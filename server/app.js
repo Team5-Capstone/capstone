@@ -14,7 +14,7 @@ app.use(express.json());
 app.use('/auth', require('./auth'));
 app.use('/api', require('./api'));
 
-app.get('/', (req, res) =>
+app.get('/', (_req, res) =>
   res.sendFile(path.join(__dirname, '..', 'public/index.html')),
 );
 
@@ -33,12 +33,12 @@ app.use((req, res, next) => {
 });
 
 // sends index.html
-app.use('*', (req, res) => {
+app.use('*', (_req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public/index.html'));
 });
 
 // error handling endware
-app.use((err, req, res, next) => {
+app.use((err, _req, res) => {
   console.error(err);
   console.error(err.stack);
   res.status(err.status || 500).send(err.message || 'Internal server error.');
