@@ -1,6 +1,7 @@
-Slack group: https://app.slack.com/client/T024FPYBQ/C03BUFQB50V/T2VHPBHA5
-Figma: https://www.figma.com/file/Q7LqTYZxPqUVjD8tF7ihmy/FSA-Capstone
-Todo Board: https://github.com/orgs/Team5-Capstone/projects/1/views/1
+# Links
+- Slack group: https://app.slack.com/client/T024FPYBQ/C03BUFQB50V/T2VHPBHA5
+- Figma: https://www.figma.com/file/Q7LqTYZxPqUVjD8tF7ihmy/FSA-Capstone
+- Todo Board: https://github.com/orgs/Team5-Capstone/projects/1/views/1
 
 
 # FS-App-Template
