@@ -7,12 +7,12 @@ import { defaultKeymap, indentWithTab } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 
-export const Editor = ({setEditorState}) => {
+export const Editor = ({ setEditorState }) => {
   const editor = useRef();
-	const [code, setCode] = useState("");
+  const [code, setCode] = useState('');
 
   const onUpdate = EditorView.updateListener.of((v) => {
-      setCode(v.state.doc.toString());
+    setCode(v.state.doc.toString());
   });
 
   useEffect(() => {
