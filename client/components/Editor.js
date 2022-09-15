@@ -10,18 +10,20 @@ import axios from 'axios';
 
 export const Editor = () => {
   const editor = useRef();
-	const [code, setCode] = useState("");
+  const [code, setCode] = useState('');
 
   const onUpdate = EditorView.updateListener.of((v) => {
-      setCode(v.state.doc.toString());
+    setCode(v.state.doc.toString());
   });
 
   const onSubmit = () => {
-    console.log(code)
-    axios.post('/api/tests', {
-      code
-    }).then((res)=> console.log(res));
-  }
+    console.log(code);
+    axios
+      .post('/api/tests', {
+        code,
+      })
+      .then((res) => console.log(res));
+  };
 
   useEffect(() => {
     const state = EditorState.create({
@@ -43,15 +45,12 @@ export const Editor = () => {
   }, []);
 
   return (
-
-  <div>
-  <div>Write a test that tests whether a function console.logs "Hello, World!".</div>
-  <div ref={editor}></div>
-  <button onClick={onSubmit}>Submit Your Test!</button>
-  </div>
-
-  
-  )
-  
-  ;
+    <div>
+      <div>
+        Write a test that tests whether a function console.logs "Hello, World!".
+      </div>
+      <div ref={editor}></div>
+      <button onClick={onSubmit}>Submit Your Test!</button>
+    </div>
+  );
 };

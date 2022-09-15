@@ -1,12 +1,12 @@
-const router = require('express').Router()
+const router = require('express').Router();
 // const { models: { User }} = require('../db')
-module.exports = router
+module.exports = router;
 
 router.post('/', async (req, res, next) => {
   try {
-    console.log(req.body)
-    res.json({message: 'success'});
+    console.log(req.body);
+    res.json({ message: 'success' });
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
