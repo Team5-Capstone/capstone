@@ -1,0 +1,12 @@
+node_modules/
+dist/
+
+bundle.js
+bundle.js.map
+
+package.json
+package-lock.json
+
+*.md
+
+.vscode

@@ -1,0 +1,35 @@
+{
+  "root": true,
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "ignorePatterns": [
+    "node_modules",
+    "public/bundle.js",
+    "public/bundle.js.map"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 10,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "react/prop-types": 0,
+    "prettier/prettier": ["error"]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
