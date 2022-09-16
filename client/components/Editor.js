@@ -1,5 +1,7 @@
-import React, { useRef, useEffect, useState } from 'react';
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable prettier/prettier */
 
+import React, { useRef, useEffect, useState } from 'react';
 import { EditorState } from '@codemirror/state';
 import { basicSetup } from 'codemirror';
 import { EditorView, keymap } from '@codemirror/view';
@@ -27,7 +29,7 @@ export const Editor = () => {
 
   useEffect(() => {
     const state = EditorState.create({
-      doc: 'Hello World',
+      doc: code,
       extensions: [
         basicSetup,
         keymap.of([defaultKeymap, indentWithTab]),
