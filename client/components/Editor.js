@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react';
-
 import { EditorState } from '@codemirror/state';
 import { basicSetup } from 'codemirror';
 import { EditorView, keymap } from '@codemirror/view';
