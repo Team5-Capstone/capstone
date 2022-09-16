@@ -13,7 +13,7 @@ import axios from 'axios';
 export const Editor = () => {
   const editor = useRef();
   const [code, setCode] = useState('');
-  const [response, setResponse] = useState('');
+  const [response, setResponse] = useState('See your results here!');
 
   const onUpdate = EditorView.updateListener.of((v) => {
     setCode(v.state.doc.toString());
@@ -24,16 +24,13 @@ export const Editor = () => {
       .post('/api/tests', {
         code,
       })
-      .then((res) => setResponse(res.data));
+      .then((res) => {
+        setResponse(res.data);
+      });
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const onSubmit = () => {
     fetchData();
-    // console.log(code);
   };
 
   useEffect(() => {
