@@ -13,18 +13,27 @@ import axios from 'axios';
 export const Editor = () => {
   const editor = useRef();
   const [code, setCode] = useState('');
+  const [response, setResponse] = useState('');
 
   const onUpdate = EditorView.updateListener.of((v) => {
     setCode(v.state.doc.toString());
   });
 
-  const onSubmit = () => {
-    console.log(code);
+  const fetchData = () => {
     axios
       .post('/api/tests', {
         code,
       })
-      .then((res) => console.log(res));
+      .then((res) => setResponse(res.data));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const onSubmit = () => {
+    fetchData();
+    // console.log(code);
   };
 
   useEffect(() => {
@@ -53,6 +62,7 @@ export const Editor = () => {
       </div>
       <div ref={editor}></div>
       <button onClick={onSubmit}>Submit Your Test!</button>
+      <div>{response}</div>
     </div>
   );
 };

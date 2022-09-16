@@ -15,6 +15,7 @@ router.post('/', (req, res) => {
 
   let toBeTestPassed = false;
   walk.full(ast, (node) => {
+    console.log(node);
     if (
       node.type === 'CallExpression' &&
       node.callee &&
