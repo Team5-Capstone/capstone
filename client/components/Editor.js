@@ -1,6 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable prettier/prettier */
-
 import React, { useRef, useEffect, useState } from 'react';
 import { EditorState } from '@codemirror/state';
 import { basicSetup } from 'codemirror';
