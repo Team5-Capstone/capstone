@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 const router = require('express').Router();
 const acorn = require('acorn');
 const walk = require('acorn-walk');
@@ -13,10 +15,12 @@ router.post('/', (req, res) => {
 
     let toBeTestPassed = false;
     walk.full(ast, (node) => {
-      //   console.log(node); // <--- console.log of the AST of the toBe('Hello, World!') expression
+      console.log(node); // <--- console.log of the AST of the toBe('Hello, World!') expression
       if (
         node.type === 'CallExpression' &&
-        node.callee?.property?.name === 'toBe'
+        node.callee &&
+        node.callee.property &&
+        node.callee.property.name === 'toBe'
       ) {
         node.arguments.map((argument) => {
           if (argument.value === 'Hello, World!') {
@@ -32,14 +36,13 @@ router.post('/', (req, res) => {
     walk.full(ast, (node) => {
       if (
         node.type === 'CallExpression' &&
-        node.callee?.name === 'helloWorld'
+        node.callee &&
+        node.callee.name === 'expect'
       ) {
         node.arguments.map((argument) => {
-          console.log(argument.type);
           if (argument.callee.name === 'helloWorld') {
             argument.arguments.map((argument) => {
               if (argument.value === 'World') {
-                console.log(argument.value);
                 expectTestPassed = true;
               }
             });
@@ -48,7 +51,7 @@ router.post('/', (req, res) => {
       }
     });
 
-    // send different console.log messages to user depending on accuracy of their test
+    // send different messages to user depending on accuracy of their test
 
     if (toBeTestPassed && expectTestPassed) {
       res.json('You passed the test');
