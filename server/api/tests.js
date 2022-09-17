@@ -11,7 +11,19 @@ router.post('/', async (req, res, next) => {
   try {
     const { code } = req.body;
     fs.writeFileSync('submitted.js', code);
-    res.send(code);
+
+    var exec = require('child_process').exec;
+
+    let stdoutToSend = 'no stdout';
+    exec('node submitted.js {{args}}', function (error, stdout, stderr) {
+      console.log('stdout: ' + stdout);
+      console.log('stderr: ' + stderr);
+      if (error !== null) {
+        console.log('exec error: ' + error);
+      }
+      stdoutToSend = stdout;
+    });
+    res.send(stdoutToSend);
   } catch (err) {
     next(err);
   }
