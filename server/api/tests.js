@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+const fs = require('fs');
 
 const router = require('express').Router();
 const acorn = require('acorn');
@@ -6,7 +7,17 @@ const walk = require('acorn-walk');
 // const { models: { User }} = require('../db')
 module.exports = router;
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res, next) => {
+  try {
+    const { code } = req.body;
+    fs.writeFileSync('submitted.js', code);
+    res.send(code);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/acorn', (req, res) => {
   // parse user input from editor into AST
   try {
     let ast = acorn.parse(req.body.code, { ecmaVersion: 2020 });

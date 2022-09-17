@@ -20,7 +20,7 @@ const turnOffCtrlS = () => {
 
 export const Editor = () => {
   const editor = useRef();
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState('console.log("Hello, World!")');
   const [response, setResponse] = useState('See your results here!');
 
   const onUpdate = EditorView.updateListener.of((v) => {
