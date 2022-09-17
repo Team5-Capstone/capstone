@@ -7,6 +7,25 @@ const walk = require('acorn-walk');
 // const { models: { User }} = require('../db')
 module.exports = router;
 
+// route that will create a new file from the submitted code and run the file
+// router.post('/', async (req, res, next) => {
+//   try {
+//     // create a new file with the submitted code
+//     fs.writeFile('test.js', req.body.code, (err) => {
+//       if (err) throw err;
+//       console.log('The file has been saved!');
+//     });
+
+//     // run the file
+//     const test = require('./test.js');
+
+//     // check if the file has a console.log
+//     const hasConsoleLog = (node) => {
+//       if (node.type === 'CallExpression' && node.callee.type === 'MemberExpression' && node.callee.object.type === 'Identifier' && node.callee.object.name === 'console' && node.callee.property.type === 'Identifier' && node.callee.property.name === 'log') {
+
+// // oh, just have a test file, run the user submitted file
+// // then grab the
+
 router.post('/', async (req, res, next) => {
   try {
     const { code } = req.body;
