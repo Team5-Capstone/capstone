@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
 
     let toBeTestPassed = false;
     walk.full(ast, (node) => {
-      console.log(node); // <--- console.log an the toBe('Hello, World!')
+      //   console.log(node); // <--- console.log of the AST of the toBe('Hello, World!') expression
       if (
         node.type === 'CallExpression' &&
         node.callee &&
@@ -37,11 +37,17 @@ router.post('/', (req, res) => {
       if (
         node.type === 'CallExpression' &&
         node.callee &&
-        node.callee.name === 'helloWorld'
+        node.callee.name === 'expect'
       ) {
         node.arguments.map((argument) => {
-          if (argument.value === 'World') {
-            expectTestPassed = true;
+          console.log(argument.type);
+          if (argument.callee.name === 'helloWorld') {
+            argument.arguments.map((argument) => {
+              if (argument.value === 'World') {
+                console.log(argument.value);
+                expectTestPassed = true;
+              }
+            });
           }
         });
       }
