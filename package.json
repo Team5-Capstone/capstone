@@ -17,8 +17,7 @@
     "lint:fix": "eslint . --fix",
     "prettier:check": "prettier . --check",
     "prettier:fix": "prettier --write \"**/*.{js,html,jsxc,css}\"",
-    "prettify": "npm run prettier:fix",
-    "precommit": "git-format-staged --formatter 'prettier --stdin' '*.js'"
+    "prettify": "npm run prettier:fix"
   },
   "author": "Fullstack Academy of Code",
   "license": "MIT",
@@ -47,7 +46,6 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
-    "git-format-staged": "^3.0.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "nodemon": "^2.0.19",
@@ -61,5 +59,11 @@
     "redux-thunk": "^2.4.1",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier  --write"
+    ]
   }
 }

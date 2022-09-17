@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 const router = require('express').Router();
 const acorn = require('acorn');
 const walk = require('acorn-walk');
@@ -18,9 +16,7 @@ router.post('/', (req, res) => {
       //   console.log(node); // <--- console.log of the AST of the toBe('Hello, World!') expression
       if (
         node.type === 'CallExpression' &&
-        node.callee &&
-        node.callee.property &&
-        node.callee.property.name === 'toBe'
+        node.callee?.property?.name === 'toBe'
       ) {
         node.arguments.map((argument) => {
           if (argument.value === 'Hello, World!') {
@@ -36,8 +32,7 @@ router.post('/', (req, res) => {
     walk.full(ast, (node) => {
       if (
         node.type === 'CallExpression' &&
-        node.callee &&
-        node.callee.name === 'expect'
+        node.callee?.name === 'helloWorld'
       ) {
         node.arguments.map((argument) => {
           console.log(argument.type);

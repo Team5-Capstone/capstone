@@ -16,7 +16,7 @@
     "public/bundle.js.map"
   ],
   "parserOptions": {
-    "ecmaVersion": 10,
+    "ecmaVersion": 2022,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
@@ -24,8 +24,9 @@
   },
   "plugins": ["react", "prettier"],
   "rules": {
-    "react/prop-types": 0,
-    "prettier/prettier": ["error"]
+    "prettier/prettier": "warn",
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off"
   },
   "settings": {
     "react": {
@@ -33,3 +34,4 @@
     }
   }
 }
+
