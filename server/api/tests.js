@@ -3,12 +3,20 @@ const jest = require('jest');
 const router = require('express').Router();
 const acorn = require('acorn');
 const walk = require('acorn-walk');
-
 const testFileName = 'helloWorld.test.js';
 
-// evaluate test
+router.post('/', async (req, res, next) => {
+  try {
+    const { code } = req.body;
+    fs.writeFileSync('submitted.js', code);
+    res.send(code);
+  } catch (err) {
+    next(err);
+  }
+});
 
-router.post('/', async (req, res) => {
+router.post('/acorn', (req, res) => {
+  // parse user input from editor into AST
   try {
     // walk through 'toBe('Hello, World!)' AST to evaluate statement accuracy
 
