@@ -12,18 +12,20 @@ router.post('/', async (req, res, next) => {
     const { code } = req.body;
     fs.writeFileSync('submitted.js', code);
 
-    var exec = require('child_process').exec;
-
-    let stdoutToSend = 'no stdout';
-    exec('node submitted.js {{args}}', function (error, stdout, stderr) {
-      console.log('stdout: ' + stdout);
-      console.log('stderr: ' + stderr);
-      if (error !== null) {
-        console.log('exec error: ' + error);
-      }
-      stdoutToSend = stdout;
+    const { spawn } = require('child_process');
+    const child = spawn('node', ['submitted.js'], { shell: true });
+    child.stdout.on('data', (data) => {
+      console.log(`stdout: ${data}`);
     });
-    res.send(stdoutToSend);
+
+    child.stderr.on('data', (data) => {
+      console.error(`stderr: ${data}`);
+    });
+
+    child.on('close', (code) => {
+      console.log(`child process exited with code ${code}`);
+    });
+    res.send('Success!');
   } catch (err) {
     next(err);
   }
