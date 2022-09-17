@@ -16,16 +16,18 @@ router.post('/', async (req, res, next) => {
     const child = spawn('node', ['submitted.js'], { shell: true });
     child.stdout.on('data', (data) => {
       console.log(`stdout: ${data}`);
+      res.send(data);
     });
 
     child.stderr.on('data', (data) => {
       console.error(`stderr: ${data}`);
+      res.send(data);
     });
 
     child.on('close', (code) => {
       console.log(`child process exited with code ${code}`);
+      res.send(code);
     });
-    res.send('Success!');
   } catch (err) {
     next(err);
   }
