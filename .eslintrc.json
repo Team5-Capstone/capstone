@@ -13,7 +13,8 @@
   "ignorePatterns": [
     "node_modules",
     "public/bundle.js",
-    "public/bundle.js.map"
+    "public/bundle.js.map",
+    "*.test.js"
   ],
   "parserOptions": {
     "ecmaVersion": 2022,
