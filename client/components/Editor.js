@@ -7,6 +7,17 @@ import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import axios from 'axios';
 
+const turnOffCtrlS = () => {
+  document.addEventListener('keydown', (e) => {
+    const pressedS = e.key === 's';
+    const pressedCtrl = navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey;
+
+    if (pressedS && pressedCtrl) {
+      e.preventDefault();
+    }
+  });
+};
+
 export const Editor = () => {
   const editor = useRef();
   const [code, setCode] = useState('');
@@ -31,6 +42,8 @@ export const Editor = () => {
   };
 
   useEffect(() => {
+    turnOffCtrlS();
+
     const state = EditorState.create({
       doc: code,
       extensions: [
