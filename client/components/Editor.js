@@ -18,9 +18,17 @@ const turnOffCtrlS = () => {
   });
 };
 
+const exampleTestCode = `
+const sum = require('./sum');
+
+test('adds 1 + 2 to equal 3', () => {
+  expect(sum(1, 2)).toBe(3);
+});
+`;
+
 export const Editor = () => {
   const editor = useRef();
-  const [code, setCode] = useState('console.log("Hello, World!")');
+  const [code, setCode] = useState(exampleTestCode);
   const [response, setResponse] = useState('See your results here!');
 
   const onUpdate = EditorView.updateListener.of((v) => {
@@ -69,7 +77,7 @@ export const Editor = () => {
       </div>
       <div ref={editor}></div>
       <button onClick={onSubmit}>Submit Your Test!</button>
-      <div>{response}</div>
+      <div style={{ whiteSpace: 'pre-wrap' }}>{response}</div>
     </div>
   );
 };
