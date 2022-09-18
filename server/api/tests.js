@@ -1,4 +1,4 @@
-const fs = require('fs');
+// const fs = require('fs');
 const router = require('express').Router();
 const acorn = require('acorn');
 const walk = require('acorn-walk');
@@ -31,14 +31,21 @@ router.post('/', async (req, res, next) => {
     // it doesn't work
 
     // Part 1: Create a new file with the submitted code
-    const { code } = req.body;
-    fs.writeFileSync('sum.test.js', code);
-    const file = fs.readFileSync('sum.test.js', 'utf8');
-    console.log('file is read after write', file);
+    // const { code } = req.body;
+    // fs.writeFileSync('sum.test.js', code);
+    // const file = fs.readFileSync('sum.test.js', 'utf8');
+    // console.log('file is read after write', file);
 
     // Part 2: Run the file
     const util = require('util');
     const exec = util.promisify(require('child_process').exec);
+
+    // fs.writeFile('sum.test.js', req.body.code, async (err) => {
+    //   if (err) throw err;
+    //   console.log('The file has been saved!');
+    //   const execution = await exec('npm run test');
+    //   console.log('execution', execution);
+    // });
 
     // this is blocking the process
     const execution = await exec('npm test');
@@ -46,8 +53,8 @@ router.post('/', async (req, res, next) => {
     // const execution = await exec('npm run testCanRunNode'); //
 
     console.log('execution', execution);
-    // console.log('stdout:', execution.stdout);
-    // console.log('stderr:', execution.stderr);
+    console.log('stdout:', execution.stdout);
+    console.log('stderr:', execution.stderr);
     console.log('can we get here?');
     res.send('hello');
     // res.send(execution.stderr);
