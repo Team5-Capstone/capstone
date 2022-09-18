@@ -1,4 +1,4 @@
-// const fs = require('fs');
+const fs = require('fs');
 const router = require('express').Router();
 const acorn = require('acorn');
 const walk = require('acorn-walk');
@@ -26,16 +26,31 @@ module.exports = router;
 
 router.post('/', async (req, res, next) => {
   try {
-    // const { code } = req.body;
-    // fs.writeFileSync('sum.test.js', code);
+    // Both parts, Part 1 and Part 2, can run on their own,
+    // but when run together,
+    // it doesn't work
 
+    // Part 1: Create a new file with the submitted code
+    const { code } = req.body;
+    fs.writeFileSync('sum.test.js', code);
+    const file = fs.readFileSync('sum.test.js', 'utf8');
+    console.log('file is read after write', file);
+
+    // Part 2: Run the file
     const util = require('util');
     const exec = util.promisify(require('child_process').exec);
+
+    // this is blocking the process
     const execution = await exec('npm test');
+    // const execution = await exec('echo "hello"'); // this works
+    // const execution = await exec('npm run testCanRunNode'); //
+
     console.log('execution', execution);
-    console.log('stdout:', execution.stdout);
-    console.log('stderr:', execution.stderr);
-    res.send(execution.stderr);
+    // console.log('stdout:', execution.stdout);
+    // console.log('stderr:', execution.stderr);
+    console.log('can we get here?');
+    res.send('hello');
+    // res.send(execution.stderr);
   } catch (err) {
     res.send(err.stdout);
     next(err);
