@@ -8,45 +8,15 @@ const testFileName = 'helloWorld.test.js';
 router.post('/', async (req, res, next) => {
   try {
     // const { code } = req.body;
-    // fs.writeFileSync('submitted.js', code);
+    // fs.writeFileSync('sum.test.js', code);
 
-    // const { spawn } = require('child_process');
-    // const child = spawn('node', ['submitted.js'], { shell: true });
-    // child.stdout.on('data', (data) => {
-    //   console.log(`stdout: ${data}`);
-    //   res.send(data);
-    // });
-
-    // child.stderr.on('data', (data) => {
-    //   console.error(`stderr: ${data}`);
-    //   res.send(data);
-    // });
-
-    // child.on('close', (code) => {
-    //   console.log(`child process exited with code ${code}`);
-    //   res.send(code);
-    // });
-
-    const objectToHoldStdout = {
-      stdout: '',
-    };
-
-    // TODO: Run a npm test command with a child process
-    const { spawn } = require('child_process');
-    const child = spawn('npm', ['test'], { shell: true });
-    child.stdout.on('data', (data) => {
-      console.log(`stdout: ${data}`);
-      objectToHoldStdout.stdout += data;
-      res.send(objectToHoldStdout.stdout);
-    });
-
-    child.stderr.on('data', (data) => {
-      console.error(`stderr: ${data}`);
-      objectToHoldStdout.stdout += data;
-      res.send(objectToHoldStdout.stdout);
-    });
-
-    // console.log('objectToHoldStdout', objectToHoldStdout);
+    const util = require('util');
+    const exec = util.promisify(require('child_process').exec);
+    const execution = await exec('npm test');
+    console.log('execution', execution);
+    console.log('stdout:', execution.stdout);
+    console.log('stderr:', execution.stderr);
+    res.send(execution.stderr);
   } catch (err) {
     next(err);
   }
