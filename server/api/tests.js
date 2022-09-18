@@ -37,6 +37,7 @@ router.post('/', async (req, res, next) => {
     console.log('stderr:', execution.stderr);
     res.send(execution.stderr);
   } catch (err) {
+    res.send(err.stdout);
     next(err);
   }
 });
