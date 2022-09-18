@@ -31,16 +31,21 @@ router.post('/', async (req, res, next) => {
     // it doesn't work
     // Works on the node command line?!
 
+    // const util = require('util');
     // Part 1: Create a new file with the submitted code
     const { code } = req.body;
-    fs.writeFileSync('sum.test.js', code);
+    // const writeFile = util.promisify(fs.writeFileSync);
+    // await writeFile('sum.test.js', code);
+
     // console.log('The file has been saved!');
+
+    // try writeStream? next time?
+
     // const file = fs.readFileSync('sum.test.js', 'utf8');
     // console.log('file is read after write', file);
 
     // Part 2: Run the file
-    const util = require('util');
-    const exec = util.promisify(require('child_process').exec);
+    // const exec = util.promisify(require('child_process').exec);
 
     // fs.writeFile('sum.test.js', req.body.code, async (err) => {
     //   if (err) throw err;
@@ -50,19 +55,31 @@ router.post('/', async (req, res, next) => {
     // });
 
     // this is blocking the process
-    const execution = await exec('npm test');
-    console.log('this is the execution');
+    // const execution = await exec('npm test');
+    // console.log('this is the execution');
     // const execution = await exec('echo "hello"'); // this works
     // const execution = await exec('npm run testCanRunNode'); //
 
-    console.log('execution', execution);
-    console.log('stdout:', execution.stdout);
-    console.log('stderr:', execution.stderr);
-    console.log('can we get here?');
+    // console.log('execution', execution);
+    // console.log('stdout:', execution.stdout);
+    // console.log('stderr:', execution.stderr);
+    // console.log('can we get here?');
+
+    // 1. write to a file
+    // 2. run the npm test command
+
+    await fs.writeFileSync('sum.test.js', code);
+    const { execSync } = require('child_process');
+    const stuff = execSync('npm run testCanRunNode');
+    // const stuff = execSync('echo "hello"');
+    // const stuff = 'hello';
+    console.log('stuff', stuff);
+
     res.send('hello');
     // res.send(execution.stderr);
   } catch (err) {
-    res.send(err.stdout);
+    console.log('GOT HERE IN THE CATCH', err);
+    // res.send(err.stdout);
     next(err);
   }
 });
