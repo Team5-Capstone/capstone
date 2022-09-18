@@ -1,4 +1,4 @@
-// const fs = require('fs');
+const fs = require('fs');
 const router = require('express').Router();
 const acorn = require('acorn');
 const walk = require('acorn-walk');
@@ -29,10 +29,12 @@ router.post('/', async (req, res, next) => {
     // Both parts, Part 1 and Part 2, can run on their own,
     // but when run together,
     // it doesn't work
+    // Works on the node command line?!
 
     // Part 1: Create a new file with the submitted code
-    // const { code } = req.body;
-    // fs.writeFileSync('sum.test.js', code);
+    const { code } = req.body;
+    fs.writeFileSync('sum.test.js', code);
+    // console.log('The file has been saved!');
     // const file = fs.readFileSync('sum.test.js', 'utf8');
     // console.log('file is read after write', file);
 
@@ -49,6 +51,7 @@ router.post('/', async (req, res, next) => {
 
     // this is blocking the process
     const execution = await exec('npm test');
+    console.log('this is the execution');
     // const execution = await exec('echo "hello"'); // this works
     // const execution = await exec('npm run testCanRunNode'); //
 
