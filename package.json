@@ -17,7 +17,8 @@
     "lint:fix": "eslint . --fix",
     "prettier:check": "prettier . --check",
     "prettier:fix": "prettier --write \"**/*.{js,html,jsxc,css}\"",
-    "prettify": "npm run prettier:fix"
+    "prettify": "npm run prettier:fix",
+    "test": "echo 'ran this script here'"
   },
   "author": "Fullstack Academy of Code",
   "license": "MIT",

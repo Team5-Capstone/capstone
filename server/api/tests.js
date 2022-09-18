@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-const fs = require('fs');
+// const fs = require('fs');
 
 const router = require('express').Router();
 const acorn = require('acorn');
@@ -28,25 +27,46 @@ module.exports = router;
 
 router.post('/', async (req, res, next) => {
   try {
-    const { code } = req.body;
-    fs.writeFileSync('submitted.js', code);
+    // const { code } = req.body;
+    // fs.writeFileSync('submitted.js', code);
 
+    // const { spawn } = require('child_process');
+    // const child = spawn('node', ['submitted.js'], { shell: true });
+    // child.stdout.on('data', (data) => {
+    //   console.log(`stdout: ${data}`);
+    //   res.send(data);
+    // });
+
+    // child.stderr.on('data', (data) => {
+    //   console.error(`stderr: ${data}`);
+    //   res.send(data);
+    // });
+
+    // child.on('close', (code) => {
+    //   console.log(`child process exited with code ${code}`);
+    //   res.send(code);
+    // });
+
+    const objectToHoldStdout = {
+      stdout: '',
+    };
+
+    // TODO: Run a npm test command with a child process
     const { spawn } = require('child_process');
-    const child = spawn('node', ['submitted.js'], { shell: true });
+    const child = spawn('npm', ['test'], { shell: true });
     child.stdout.on('data', (data) => {
       console.log(`stdout: ${data}`);
-      res.send(data);
+      objectToHoldStdout.stdout += data;
+      res.send(objectToHoldStdout.stdout);
     });
 
     child.stderr.on('data', (data) => {
       console.error(`stderr: ${data}`);
-      res.send(data);
+      objectToHoldStdout.stdout += data;
+      res.send(objectToHoldStdout.stdout);
     });
 
-    child.on('close', (code) => {
-      console.log(`child process exited with code ${code}`);
-      res.send(code);
-    });
+    // console.log('objectToHoldStdout', objectToHoldStdout);
   } catch (err) {
     next(err);
   }
