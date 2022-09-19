@@ -45,8 +45,8 @@ router.get('/results', async (req, res, next) => {
       },
       [process.cwd()],
     );
-    console.log('results', results.testResults); // this is still null
-    res.send(results.testResults);
+    console.log('results', results); // this is still null
+    res.send(results);
     // .catch((error) => {
     //   console.log('Error:');
     //   console.log(error);
