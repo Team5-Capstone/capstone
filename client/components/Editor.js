@@ -62,12 +62,25 @@ export const Editor = () => {
       ],
     });
 
-    const view = new EditorView({ state, parent: editor.current });
+    const view = new EditorView({
+      state,
+      parent: editor.current,
+    });
 
     return () => {
       view.destroy();
     };
   }, []);
+
+  const runTest = () => {
+    axios
+      .post('/api/tests/results', {
+        code,
+      })
+      .then((res) => {
+        setResponse(res.data);
+      });
+  };
 
   return (
     <div>
@@ -76,7 +89,13 @@ export const Editor = () => {
       </div>
       <div ref={editor}></div>
       <button onClick={onSubmit}>Submit Your Test!</button>
-      <div style={{ whiteSpace: 'pre-wrap' }}>{response}</div>
+      <button onClick={runTest}>Run Test</button>
+      <div
+        style={{
+          whiteSpace: 'pre-wrap',
+        }}>
+        {response}
+      </div>
     </div>
   );
 };

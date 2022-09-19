@@ -22,7 +22,45 @@ const walk = require('acorn-walk');
 // // oh, just have a test file, run the user submitted file
 // // then grab the
 
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
+  try {
+    // create a new file with the submitted code
+    fs.writeFile('sum.test.js', req.body.code, (err) => {
+      if (err) throw err;
+      console.log('The file has been saved!');
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/results', async (req, res, next) => {
+  try {
+    const { run } = require('jest');
+    run(['sum.test.js'], { rootDir: __dirname }).then((results) => {
+      console.log(results);
+      res.send(results);
+    });
+
+    // const { results } = await runCLI(
+    //   {
+    //     testPathPattern: 'sum.test.js',
+    //     watch: false,
+    //     silent: true,
+    //   },
+    //   [process.cwd()],
+    // );
+    // const { numFailedTests, numPassedTests, numPendingTests, testResults } =
+    //   results;
+    // const { failureMessage } = testResults[0];
+    // const { message } = failureMessage;
+    // res.send({ numFailedTests, numPassedTests, numPendingTests, message });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/deprecated', (req, res, next) => {
   try {
     // Both parts, Part 1 and Part 2, can run on their own,
     // but when run together,
@@ -79,7 +117,12 @@ router.post('/', (req, res, next) => {
 
     // THIS Runs and spits out results in command line
     // but not after a writeFileSync
-    runCLI({ runInBand: true }, [process.cwd()]).then((result) => {
+    runCLI(
+      {
+        runInBand: true,
+      },
+      [process.cwd()],
+    ).then((result) => {
       console.log('result', result);
     });
 
@@ -118,7 +161,9 @@ router.post('/', (req, res, next) => {
 router.post('/acorn', (req, res) => {
   // parse user input from editor into AST
   try {
-    let ast = acorn.parse(req.body.code, { ecmaVersion: 2020 });
+    let ast = acorn.parse(req.body.code, {
+      ecmaVersion: 2020,
+    });
 
     // walk through 'toBe('Hellow, World!)' AST to evaluate statement accuracy
 
