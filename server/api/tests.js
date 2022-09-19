@@ -1,26 +1,8 @@
 const fs = require('fs');
+const { runCLI } = require('jest');
 const router = require('express').Router();
 const acorn = require('acorn');
 const walk = require('acorn-walk');
-// const { models: { User }} = require('../db')
-// route that will create a new file from the submitted code and run the file
-// router.post('/', async (req, res, next) => {
-//   try {
-//     // create a new file with the submitted code
-//     fs.writeFile('test.js', req.body.code, (err) => {
-//       if (err) throw err;
-//       console.log('The file has been saved!');
-//     });
-
-//     // run the file
-//     const test = require('./test.js');
-
-//     // check if the file has a console.log
-//     const hasConsoleLog = (node) => {
-//       if (node.type === 'CallExpression' && node.callee.type === 'MemberExpression' && node.callee.object.type === 'Identifier' && node.callee.object.name === 'console' && node.callee.property.type === 'Identifier' && node.callee.property.name === 'log') {
-
-// // oh, just have a test file, run the user submitted file
-// // then grab the
 
 const testFileName = 'sum.test.js';
 
@@ -30,6 +12,7 @@ router.post('/', async (req, res, next) => {
     fs.writeFile(testFileName, req.body.code, (err) => {
       if (err) throw err;
       console.log('The file has been saved!');
+      res.send('file saved');
     });
   } catch (err) {
     next(err);
@@ -38,45 +21,30 @@ router.post('/', async (req, res, next) => {
 
 router.get('/results', async (req, res, next) => {
   try {
-    const { runCLI } = require('jest');
-    const results = await runCLI(
+    const { results } = await runCLI(
       {
-        testRegex: testFileName,
+        testPathPattern: 'sum.test.js',
+        watch: false,
+        silent: true,
       },
       [process.cwd()],
     );
-    console.log('results', results.testResults);
-    // console.log('processsffs', process);
-    // console.log('results', results); // this is still null
-    res.send(results.testResults);
 
-    // res.send(JSON.stringify(process));
-    // .catch((error) => {
-    //   console.log('Error:');
-    //   console.log(error);
-    // })
-    // .then(() => {
-    //   console.log('Done');
-    // });
-    // const { run } = require('jest');
-    // run(['sum.test.js'], { rootDir: __dirname }).then((results) => {
-    //   console.log(results);
-    //   res.send(results);
-    // });
-
-    // const { results } = await runCLI(
-    //   {
-    //     testPathPattern: 'sum.test.js',
-    //     watch: false,
-    //     silent: true,
-    //   },
-    //   [process.cwd()],
-    // );
-    // const { numFailedTests, numPassedTests, numPendingTests, testResults } =
-    //   results;
-    // const { failureMessage } = testResults[0];
-    // const { message } = failureMessage;
-    // res.send({ numFailedTests, numPassedTests, numPendingTests, message });
+    let testPassed = '';
+    for (const key in results) {
+      if (key === 'testResults') {
+        results[key].forEach((result) => {
+          for (const key in result) {
+            if (key === 'testResults') {
+              result[key].forEach((test) => {
+                testPassed = test.status;
+              });
+            }
+          }
+        });
+      }
+    }
+    res.json(testPassed);
   } catch (err) {
     next(err);
   }
