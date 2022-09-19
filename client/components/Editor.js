@@ -142,6 +142,16 @@ export const Editor = (props) => {
     };
   }, [templateTest]);
 
+  const runTest = () => {
+    axios
+      .post('/api/tests/results', {
+        code,
+      })
+      .then((res) => {
+        setResponse(res.data);
+      });
+  };
+
   return (
     <div className='p-5'>
       <div ref={editor2}></div>
