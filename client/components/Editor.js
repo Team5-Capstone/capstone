@@ -63,13 +63,15 @@ export const Editor = () => {
   }, []);
 
   return (
-    <div>
-      <div>
+    <div className='p-5'>
+      <div className='p-5 font-bold'>
         Write a test that tests whether a function console.logs "Hello, World!".
       </div>
-      <div ref={editor}></div>
-      <button onClick={onSubmit}>Submit Your Test!</button>
-      <div>{response}</div>
+      <div className='p-5' ref={editor}></div>
+      <button className='p-2 bg-gray-400 m-5' onClick={onSubmit}>
+        Submit Test!
+      </button>
+      <div className='p-5'>{response}</div>
     </div>
   );
 };
