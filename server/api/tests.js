@@ -22,10 +22,12 @@ const walk = require('acorn-walk');
 // // oh, just have a test file, run the user submitted file
 // // then grab the
 
+const testFileName = 'sum.test.js';
+
 router.post('/', async (req, res, next) => {
   try {
     // create a new file with the submitted code
-    fs.writeFile('sum.test.js', req.body.code, (err) => {
+    fs.writeFile(testFileName, req.body.code, (err) => {
       if (err) throw err;
       console.log('The file has been saved!');
     });
@@ -37,14 +39,21 @@ router.post('/', async (req, res, next) => {
 router.get('/results', async (req, res, next) => {
   try {
     const { runCLI } = require('jest');
-    runCLI({}, [process.cwd()])
-      .catch((error) => {
-        console.log('Error:');
-        console.log(error);
-      })
-      .then(() => {
-        console.log('Done');
-      });
+    const results = await runCLI(
+      {
+        testRegex: testFileName,
+      },
+      [process.cwd()],
+    );
+    console.log('results', results.testResults); // this is still null
+    res.send(results.testResults);
+    // .catch((error) => {
+    //   console.log('Error:');
+    //   console.log(error);
+    // })
+    // .then(() => {
+    //   console.log('Done');
+    // });
     // const { run } = require('jest');
     // run(['sum.test.js'], { rootDir: __dirname }).then((results) => {
     //   console.log(results);
