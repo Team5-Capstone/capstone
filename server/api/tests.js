@@ -83,6 +83,13 @@ router.post('/', (req, res, next) => {
       console.log('result', result);
     });
 
+    // FOR MONDAY BECAUSE WRITING A FILE AND THAN RUNNING IT ISN'T WORKING
+    // OR MAybe TO DO:
+    // 1. write to a file in one request
+    // 2. send the file name back to frontend
+    // 3. frontend sends a request to run the file
+    // 4. backend runs the file and sends back the results
+
     // await fs.writeFileSync('sum.test.js', code);
 
     // runCLI({ config: 'jest.config.js' }, [process.cwd()]).then((result) => {
