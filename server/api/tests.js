@@ -36,11 +36,20 @@ router.post('/', async (req, res, next) => {
 
 router.get('/results', async (req, res, next) => {
   try {
-    const { run } = require('jest');
-    run(['sum.test.js'], { rootDir: __dirname }).then((results) => {
-      console.log(results);
-      res.send(results);
-    });
+    const { runCLI } = require('jest');
+    runCLI({}, [process.cwd()])
+      .catch((error) => {
+        console.log('Error:');
+        console.log(error);
+      })
+      .then(() => {
+        console.log('Done');
+      });
+    // const { run } = require('jest');
+    // run(['sum.test.js'], { rootDir: __dirname }).then((results) => {
+    //   console.log(results);
+    //   res.send(results);
+    // });
 
     // const { results } = await runCLI(
     //   {

@@ -74,7 +74,7 @@ export const Editor = () => {
 
   const runTest = () => {
     axios
-      .post('/api/tests/results', {
+      .get('/api/tests/results', {
         code,
       })
       .then((res) => {
