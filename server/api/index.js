@@ -3,6 +3,7 @@ module.exports = router;
 
 router.use('/tests', require('./tests'));
 router.use('/users', require('./users'));
+router.use('/prompts', require('./prompts'));
 
 router.use((req, res, next) => {
   const error = new Error('Not Found');

@@ -3,10 +3,8 @@
 @tailwind utilities;
 
 body {
-    --tw-bg-opacity: 1;
-    background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
-    color: white;
+  --tw-bg-opacity: 1;
+  background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
+  color: white;
 }
-
-
 
