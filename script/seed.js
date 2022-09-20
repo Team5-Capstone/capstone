@@ -2,8 +2,9 @@
 
 const {
   db,
-  models: { User },
+  models: { User, TestingPrompt },
 } = require('../server/db');
+const seedPrompts = require('../server/db/seeds/testingPrompts.json');
 
 /**
  * seed - this function clears the database, updates tables to
@@ -19,13 +20,20 @@ async function seed() {
     User.create({ username: 'murphy', password: '123' }),
   ]);
 
+  // Creating Prompts
+  const prompts = await Promise.all(
+    seedPrompts.map((prompt) => TestingPrompt.create(prompt)),
+  );
+
   console.log(`seeded ${users.length} users`);
+  console.log(`seeded ${prompts.length} prompts`);
   console.log(`seeded successfully`);
   return {
     users: {
       cody: users[0],
       murphy: users[1],
     },
+    prompts,
   };
 }
 

@@ -196,7 +196,9 @@ router.post('/acorn', (req, res) => {
     });
 
     // send different messages to user depending on accuracy of their test
-
+    if (req.body.code.length < 1) {
+      res.json("You haven't entered anything!");
+    }
     if (toBeTestPassed && expectTestPassed) {
       res.json('You passed the test');
     } else if (!toBeTestPassed && expectTestPassed) {

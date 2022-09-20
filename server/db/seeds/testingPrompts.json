@@ -1,0 +1,7 @@
+[
+  {
+    "prompt": "Test whether a function logs “Hello, World” to the console.",
+    "jsCode": "console.log('Hello World')",
+    "CorrectTest": "test"
+  }
+]
