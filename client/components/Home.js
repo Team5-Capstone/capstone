@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Editor from './Editor.js';
-import '../styles.css';
+import '../style.css';
 
 /**
  * COMPONENT

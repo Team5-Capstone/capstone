@@ -26,7 +26,6 @@ const Editor = (props) => {
   const [code, setCode] = useState('');
   const [response, setResponse] = useState('See your results here!');
   const { prompts } = props;
-  console.log('prompts', prompts);
 
   const onUpdate = EditorView.updateListener.of((v) => {
     setCode(v.state.doc.toString());
@@ -46,11 +45,10 @@ const Editor = (props) => {
     fetchData();
   };
 
-
   const templateTest = prompts[0]?.templateTest;
 
   const getReadOnlyRanges = (editor) => {
-    console.log(editor.doc.line);
+    // console.log(editor.doc.line);
     return [
       {
         from: undefined, //same as targetState.doc.line(0).from or 0
@@ -66,7 +64,6 @@ const Editor = (props) => {
       },
     ];
   };
-
 
   useEffect(() => {
     turnOffCtrlS();
