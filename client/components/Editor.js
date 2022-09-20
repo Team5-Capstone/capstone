@@ -7,6 +7,8 @@ import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import readOnlyRangesExtension from 'codemirror-readonly-ranges';
 import axios from 'axios';
+import { fetchPrompts } from '../store/prompts';
+import { connect } from 'react-redux';
 
 const turnOffCtrlS = () => {
   document.addEventListener('keydown', (e) => {
@@ -19,10 +21,12 @@ const turnOffCtrlS = () => {
   });
 };
 
-export const Editor = () => {
+const Editor = (props) => {
   const editor = useRef();
   const [code, setCode] = useState('');
   const [response, setResponse] = useState('See your results here!');
+  const { prompts } = props;
+  console.log('prompts', prompts);
 
   const onUpdate = EditorView.updateListener.of((v) => {
     setCode(v.state.doc.toString());
@@ -42,6 +46,9 @@ export const Editor = () => {
     fetchData();
   };
 
+
+  const templateTest = prompts[0]?.templateTest;
+
   const getReadOnlyRanges = (editor) => {
     console.log(editor.doc.line);
     return [
@@ -60,17 +67,13 @@ export const Editor = () => {
     ];
   };
 
-  const answerPlaceHolder = `describe('helloWorld', ()=> {
-    test('returns a string "Hello World"', () => {
-        expect().toBe('Hello, World!')
-    })
-});`;
 
   useEffect(() => {
     turnOffCtrlS();
 
     const state = EditorState.create({
-      doc: code || answerPlaceHolder,
+      doc: code || templateTest,
+
       extensions: [
         basicSetup,
         keymap.of([defaultKeymap, indentWithTab]),
@@ -83,16 +86,22 @@ export const Editor = () => {
 
     const view = new EditorView({ state, parent: editor.current });
 
+    const fetchStuff = async () => {
+      await props.fetchPrompts();
+    };
+    fetchStuff();
+
     return () => {
       view.destroy();
     };
-  }, []);
+  }, [templateTest]);
 
   return (
     <div className='p-5'>
       <div className='p-5 font-bold'>
         Write a test that tests whether a function console.logs "Hello, World!".
       </div>
+      <div>{prompts[0]?.prompt}</div>
       <div className='p-5' ref={editor}></div>
       <button className='p-2 bg-gray-400 m-5' onClick={onSubmit}>
         Submit Test!
@@ -101,3 +110,17 @@ export const Editor = () => {
     </div>
   );
 };
+
+const mapStateToProps = ({ prompts }) => {
+  return {
+    prompts,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchPrompts: () => dispatch(fetchPrompts()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Editor);
