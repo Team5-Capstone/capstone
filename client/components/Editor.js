@@ -5,7 +5,10 @@ import { EditorView, keymap } from '@codemirror/view';
 import { defaultKeymap, indentWithTab } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
+// import readOnlyRangesExtension from 'codemirror-readonly-ranges';
 import axios from 'axios';
+import { fetchPrompts } from '../store/prompts';
+import { connect } from 'react-redux';
 
 const turnOffCtrlS = () => {
   document.addEventListener('keydown', (e) => {
@@ -18,17 +21,15 @@ const turnOffCtrlS = () => {
   });
 };
 
-const exampleTestCode = `const sum = require('./sum');
-
-test('adds 1 + 2 to equal 3', () => {
-  expect(sum(1, 2)).toBe(3);
-});
-`;
-
-export const Editor = () => {
+export const Editor = (props) => {
   const editor = useRef();
-  const [code, setCode] = useState(exampleTestCode);
+  const editor2 = useRef();
+  const [code, setCode] = useState('');
   const [response, setResponse] = useState('See your results here!');
+  const { prompts } = props;
+
+  const templateTest = prompts[0]?.templateTest;
+  const narrative = prompts[0]?.narrative;
 
   const onUpdate = EditorView.updateListener.of((v) => {
     setCode(v.state.doc.toString());
@@ -36,10 +37,11 @@ export const Editor = () => {
 
   const fetchData = () => {
     axios
-      .post('/api/tests', {
+      .post('/tests', {
         code,
       })
       .then((res) => {
+        console.log(res);
         setResponse(res.data);
       });
   };
@@ -48,29 +50,57 @@ export const Editor = () => {
     fetchData();
   };
 
+  // const getReadOnlyRanges = (editor) => {
+  // console.log(editor.doc.line);
+  // return [
+  //   {
+  //     from: undefined, //same as targetState.doc.line(0).from or 0
+  //     to: editor.doc.line(2).to,
+  //   },
+  //   {
+  //     from: editor.doc.line(4).from, //same as targetState.doc.line(0).from or 0
+  //     to: editor.doc.line(5).to,
+  //   },
+  //   {
+  //     from: editor.doc.line(editor.doc.lines).from,
+  //     to: undefined, // same as targetState.doc.line(targetState.doc.lines).to
+  //   },
+  // ];
+  // };
+  // const removeIndentation =() => {
+  //   const cm = editor2.instance;
+  //   cm.execCommand('delLineLeft');
+  // }
+
   useEffect(() => {
     turnOffCtrlS();
 
     const state = EditorState.create({
-      doc: code,
+      doc: narrative,
       extensions: [
         basicSetup,
-        keymap.of([defaultKeymap, indentWithTab]),
         oneDark,
-        javascript(),
         onUpdate,
+        javascript(),
+        // removeIndentation(),
+        // readOnlyRangesExtension(getReadOnlyRanges),
       ],
     });
 
-    const view = new EditorView({
+    const view2 = new EditorView({
       state,
-      parent: editor.current,
+      parent: editor2.current,
     });
 
-    return () => {
-      view.destroy();
+    const fetchStuff = async () => {
+      await props.fetchPrompts();
     };
-  }, []);
+    fetchStuff();
+
+    return () => {
+      view2.destroy();
+    };
+  }, [narrative]);
 
   const runTest = () => {
     axios
@@ -82,15 +112,50 @@ export const Editor = () => {
       });
   };
 
+  useEffect(() => {
+    turnOffCtrlS();
+
+    const state = EditorState.create({
+      doc: code || templateTest,
+
+      extensions: [
+        basicSetup,
+        keymap.of([defaultKeymap, indentWithTab]),
+        oneDark,
+        javascript(),
+        onUpdate,
+        // readOnlyRangesExtension(getReadOnlyRanges),
+      ],
+    });
+
+    const view = new EditorView({
+      state,
+      parent: editor.current,
+    });
+
+    const fetchStuff = async () => {
+      await props.fetchPrompts();
+    };
+    fetchStuff();
+
+    return () => {
+      view.destroy();
+    };
+  }, [templateTest]);
+
   return (
-    <div>
-      <div>
-        Write a test that tests whether a function console.logs "Hello, World!".
-      </div>
+    <div className='p-5'>
+      <div ref={editor2}></div>
+      <div className='p-5 font-bold'>{prompts[0]?.prompt}</div>
       <div ref={editor}></div>
-      <button onClick={onSubmit}>Submit Your Test!</button>
-      <button onClick={runTest}>Run Test</button>
+      <button className='m-5 bg-gray-400 p-1' onClick={onSubmit}>
+        Evaluate Your Test
+      </button>
+      <button className='m-5 bg-gray-400 p-1' onClick={runTest}>
+        Submit Your Test
+      </button>
       <div
+        className='p-5'
         style={{
           whiteSpace: 'pre-wrap',
         }}>
@@ -99,3 +164,17 @@ export const Editor = () => {
     </div>
   );
 };
+
+const mapStateToProps = ({ prompts }) => {
+  return {
+    prompts,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchPrompts: () => dispatch(fetchPrompts()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Editor);

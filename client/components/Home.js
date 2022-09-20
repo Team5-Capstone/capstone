@@ -1,16 +1,15 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { connect } from 'react-redux';
-import { Editor } from './Editor.js';
+import Editor from './Editor.js';
+import '../styles.css';
 
 /**
  * COMPONENT
  */
-export const Home = (props) => {
-  const { username } = props;
-
+export const Home = () => {
   return (
     <div>
-      <h3>Welcome, {username}</h3>
       <Editor />
     </div>
   );
