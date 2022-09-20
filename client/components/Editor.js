@@ -5,6 +5,7 @@ import { EditorView, keymap } from '@codemirror/view';
 import { defaultKeymap, indentWithTab } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
+import readOnlyRangesExtension from 'codemirror-readonly-ranges';
 import axios from 'axios';
 import { fetchPrompts } from '../store/prompts';
 import { connect } from 'react-redux';
@@ -45,19 +46,41 @@ const Editor = (props) => {
     fetchData();
   };
 
+
   const templateTest = prompts[0]?.templateTest;
+
+  const getReadOnlyRanges = (editor) => {
+    console.log(editor.doc.line);
+    return [
+      {
+        from: undefined, //same as targetState.doc.line(0).from or 0
+        to: editor.doc.line(2).to,
+      },
+      {
+        from: editor.doc.line(4).from, //same as targetState.doc.line(0).from or 0
+        to: editor.doc.line(5).to,
+      },
+      {
+        from: editor.doc.line(editor.doc.lines).from,
+        to: undefined, // same as targetState.doc.line(targetState.doc.lines).to
+      },
+    ];
+  };
+
 
   useEffect(() => {
     turnOffCtrlS();
 
     const state = EditorState.create({
       doc: code || templateTest,
+
       extensions: [
         basicSetup,
         keymap.of([defaultKeymap, indentWithTab]),
         oneDark,
         javascript(),
         onUpdate,
+        readOnlyRangesExtension(getReadOnlyRanges),
       ],
     });
 
