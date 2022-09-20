@@ -12,10 +12,7 @@ router.post('/', async (req, res, next) => {
 
     const util = require('util');
     const exec = util.promisify(require('child_process').exec);
-    const execution = await exec('npm test');
-    console.log('execution', execution);
-    console.log('stdout:', execution.stdout);
-    console.log('stderr:', execution.stderr);
+    execution = await exec(`npm test ${testFileName}`);
     res.send(execution.stderr);
   } catch (err) {
     next(err);
