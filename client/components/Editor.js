@@ -23,7 +23,7 @@ const turnOffCtrlS = () => {
 
 const Editor = (props) => {
   const editor = useRef();
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState(exampleTestCode);
   const [response, setResponse] = useState('See your results here!');
   const { prompts } = props;
   console.log('prompts', prompts);
@@ -84,7 +84,10 @@ const Editor = (props) => {
       ],
     });
 
-    const view = new EditorView({ state, parent: editor.current });
+    const view = new EditorView({
+      state,
+      parent: editor.current,
+    });
 
     const fetchStuff = async () => {
       await props.fetchPrompts();
@@ -96,17 +99,29 @@ const Editor = (props) => {
     };
   }, [templateTest]);
 
+  const runTest = () => {
+    axios
+      .get('/api/tests/results', {
+        code,
+      })
+      .then((res) => {
+        setResponse(res.data);
+      });
+  };
+
   return (
     <div className='p-5'>
       <div className='p-5 font-bold'>
-        Write a test that tests whether a function console.logs "Hello, World!".
+     {prompts[0]?.prompt}      </div>
+      <div ref={editor}></div>
+      <button onClick={onSubmit}>Submit Your Test!</button>
+      <button onClick={runTest}>Run Test</button>
+      <div
+        style={{
+          whiteSpace: 'pre-wrap',
+        }}>
+        {response}
       </div>
-      <div>{prompts[0]?.prompt}</div>
-      <div className='p-5' ref={editor}></div>
-      <button className='p-2 bg-gray-400 m-5' onClick={onSubmit}>
-        Submit Test!
-      </button>
-      <div className='p-5'>{response}</div>
     </div>
   );
 };
