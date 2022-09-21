@@ -4,10 +4,14 @@ const router = require('express').Router();
 const acorn = require('acorn');
 const walk = require('acorn-walk');
 
-const testFileName = 'sum.test.js';
+const testFileName = 'helloWorld.test.js';
 
 router.post('/', async (req, res) => {
   try {
+    fs.appendFile(testFileName, req.body.code, function (err) {
+      if (err) throw err;
+    });
+
     let ast = acorn.parse(req.body.code, {
       ecmaVersion: 2020,
     });
@@ -65,13 +69,6 @@ router.post('/', async (req, res) => {
     } else {
       res.json('You failed. Check both toBe and expect assertions.');
     }
-
-    // create a new file with the submitted code
-    fs.writeFile(testFileName, req.body.code, (err) => {
-      if (err) throw err;
-      console.log('The file has been saved!');
-      //   res.send('file saved');
-    });
   } catch (err) {
     res.json('Syntax Error!');
   }
@@ -81,7 +78,7 @@ router.get('/results', async (req, res, next) => {
   try {
     const { results } = await runCLI(
       {
-        testPathPattern: 'sum.test.js',
+        testPathPattern: 'helloWorld.test.js',
         watch: false,
         silent: true,
         json: true,
