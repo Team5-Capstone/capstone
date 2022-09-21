@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { runCLI } = require('jest');
+const jest = require('jest');
 const router = require('express').Router();
 const acorn = require('acorn');
 const walk = require('acorn-walk');
@@ -10,12 +10,6 @@ const testFileName = 'helloWorld.test.js';
 
 router.post('/', async (req, res) => {
   try {
-    // append the user-created unit test (req.body.code) to file that contains .js code to test against
-
-    fs.appendFile(testFileName, '\n' + req.body.code, function (err) {
-      if (err) throw err;
-    });
-
     // walk through 'toBe('Hello, World!)' AST to evaluate statement accuracy
 
     let ast = acorn.parse(req.body.code, {
@@ -65,13 +59,20 @@ router.post('/', async (req, res) => {
       res.json("You haven't entered anything!");
     }
     if (toBeTestPassed && expectTestPassed) {
-      res.json('You passed the test');
+      res.json('That looks right! Feel free to submit your test!');
     } else if (!toBeTestPassed && expectTestPassed) {
       res.json('You failed. Check your toBe assertion!');
     } else if (toBeTestPassed && !expectTestPassed) {
       res.json('You failed. Check your expect assertion!');
     } else {
       res.json('You failed. Check both toBe and expect assertions.');
+    }
+
+    // append the user-created unit test (req.body.code) to file that contains .js code to test against
+    if (toBeTestPassed && expectTestPassed) {
+      fs.appendFile(testFileName, '\n' + req.body.code, function (err) {
+        if (err) throw err;
+      });
     }
   } catch (err) {
     res.json('Syntax Error!');
@@ -84,7 +85,7 @@ router.get('/results', async (req, res, next) => {
   try {
     // use runCLI to test user-created tests against .js code found in runCLI options (testPathPattern), assign output to results object
 
-    const { results } = await runCLI(
+    const { results } = await jest.runCLI(
       {
         testPathPattern: 'helloWorld.test.js',
         watch: false,
@@ -144,8 +145,11 @@ router.get('/results', async (req, res, next) => {
         },
       );
     });
+
     if (testResults === '') {
       testResults = 'Failed. Try Again.';
+    } else if (testResults === 'passed') {
+      testResults = 'You Passed This Test! Go to the next one!';
     }
 
     res.json(JSON.stringify(testResults));
