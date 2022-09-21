@@ -7,19 +7,17 @@ const TestingPrompt = db.define('testingPrompt', {
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true,
   },
+  narrative: {
+    type: Sequelize.TEXT,
+  },
   prompt: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
   jsCode: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   },
   templateTest: {
-    type: Sequelize.STRING,
-    defaultValue: `describe('helloWorld', () => {
-      test('returns a string "Hello World"', () => {
-          expect( *ADD CODE HERE* ).toBe( *ADD CORE HERE* )
-      })
-  });`,
+    type: Sequelize.TEXT,
   },
 });
 

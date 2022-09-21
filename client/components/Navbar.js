@@ -12,10 +12,13 @@ const Navbar = ({ handleClick, isLoggedIn, username }) => (
           <Link className='p-2 pl-10 text-white' to='/home'>
             Home
           </Link>
+          <Link className='p-2 text-white' to='/tests'>
+            Tests
+          </Link>
           <a className='p-2 text-white' href='#' onClick={handleClick}>
             Logout
           </a>
-          <a className='p-2 pr-10 text-white ml-auto'>Welcome, {username}</a>
+          <a className='ml-auto p-2 pr-10 text-white'>Welcome, {username}</a>
         </div>
       ) : (
         <div>
