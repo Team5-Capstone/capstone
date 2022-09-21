@@ -120,12 +120,23 @@ router.get('/results', async (req, res, next) => {
         .join('\n');
     };
 
+    // create helper function that builds an array starting on the line after the .js code to 1000 eg. [3, 4, 5, 6...]
+
+    const removeLinesHelper = [];
+    const removeLinesHelperFunc = () => {
+      for (let i = 3; i < 1000; i++) {
+        removeLinesHelper.push(i);
+      }
+    };
+
+    removeLinesHelperFunc();
+
     fs.readFile('helloWorld.test.js', 'utf8', (err, data) => {
       if (err) throw err;
 
       fs.writeFile(
         'helloWorld.test.js',
-        removeLines(data, [3, 4, 5, 6, 7, 8, 9, 10, 11]),
+        removeLines(data, removeLinesHelper),
         'utf8',
         function (err) {
           if (err) throw err;
