@@ -87,28 +87,21 @@ export const Editor = (props) => {
     };
   }, [narrative]);
 
-  const fetchData = () => {
-    axios
-      .post('/api/tests', {
-        code,
-      })
-      .then((res) => {
-        setResponse(res.data);
-      });
-  };
-
-  const onSubmit = () => {
-    fetchData();
-  };
+  const onSubmit = () =>
+    axios.post('/api/tests', { code }).then((res) => {
+      setResponse(res.data);
+    });
 
   const runTest = () => {
-    axios
-      .get('/api/tests/results', {
-        code,
-      })
-      .then((res) => {
-        setResponse(res.data);
-      });
+    axios.get('/api/tests/results', { code }).then((res) => {
+      setResponse(res.data);
+    });
+  };
+
+  const runJest = () => {
+    axios.get('/api/tests/jest').then((res) => {
+      setResponse(res.data);
+    });
   };
 
   useEffect(() => {
@@ -152,6 +145,9 @@ export const Editor = (props) => {
       </button>
       <button className='m-5 bg-gray-400 p-1' onClick={runTest}>
         Submit Your Test
+      </button>
+      <button className='m-5 bg-gray-400 p-1' onClick={runJest}>
+        Run Jest
       </button>
       <div
         className='p-5'
