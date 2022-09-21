@@ -125,7 +125,7 @@ router.get('/results', async (req, res, next) => {
 
       fs.writeFile(
         'helloWorld.test.js',
-        removeLines(data, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]),
+        removeLines(data, [3, 4, 5, 6, 7, 8, 9, 10, 11]),
         'utf8',
         function (err) {
           if (err) throw err;
