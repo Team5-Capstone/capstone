@@ -1,97 +1,12 @@
-<<<<<<< HEAD
 const fs = require('fs');
 const jest = require('jest');
 const router = require('express').Router();
 const acorn = require('acorn');
 const walk = require('acorn-walk');
+
 const testFileName = 'helloWorld.test.js';
-=======
-// const fs = require('fs');
-const router = require('express').Router();
-const acorn = require('acorn');
-const walk = require('acorn-walk');
-const {
-  models: { User, Submission },
-} = require('../db');
 
-// const { models: { User }} = require('../db')
-// route that will create a new file from the submitted code and run the file
-// router.post('/', async (req, res, next) => {
-//   try {
-//     // create a new file with the submitted code
-//     fs.writeFile('test.js', req.body.code, (err) => {
-//       if (err) throw err;
-//       console.log('The file has been saved!');
-//     });
-
-//     // run the file
-//     const test = require('./test.js');
-
-//     // check if the file has a console.log
-//     const hasConsoleLog = (node) => {
-//       if (node.type === 'CallExpression' && node.callee.type === 'MemberExpression' && node.callee.object.type === 'Identifier' && node.callee.object.name === 'console' && node.callee.property.type === 'Identifier' && node.callee.property.name === 'log') {
-
-// // oh, just have a test file, run the user submitted file
-// // then grab the
-
-const isLoggedin = async (req, res, next) => {
-  try {
-    await User.byToken(req.headers.authorization);
-    next();
-  } catch (err) {
-    res.status(401).send('Unauthorized');
-  }
-};
-
-const testFileName = 'sum.test.js';
->>>>>>> 151703e (attempt at protected route... maybe for later)
-
-router.post('/:promtsId', isLoggedin, async (req, res, next) => {
-  try {
-    // const { code } = req.body;
-<<<<<<< HEAD
-    // fs.writeFileSync('sum.test.js', code);
-
-=======
-    const { promptsId } = req.params;
-    const { id: userId } = await User.byToken(req.headers.authorization);
-    // console.log('req.body', req.body);
-    // console.log('req.promtsId', req.params.promtsId);
-    // const submissionFileName = `${id}-${promptsId}-${Date.now()}.js`;
-
-    const submission = await Submission.create({
-      userId,
-      promptsId,
-    });
-
-    console.log('submission', submission);
-    // User.create({ username: 'cody', password: '123' }),
-    // const sub = Submission.create({
-
-    // fs.writeFile(testFileName, req.body.code, (err) => {
-    //   if (err) throw err;
-    //   console.log('The file has been saved!');
-    // });
-  } catch (err) {
-    next(err);
-  }
-});
-
-let execution;
-router.get('/results', isLoggedin, async (req, res, next) => {
-  try {
->>>>>>> 151703e (attempt at protected route... maybe for later)
-    const util = require('util');
-    const exec = util.promisify(require('child_process').exec);
-    execution = await exec(`npm test ${testFileName}`);
-    res.send(execution.stderr);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.post('/acorn', (req, res) => {
-  // parse user input from editor into AST
+router.post('/', async (req, res) => {
   try {
     // walk through 'toBe('Hello, World!)' AST to evaluate statement accuracy
 
