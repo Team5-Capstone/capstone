@@ -59,7 +59,10 @@ router.post('/', async (req, res) => {
       res.json("You haven't entered anything!");
     }
     if (toBeTestPassed && expectTestPassed) {
-      res.json('That looks right! Feel free to submit your test!');
+      res.json(`
+      toBe matcher is correct.
+      expect funcntion is correct.
+      That looks right! Go ahead and submit your test!`);
     } else if (!toBeTestPassed && expectTestPassed) {
       res.json('You failed. Check your toBe assertion!');
     } else if (toBeTestPassed && !expectTestPassed) {
@@ -68,7 +71,7 @@ router.post('/', async (req, res) => {
       res.json('You failed. Check both toBe and expect assertions.');
     }
 
-    // append the user-created unit test (req.body.code) to file that contains .js code to test against
+    // if test passes AST evaluation, append the user-created unit test (req.body.code) to file that contains .js code to test against
     if (toBeTestPassed && expectTestPassed) {
       fs.appendFile(testFileName, '\n' + req.body.code, function (err) {
         if (err) throw err;
