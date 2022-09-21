@@ -35,66 +35,13 @@ export const Editor = (props) => {
     setCode(v.state.doc.toString());
   });
 
-  // const getReadOnlyRanges = (editor) => {
-  // console.log(editor.doc.line);
-  // return [
-  //   {
-  //     from: undefined, //same as targetState.doc.line(0).from or 0
-  //     to: editor.doc.line(2).to,
-  //   },
-  //   {
-  //     from: editor.doc.line(4).from, //same as targetState.doc.line(0).from or 0
-  //     to: editor.doc.line(5).to,
-  //   },
-  //   {
-  //     from: editor.doc.line(editor.doc.lines).from,
-  //     to: undefined, // same as targetState.doc.line(targetState.doc.lines).to
-  //   },
-  // ];
-  // };
-  // const removeIndentation =() => {
-  //   const cm = editor2.instance;
-  //   cm.execCommand('delLineLeft');
-  // }
-
-  useEffect(() => {
-    turnOffCtrlS();
-
-    const state = EditorState.create({
-      doc: narrative,
-      extensions: [
-        basicSetup,
-        oneDark,
-        onUpdate,
-        javascript(),
-        // removeIndentation(),
-        // readOnlyRangesExtension(getReadOnlyRanges),
-      ],
-    });
-
-    const view2 = new EditorView({
-      state,
-      parent: editor2.current,
-    });
-
-    const fetchStuff = async () => {
-      await props.fetchPrompts();
-    };
-    fetchStuff();
-
-    return () => {
-      view2.destroy();
-    };
-  }, [narrative]);
-
   const fetchData = () => {
     axios.post('/api/tests', { code }).then((res) => setResponse(res.data));
   };
-  fetchStuff();
 
   const onSubmit = () => fetchData();
 
-  // const templateTest = prompts[0]?.templateTest;
+  const templateTest = prompts[0]?.templateTest;
 
   const getReadOnlyRanges = (editor) => {
     console.log(editor.doc.line);
