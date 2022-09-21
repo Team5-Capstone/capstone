@@ -159,4 +159,19 @@ router.get('/results', async (req, res, next) => {
   }
 });
 
+router.get('/jest', async (req, res, next) => {
+  try {
+    const util = require('util');
+    const exec = util.promisify(require('child_process').exec);
+    const { stdout, stderr } = await exec('npm run test sum.test.js');
+    console.log('stdout:', stdout);
+    console.log('stderr:', stderr);
+
+    res.send(stderr);
+  } catch (err) {
+    res.send(err);
+    next(err);
+  }
+});
+
 module.exports = router;
