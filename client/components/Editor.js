@@ -35,21 +35,6 @@ export const Editor = (props) => {
     setCode(v.state.doc.toString());
   });
 
-  const fetchData = () => {
-    axios
-      .post('/tests', {
-        code,
-      })
-      .then((res) => {
-        console.log(res);
-        setResponse(res.data);
-      });
-  };
-
-  const onSubmit = () => {
-    fetchData();
-  };
-
   // const getReadOnlyRanges = (editor) => {
   // console.log(editor.doc.line);
   // return [
@@ -101,6 +86,20 @@ export const Editor = (props) => {
       view2.destroy();
     };
   }, [narrative]);
+
+  const fetchData = () => {
+    axios
+      .post('/api/tests', {
+        code,
+      })
+      .then((res) => {
+        setResponse(res.data);
+      });
+  };
+
+  const onSubmit = () => {
+    fetchData();
+  };
 
   const runTest = () => {
     axios

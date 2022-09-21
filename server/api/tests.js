@@ -6,8 +6,7 @@ const walk = require('acorn-walk');
 
 const testFileName = 'sum.test.js';
 
-router.post('/tests', async (req, res, next) => {
-  console.log(req.body.code);
+router.post('/', async (req, res) => {
   try {
     let ast = acorn.parse(req.body.code, {
       ecmaVersion: 2020,
@@ -74,7 +73,7 @@ router.post('/tests', async (req, res, next) => {
       //   res.send('file saved');
     });
   } catch (err) {
-    next(err);
+    res.json('Syntax Error!');
   }
 });
 
