@@ -76,6 +76,7 @@ router.post('/', async (req, res) => {
 
 router.get('/results', async (req, res, next) => {
   try {
+    console.log(req.body.code);
     const { results } = await runCLI(
       {
         testPathPattern: 'helloWorld.test.js',
@@ -100,6 +101,29 @@ router.get('/results', async (req, res, next) => {
         });
       }
     }
+
+    const removeLines = (data, lines = []) => {
+      return data
+        .split('\n')
+        .filter((val, idx) => lines.indexOf(idx) === -1)
+        .join('\n');
+    };
+
+    fs.readFile('helloWorld.test.js', 'utf8', (err, data) => {
+      if (err) throw err;
+
+      // remove the first line and the 5th and 6th lines in the file
+      fs.writeFile(
+        'helloWorld.test.js',
+        removeLines(data, [3, 4, 5, 6, 7, 8, 9, 10, 11]),
+        'utf8',
+        function (err) {
+          if (err) throw err;
+          console.log('the lines have been removed.');
+        },
+      );
+    });
+
     res.json(JSON.stringify(testPassed));
   } catch (err) {
     next(err);
