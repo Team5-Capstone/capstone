@@ -3,7 +3,6 @@
 - Figma: https://www.figma.com/file/Q7LqTYZxPqUVjD8tF7ihmy/FSA-Capstone
 - Todo Board: https://github.com/orgs/Team5-Capstone/projects/1/views/1
 
-
 # FS-App-Template
 
 ## Setup
