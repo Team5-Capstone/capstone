@@ -6,21 +6,21 @@ const walk = require('acorn-walk');
 
 const testFileName = 'helloWorld.test.js';
 
+// evaluate test
+
 router.post('/', async (req, res) => {
   try {
     // append the user-created unit test (req.body.code) to file that contains .js code to test against
 
-    fs.appendFile(testFileName, req.body.code, function (err) {
+    fs.appendFile(testFileName, '\n' + req.body.code, function (err) {
       if (err) throw err;
     });
 
-    // if user-created unit test does not pass, walk through test checking for accuracy
+    // walk through 'toBe('Hello, World!)' AST to evaluate statement accuracy
 
     let ast = acorn.parse(req.body.code, {
       ecmaVersion: 2020,
     });
-
-    // walk through 'toBe('Hello, World!)' AST to evaluate statement accuracy
 
     let toBeTestPassed = false;
     walk.full(ast, (node) => {
@@ -78,9 +78,11 @@ router.post('/', async (req, res) => {
   }
 });
 
+// submit test
+
 router.get('/results', async (req, res, next) => {
   try {
-    // use runCLI to test user-created tests against .js code found in testPathPattern, save output to results object
+    // use runCLI to test user-created tests against .js code found in runCLI options (testPathPattern), assign output to results object
 
     const { results } = await runCLI(
       {
@@ -92,7 +94,7 @@ router.get('/results', async (req, res, next) => {
       [process.cwd()],
     );
 
-    // iterate through results object to source data regarding test results
+    // iterate through results object to source data regarding test results (to send back to frontend)
 
     let testResults = '';
     for (const key in results) {
@@ -123,7 +125,7 @@ router.get('/results', async (req, res, next) => {
 
       fs.writeFile(
         'helloWorld.test.js',
-        removeLines(data, [3, 4, 5, 6, 7, 8, 9, 10, 11]),
+        removeLines(data, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]),
         'utf8',
         function (err) {
           if (err) throw err;
@@ -131,6 +133,9 @@ router.get('/results', async (req, res, next) => {
         },
       );
     });
+    if (testResults === '') {
+      testResults = 'Failed. Try Again.';
+    }
 
     res.json(JSON.stringify(testResults));
   } catch (err) {
