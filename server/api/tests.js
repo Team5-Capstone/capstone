@@ -88,7 +88,7 @@ router.post('/', async (req, res) => {
 router.get('/results', async (req, res) => {
   try {
     // use runCLI to test user-created tests against .js code found in runCLI options (testPathPattern), assign output to results object
-    const { results } = await jest.runCLI(
+    await jest.runCLI(
       {
         testPathPattern: 'helloWorld.test.js',
         watch: false,
@@ -100,28 +100,7 @@ router.get('/results', async (req, res) => {
     );
 
     const exec = util.promisify(require('child_process').exec);
-    const { stdout, stderr } = await exec('npm run test helloWorld.test.js');
-    console.log('stdout:', stdout);
-    console.log('stderr:', stderr);
-
-    // console.log(process.stdout.toString());
-
-    // iterate through results object to source data regarding test results (to send back to frontend)
-
-    let testResults = '';
-    for (const key in results) {
-      if (key === 'testResults') {
-        results[key].forEach((result) => {
-          for (const key in result) {
-            if (key === 'testResults') {
-              result[key].forEach((test) => {
-                testResults = test.status;
-              });
-            }
-          }
-        });
-      }
-    }
+    const { stderr } = await exec('npm run test helloWorld.test.js');
 
     // remove user-created test from .js file
 
@@ -157,15 +136,9 @@ router.get('/results', async (req, res) => {
       );
     });
 
-    if (testResults === '') {
-      testResults = 'Failed. Try Again.';
-    } else if (testResults === 'passed') {
-      testResults = 'You Passed This Test! Go to the next one!';
-    }
-
     res.json(stderr.toString());
   } catch (err) {
-    res.send(err);
+    res.send(err.toString());
   }
 });
 
