@@ -8,6 +8,7 @@ import { oneDark } from '@codemirror/theme-one-dark';
 // import readOnlyRangesExtension from 'codemirror-readonly-ranges';
 import axios from 'axios';
 import { fetchPrompts } from '../store/prompts';
+import { autocompletion } from '@codemirror/autocomplete';
 import { connect } from 'react-redux';
 
 const turnOffCtrlS = () => {
@@ -30,6 +31,26 @@ export const Editor = (props) => {
 
   const templateTest = prompts[0]?.templateTest;
   const narrative = prompts[0]?.narrative;
+  const completions = [
+    { label: 'toBe', type: 'keyword' },
+    { label: 'expect', type: 'keyword' },
+    { label: 'test', type: 'keyWord' },
+    { label: 'describe', type: 'keyword' },
+    { label: 'helloWorld', type: 'keyword' },
+    { label: 'Hello, ', type: 'keyword' },
+    { label: 'World!', type: 'keyword' },
+  ];
+
+  function myCompletions(context) {
+    console.log(context);
+    let before = context.matchBefore(/\w+/);
+    if (!context.explicit && !before) return null;
+    return {
+      from: before ? before.from : context.pos,
+      options: completions,
+      validFor: /^\w*$/,
+    };
+  }
 
   const onUpdate = EditorView.updateListener.of((v) => {
     setCode(v.state.doc.toString());
@@ -111,9 +132,13 @@ export const Editor = (props) => {
       });
   };
 
+
+  const baseTheme = EditorView.baseTheme({
+    '.ͼq': { color: 'orange' },
+  });
+
   useEffect(() => {
     turnOffCtrlS();
-
     const state = EditorState.create({
       doc: code || templateTest,
 
@@ -121,16 +146,14 @@ export const Editor = (props) => {
         basicSetup,
         keymap.of([defaultKeymap, indentWithTab]),
         oneDark,
+        baseTheme,
         javascript(),
         onUpdate,
         // readOnlyRangesExtension(getReadOnlyRanges),
+        autocompletion({ override: [myCompletions] }),
       ],
     });
-
-    const view = new EditorView({
-      state,
-      parent: editor.current,
-    });
+    const view = new EditorView({ state, parent: editor.current });
 
     const fetchStuff = async () => {
       await props.fetchPrompts();
