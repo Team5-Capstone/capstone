@@ -3,6 +3,7 @@ const jest = require('jest');
 const router = require('express').Router();
 const acorn = require('acorn');
 const walk = require('acorn-walk');
+const util = require('util');
 
 const testFileName = 'helloWorld.test.js';
 
@@ -84,19 +85,26 @@ router.post('/', async (req, res) => {
 
 // submit test
 
-router.get('/results', async (req, res, next) => {
+router.get('/results', async (req, res) => {
   try {
     // use runCLI to test user-created tests against .js code found in runCLI options (testPathPattern), assign output to results object
-
     const { results } = await jest.runCLI(
       {
         testPathPattern: 'helloWorld.test.js',
         watch: false,
         silent: true,
         json: true,
+        useStderr: false,
       },
       [process.cwd()],
     );
+
+    const exec = util.promisify(require('child_process').exec);
+    const { stdout, stderr } = await exec('npm run test helloWorld.test.js');
+    console.log('stdout:', stdout);
+    console.log('stderr:', stderr);
+
+    // console.log(process.stdout.toString());
 
     // iterate through results object to source data regarding test results (to send back to frontend)
 
@@ -155,9 +163,9 @@ router.get('/results', async (req, res, next) => {
       testResults = 'You Passed This Test! Go to the next one!';
     }
 
-    res.json(JSON.stringify(testResults));
+    res.json(stderr.toString());
   } catch (err) {
-    next(err);
+    res.send(err);
   }
 });
 
