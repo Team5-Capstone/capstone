@@ -12,7 +12,6 @@ const jsCode = `function helloWorld(str) {
 
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body);
     // walk through 'toBe('Hello, World!)' AST to evaluate statement accuracy
     let ast = acorn.parse(req.body.code, {
       ecmaVersion: 2020,
@@ -65,8 +64,6 @@ router.post('/', async (req, res) => {
     } else {
       res.json('You failed. Check both toBe and expect assertions.');
     }
-
-    // if test passes AST evaluation, append the user-created unit test (req.body.code) to file that contains .js code to test against
   } catch (err) {
     res.json('Syntax Error!');
   }
@@ -76,27 +73,28 @@ router.post('/', async (req, res) => {
 
 router.post('/results', async (req, res) => {
   try {
-    req.body.id = req.body.id + '.test.js';
+    if (req.body.passedTest === 'true') {
+      req.body.id = req.body.id + '.test.js';
+      fs.writeFile(
+        './testFiles/' + req.body.id,
+        jsCode + '\n' + req.body.code,
+        function (err) {
+          if (err) throw err;
+        },
+      );
 
-    fs.writeFile(
-      './testFiles/' + req.body.id,
-      jsCode + '\n' + req.body.code,
-      function (err) {
-        if (err) throw err;
-      },
-    );
+      const exec = util.promisify(require('child_process').exec);
+      const { stderr } = await exec(`npm test ${req.body.id}`);
 
-    const exec = util.promisify(require('child_process').exec);
-    const { stderr } = await exec(`npm test ${req.body.id}`);
-
-    fs.unlink('./testFiles/' + req.body.id, (err) => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log('success!');
-      }
-    }),
-      res.json(stderr.toString());
+      fs.unlinkSync('./testFiles/' + req.body.id, (err) => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log('success!');
+        }
+      }),
+        res.json(stderr.toString());
+    }
   } catch (err) {
     res.send(err.toString());
   }

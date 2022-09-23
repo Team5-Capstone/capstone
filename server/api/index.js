@@ -2,6 +2,7 @@ const router = require('express').Router();
 module.exports = router;
 
 router.use('/jest1', require('./jest1'));
+router.use('/jest2', require('./jest2'));
 router.use('/users', require('./users'));
 router.use('/prompts', require('./prompts'));
 
