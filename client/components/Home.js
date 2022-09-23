@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../styles.css';
-import Editor from './Editor';
 import jestLogo from '/public/jestLogo';
 
 /**
@@ -11,7 +10,7 @@ import jestLogo from '/public/jestLogo';
 export const Home = (props) => {
   return (
     <div>
-      <div className='w-2/3 bg-cyan-600 border-2 p-4 flex-col mt-12'>
+      <div className='mt-12 w-2/3 flex-col border-2 bg-cyan-600 p-4'>
         <div>
           <p className='decoration-wavy'>
             {' '}
@@ -46,7 +45,7 @@ export const Home = (props) => {
               <div>
                 <a>
                   <img
-                    className='w-20 h-20 rounded-full max-w-xs'
+                    className='h-20 w-20 max-w-xs rounded-full'
                     src={jestLogo.imgSrc}
                   />
                 </a>
@@ -55,7 +54,6 @@ export const Home = (props) => {
           </div>
         </div>
       </div>
-      <Editor />
     </div>
   );
 };

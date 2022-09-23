@@ -10,6 +10,7 @@ import axios from 'axios';
 import { fetchPrompts } from '../store/prompts';
 import { autocompletion } from '@codemirror/autocomplete';
 import { connect } from 'react-redux';
+const { v4: uuidv4 } = require('uuid');
 
 const turnOffCtrlS = () => {
   document.addEventListener('keydown', (e) => {
@@ -26,6 +27,7 @@ export const Editor = (props) => {
   const editor = useRef();
   const editor2 = useRef();
   const [code, setCode] = useState('');
+  const [id, setId] = useState(uuidv4());
   const [response, setResponse] = useState('See your results here!');
   const { prompts } = props;
 
@@ -110,8 +112,9 @@ export const Editor = (props) => {
 
   const fetchData = () => {
     axios
-      .post('/api/tests', {
+      .post('/api/jest1', {
         code,
+        id,
       })
       .then((res) => {
         setResponse(res.data);
@@ -123,15 +126,16 @@ export const Editor = (props) => {
   };
 
   const runTest = () => {
+    setId(uuidv4());
     axios
-      .get('/api/tests/results', {
+      .post('/api/jest1/results', {
         code,
+        id,
       })
       .then((res) => {
         setResponse(res.data);
       });
   };
-
 
   const baseTheme = EditorView.baseTheme({
     '.ͼq': { color: 'orange' },

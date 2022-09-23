@@ -22,11 +22,15 @@ async function seed() {
   // Creating Prompts
   const prompts = await Promise.all([
     TestingPrompt.create({
-      narrative: `It often makes sense to write the test first and then write as much code as needed to allow the test to pass.
+      narrative: `Welcome to Exercise #1!
+    
+    It often makes sense to write Unit Tests first and then write as much code as needed to allow the Unit Tests to pass.
     
     Doing this moves towards a practice known as Test-Driven Development (TDD).
 
-    In this exercise, you are going to use the expect function with the toBe matcher to complete the unit test below. 
+    Throughout the next 10 exercises, you will not see the javascript code your Unit Test is running against, only a prompt that will provide clues for you to complete the Unit Test.
+
+    In this first exercise, you are going to use the expect function with the toBe matcher to complete the unit test below. 
     
     When you're writing tests, you often need to check that values meet certain conditions. Expect gives you access to a number of "matchers" that let you validate different things.
     
@@ -36,13 +40,13 @@ async function seed() {
       expect(2 + 2).toBe(4);
       });
     
-    Now, take a look at the following prompt and try to fill out the unit test below:
+    Now, take a look at the prompt and try to fill out the unit test below:
     `,
-      prompt: `Please create a function called helloWorld where when a user passes the string “World” to this function, the function console.logs the string “Hello, World!”
+      prompt: `Please create a function called helloWorld where when a user passes the string “World” to this function, the function console.logs the string “Hello, World!”.
     `,
       jsCode: 'const helloWorld = (str) => { return `Hello ${str}`};',
       templateTest: ` describe('helloWorld', () => {
-        test('returns a string "Hello World"', () => {
+        test('returns a string "Hello, World!"', () => {
             expect( ADD CODE HERE ).toBe( ADD CODE HERE )
         })
     });
@@ -68,9 +72,9 @@ async function seed() {
       `,
     }),
     TestingPrompt.create({
-      narrative: `Let’s use what we learned from the last two exercises to complete the following exercise:
+      narrative: `Let's use what we learned from the last two exercises and use the prompt to complete the following Unit Test:
       `,
-      prompt: `Please create a function called isNumber that returns a boolean: True if the argument passed to isNumber is an integer and false if the argument passed to isNumber is anything else.`,
+      prompt: `Please create a function called isNumber that returns a boolean (True) if the argument passed to isNumber is an integer and false if the argument passed to isNumber is any other data-type.`,
       jsCode: `
         function isNumber(value){
           return typeof value === 'number'
