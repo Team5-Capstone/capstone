@@ -11,7 +11,7 @@
     "start:dev": "npm run build:dev & npm run start-server",
     "start:dev:logger": "LOGGING=true npm run start:dev",
     "start:dev:seed": "SEED=true npm run start:dev",
-    "start-server": "JWT=shh nodemon server -e html,js,scss --ignore public --ignore client ",
+    "start-server": "JWT=shh nodemon server -e html,js,scss --ignore public --ignore client --ignore testFiles",
     "prepare": "husky install",
     "lint:check": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -40,12 +40,14 @@
     "jest": "^29.0.3",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
+    "path": "^0.12.7",
     "pg": "^8.8.0",
     "postcss-loader": "^7.0.1",
     "range-analyzer": "^0.1.1-alpha.2",
     "replace-in-file": "^6.3.5",
     "sequelize": "^6.21.4",
-    "style-loader": "^3.3.1"
+    "style-loader": "^3.3.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",
