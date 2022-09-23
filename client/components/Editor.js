@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { EditorState } from '@codemirror/state';
+import { EditorState, StateField, StateEffect } from '@codemirror/state';
 import { basicSetup } from 'codemirror';
-import { EditorView, keymap } from '@codemirror/view';
+import { EditorView, keymap, Decoration } from '@codemirror/view';
 import { defaultKeymap, indentWithTab } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
@@ -148,27 +148,61 @@ export const Editor = (props) => {
     }
   };
 
-  const baseTheme = EditorView.baseTheme({
-    '.ͼq': { color: 'orange' },
-  });
-
   useEffect(() => {
+    const addMarks = StateEffect.define();
+    const filterMarks = StateEffect.define();
+
+    const markField = StateField.define({
+      // Start with an empty set of decorations
+      create() {
+        return Decoration.none;
+      },
+      // This is called whenever the editor updates—it computes the new set
+      update(value, tr) {
+        // Move the decorations to account for document changes
+        value = value.map(tr.changes);
+        // If this transaction adds or removes decorations, apply those changes
+        for (let effect of tr.effects) {
+          if (effect.is(addMarks))
+            value = value.update({ add: effect.value, sort: true });
+          else if (effect.is(filterMarks))
+            value = value.update({ filter: effect.value });
+        }
+        return value;
+      },
+      // Indicate that this field provides a set of decorations
+      provide: (f) => EditorView.decorations.from(f),
+    });
+
     turnOffCtrlS();
     const state = EditorState.create({
       doc: code || templateTest,
 
       extensions: [
         basicSetup,
+        EditorState.tabSize.of(16),
         keymap.of([defaultKeymap, indentWithTab]),
         oneDark,
-        baseTheme,
+        markField,
         javascript(),
         onUpdate,
         // readOnlyRangesExtension(getReadOnlyRanges),
         autocompletion({ override: [myCompletions] }),
       ],
     });
+
     const view = new EditorView({ state, parent: editor.current });
+    const strikeMark = Decoration.mark({
+      attributes: { style: 'background: yellow' },
+    });
+    view.dispatch({
+      effects: addMarks.of([
+        strikeMark.range(90, 103),
+        strikeMark.range(115, 128),
+        strikeMark.range(147, 160),
+        strikeMark.range(173, 186),
+      ]),
+    });
 
     const fetchStuff = async () => {
       await props.fetchPrompts();
