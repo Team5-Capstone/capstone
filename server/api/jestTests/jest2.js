@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 const fs = require('fs');
 const router = require('express').Router();
 const acorn = require('acorn');
@@ -13,7 +12,6 @@ const jsCode = `function cloneArray(array){
 
 router.post('/', async (req, res) => {
   try {
-    // walk through 'toBe('Hello, World!)' AST to evaluate statement accuracy
     let ast = acorn.parse(req.body.code, {
       ecmaVersion: 2020,
     });
