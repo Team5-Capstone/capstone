@@ -28,11 +28,12 @@ export const Editor = (props) => {
   const editor2 = useRef();
   const [code, setCode] = useState('');
   const [id, setId] = useState(uuidv4());
+  const [passedTest, setPassedTest] = useState('false');
   const [response, setResponse] = useState('See your results here!');
   const { prompts } = props;
 
-  const templateTest = prompts[0]?.templateTest;
-  const narrative = prompts[0]?.narrative;
+  const templateTest = prompts[7]?.templateTest;
+  const narrative = prompts[7]?.narrative;
   const completions = [
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
@@ -112,12 +113,16 @@ export const Editor = (props) => {
 
   const fetchData = () => {
     axios
-      .post('/api/jest1', {
+      .post('/api/jestTests/jest8', {
         code,
-        id,
       })
       .then((res) => {
         setResponse(res.data);
+        if (
+          res.data.includes('That looks right! Go ahead and submit your test!')
+        ) {
+          setPassedTest('true');
+        }
       });
   };
 
@@ -126,15 +131,21 @@ export const Editor = (props) => {
   };
 
   const runTest = () => {
-    setId(uuidv4());
-    axios
-      .post('/api/jest1/results', {
-        code,
-        id,
-      })
-      .then((res) => {
-        setResponse(res.data);
-      });
+    if (passedTest === 'true') {
+      setId(uuidv4());
+      axios
+        .post('/api/jestTests/jest8/results', {
+          code,
+          id,
+          passedTest,
+        })
+        .then((res) => {
+          setPassedTest('false');
+          setResponse(res.data);
+        });
+    } else {
+      setResponse('Get the test to pass before you submit!');
+    }
   };
 
   const baseTheme = EditorView.baseTheme({
@@ -172,7 +183,7 @@ export const Editor = (props) => {
   return (
     <div className='p-5'>
       <div ref={editor2}></div>
-      <div className='p-5 font-bold'>{prompts[0]?.prompt}</div>
+      <div className='p-5 font-bold'>{prompts[7]?.prompt}</div>
       <div ref={editor}></div>
       <button className='m-5 bg-gray-400 p-1' onClick={onSubmit}>
         Evaluate Your Test

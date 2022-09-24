@@ -87,6 +87,7 @@ async function seed() {
         test("isInteger fails for non-integer value", () => {
             expect( ADD CODE HERE ).toBe( ADD CODE HERE );
         });
+      });
        
       `,
     }),
@@ -111,7 +112,8 @@ async function seed() {
       templateTest: `describe('isTruthy function', () => {
         test('check if value passed is truthy', () => {
         expect( ADD CODE HERE ).toBeTruthy();
-    });
+    })
+  });
       `,
     }),
     TestingPrompt.create({
@@ -127,25 +129,23 @@ async function seed() {
       Please use one of the matchers above to complete the following exercise:
       
       `,
-      prompt: `Please create a function called notOverTen that takes two numbers as an argument and when combined the value does not exceed 10.
+      prompt: `Please create a function called notOverTen that takes a number that does not exceed 10.
       `,
       jsCode: `
-        function notOver10(num1,num2){
-          let sum = 0;
-          if (num1 + num2 <= 10) {
-            return sum
-          } else {
-            return 'The sum is over 10!'
-          }
+      function notOverTen(num){
+        if (num <= 10) {
+          return true
+        }
       };`,
       templateTest: `describe('notOverTen function', () => {
-        test('check if values passed exceed 10', () => {
+        test('check if value passed exceeds 10', () => {
     expect( ADD CODE HERE ).toBeLessThanOrEqual( ADD CODE HERE )
     });
+  })
       `,
     }),
     TestingPrompt.create({
-      narrative: `You’ve probably noticed by now that we have used the function Describe over and over again.
+      narrative: `You've probably noticed by now that we have used the function Describe over and over again.
 
       describe(name, fn) creates a block that groups together several related tests. For example, if you have a myLunch object that is supposed to be hot but not spicy, you could test it with:
       
@@ -172,18 +172,18 @@ async function seed() {
         isRaining = false;
     }`,
       templateTest: `const weatherOutside = {
-        isCold = true;
-        isRaining = false;
+        isCold: true,
+        isRaining: false,
     }
     
-    describe(' ADD CODE HERE ', () => {
+    describe( ADD CODE HERE , () => {
         test('is cold outside', () => {
-        expect( ADD CODE HERE ).toBeTruthy();
+        expect( weatherOutside.isCold ).toBeTruthy();
     })
         test('is raining outside', () => {
-        expect( ADD CORE HERE ).toBeFalsy();
+        expect( weatherOutside.isRaining ).toBeFalsy();
     })
-    
+  })
       `,
     }),
     TestingPrompt.create({
@@ -205,10 +205,12 @@ async function seed() {
         let shoppingList = [apples, oranges, pears];
         return shoppingList
       }`,
-      templateTest: `test(' ADD CODE HERE', () => {
-        expect(shoppingList).toContain(apples);
-        expect(new Set(shoppingList)).toContain(apples);
+      templateTest: `test( ADD CODE HERE, () => {
+        let apples;
+        expect(shoppingList()).toContain(apples);
+        expect(new Set(shoppingList())).toContain(apples);
       });      
+           
       `,
     }),
     TestingPrompt.create({
