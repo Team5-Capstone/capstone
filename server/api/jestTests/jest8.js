@@ -56,6 +56,7 @@ router.post('/', async (req, res) => {
       }
     });
 
+    let count = 0;
     let expect1TestPassed = false;
     walk.full(ast, (node) => {
       if (node.type === 'CallExpression' && node.callee?.name === 'expect') {
@@ -65,8 +66,12 @@ router.post('/', async (req, res) => {
             argument.callee?.name === 'sum'
           ) {
             argument.arguments.map((argument) => {
-              if (Number.isInteger(argument?.value) && argument.start <= 80)
+              if (Number.isInteger(argument.value)) {
+                count++;
+              }
+              if (count === 2) {
                 expect1TestPassed = true;
+              }
             });
           }
         });
@@ -95,6 +100,8 @@ router.post('/', async (req, res) => {
       res.json(`Check your test and describe functions`);
     } else if (testTestPassed && !describeTestPassed && expect1TestPassed) {
       res.json(`Check your describe function`);
+    } else if (!testTestPassed && describeTestPassed && expect1TestPassed) {
+      res.json(`Check your test function`);
     } else {
       res.json('You failed. Check your all functions.');
     }
@@ -121,7 +128,7 @@ router.post('/results', async (req, res) => {
       const exec = util.promisify(require('child_process').exec);
       const { stderr } = await exec(`npm test ${req.body.id}`);
 
-      fs.unlinkSync('./testFiles/' + req.body.id, (err) => {
+      fs.unlink('./testFiles/' + req.body.id, (err) => {
         if (err) {
           console.error(err);
         } else {
