@@ -4,28 +4,22 @@ const acorn = require('acorn');
 const walk = require('acorn-walk');
 const util = require('util');
 
-const jsCode = `
-function isTruthy(value){
-  if (value == true) {
-    return true;
-  } 
-};`;
-
 // evaluate test
 
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body.code);
     let ast = acorn.parse(req.body.code, {
       ecmaVersion: 2020,
     });
-
-    let expectTestPassed = false;
+    console.log(ast);
+    let describeTestPassed = false;
     walk.full(ast, (node) => {
-      if (node.type === 'CallExpression' && node.callee?.name === 'expect') {
+      if (node.type === 'CallExpression' && node.callee?.name === 'describe') {
         node.arguments.map((argument) => {
-          if (argument.value) {
-            expectTestPassed = true;
+          let regex = /^.*?\boutside\b$/m;
+          let regex2 = /^.*?\bweather\b$/m;
+          if (argument.value?.match(regex) || argument.value?.match(regex2)) {
+            describeTestPassed = true;
           }
         });
       }
@@ -35,14 +29,15 @@ router.post('/', async (req, res) => {
     if (req.body.code.length < 1) {
       res.json("You haven't entered anything!");
     }
-    if (expectTestPassed) {
+    if (describeTestPassed) {
       res.json(`
-        expect function is correct.
+        describe function is correct.
         That looks right! Go ahead and submit your test!`);
     } else {
-      res.json('You failed. Check your expect function.');
+      res.json('You failed. Check your describe function.');
     }
   } catch (err) {
+    console.log(err);
     res.json('Syntax Error!');
   }
 });
@@ -53,13 +48,9 @@ router.post('/results', async (req, res) => {
   try {
     if (req.body.passedTest === 'true') {
       req.body.id = req.body.id + '.test.js';
-      fs.writeFile(
-        './testFiles/' + req.body.id,
-        jsCode + '\n' + req.body.code,
-        function (err) {
-          if (err) throw err;
-        },
-      );
+      fs.writeFile('./testFiles/' + req.body.id, req.body.code, function (err) {
+        if (err) throw err;
+      });
 
       const exec = util.promisify(require('child_process').exec);
       const { stderr } = await exec(`npm test ${req.body.id}`);

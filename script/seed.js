@@ -147,7 +147,7 @@ async function seed() {
       `,
     }),
     TestingPrompt.create({
-      narrative: `You’ve probably noticed by now that we have used the function Describe over and over again.
+      narrative: `You've probably noticed by now that we have used the function Describe over and over again.
 
       describe(name, fn) creates a block that groups together several related tests. For example, if you have a myLunch object that is supposed to be hot but not spicy, you could test it with:
       
@@ -174,18 +174,18 @@ async function seed() {
         isRaining = false;
     }`,
       templateTest: `const weatherOutside = {
-        isCold = true;
-        isRaining = false;
+        isCold: true,
+        isRaining: false,
     }
     
-    describe(' ADD CODE HERE ', () => {
+    describe( ADD CODE HERE , () => {
         test('is cold outside', () => {
-        expect( ADD CODE HERE ).toBeTruthy();
+        expect( weatherOutside.isCold ).toBeTruthy();
     })
         test('is raining outside', () => {
-        expect( ADD CORE HERE ).toBeFalsy();
+        expect( weatherOutside.isRaining ).toBeFalsy();
     })
-    
+  })
       `,
     }),
     TestingPrompt.create({
