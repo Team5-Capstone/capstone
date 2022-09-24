@@ -7,6 +7,8 @@ router.use('/jestTests/jest3', require('./jestTests/jest3.js'));
 router.use('/jestTests/jest4', require('./jestTests/jest4.js'));
 router.use('/jestTests/jest5', require('./jestTests/jest5.js'));
 router.use('/jestTests/jest6', require('./jestTests/jest6.js'));
+router.use('/jestTests/jest7', require('./jestTests/jest7.js'));
+
 router.use('/users', require('./users'));
 router.use('/prompts', require('./prompts'));
 

@@ -205,10 +205,12 @@ async function seed() {
         let shoppingList = [apples, oranges, pears];
         return shoppingList
       }`,
-      templateTest: `test(' ADD CODE HERE', () => {
-        expect(shoppingList).toContain(apples);
-        expect(new Set(shoppingList)).toContain(apples);
+      templateTest: `test( ADD CODE HERE, () => {
+        let apples;
+        expect(shoppingList()).toContain(apples);
+        expect(new Set(shoppingList())).toContain(apples);
       });      
+           
       `,
     }),
     TestingPrompt.create({

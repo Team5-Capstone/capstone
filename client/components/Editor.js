@@ -32,8 +32,8 @@ export const Editor = (props) => {
   const [response, setResponse] = useState('See your results here!');
   const { prompts } = props;
 
-  const templateTest = prompts[4]?.templateTest;
-  const narrative = prompts[4]?.narrative;
+  const templateTest = prompts[6]?.templateTest;
+  const narrative = prompts[6]?.narrative;
   const completions = [
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
@@ -113,7 +113,7 @@ export const Editor = (props) => {
 
   const fetchData = () => {
     axios
-      .post('/api/jestTests/jest5', {
+      .post('/api/jestTests/jest7', {
         code,
       })
       .then((res) => {
@@ -134,7 +134,7 @@ export const Editor = (props) => {
     if (passedTest === 'true') {
       setId(uuidv4());
       axios
-        .post('/api/jestTests/jest5/results', {
+        .post('/api/jestTests/jest7/results', {
           code,
           id,
           passedTest,
@@ -183,7 +183,7 @@ export const Editor = (props) => {
   return (
     <div className='p-5'>
       <div ref={editor2}></div>
-      <div className='p-5 font-bold'>{prompts[4]?.prompt}</div>
+      <div className='p-5 font-bold'>{prompts[6]?.prompt}</div>
       <div ref={editor}></div>
       <button className='m-5 bg-gray-400 p-1' onClick={onSubmit}>
         Evaluate Your Test
