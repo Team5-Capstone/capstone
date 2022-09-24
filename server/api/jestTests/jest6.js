@@ -16,9 +16,12 @@ router.post('/', async (req, res) => {
     walk.full(ast, (node) => {
       if (node.type === 'CallExpression' && node.callee?.name === 'describe') {
         node.arguments.map((argument) => {
-          let regex = /^.*?\boutside\b$/m;
-          let regex2 = /^.*?\bweather\b$/m;
-          if (argument.value?.match(regex) || argument.value?.match(regex2)) {
+          let regex = /^.*?\boutside\b$/im;
+          let regex2 = /^.*?\bweather\b$/im;
+          if (
+            argument.value?.trim().match(regex) ||
+            argument.value?.trim().match(regex2)
+          ) {
             describeTestPassed = true;
           }
         });
