@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
       ecmaVersion: 2020,
     });
     console.log(ast);
-    let describeTestPassed = false;
+    let testTestPassed = false;
     walk.full(ast, (node) => {
       if (node.type === 'CallExpression' && node.callee?.name === 'test') {
         node.arguments.map((argument) => {
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
             argument.value?.trim().match(regex) ||
             argument.value?.trim().match(regex2)
           ) {
-            describeTestPassed = true;
+            testTestPassed = true;
           }
         });
       }
@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
     if (req.body.code.length < 1) {
       res.json("You haven't entered anything!");
     }
-    if (describeTestPassed) {
+    if (testTestPassed) {
       res.json(`
         test function is correct.
         That looks right! Go ahead and submit your test!`);
