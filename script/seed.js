@@ -129,21 +129,19 @@ async function seed() {
       Please use one of the matchers above to complete the following exercise:
       
       `,
-      prompt: `Please create a function called notOverTen that takes two numbers as an argument and when combined the value does not exceed 10.
+      prompt: `Please create a function called notOverTen that takes a number that does not exceed 10.
       `,
       jsCode: `
-        function notOver10(num1,num2){
-          let sum = 0;
-          if (num1 + num2 <= 10) {
-            return sum
-          } else {
-            return 'The sum is over 10!'
-          }
+      function notOverTen(num){
+        if (num <= 10) {
+          return true
+        }
       };`,
       templateTest: `describe('notOverTen function', () => {
-        test('check if values passed exceed 10', () => {
+        test('check if value passed exceeds 10', () => {
     expect( ADD CODE HERE ).toBeLessThanOrEqual( ADD CODE HERE )
     });
+  })
       `,
     }),
     TestingPrompt.create({
