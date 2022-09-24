@@ -230,14 +230,13 @@ async function seed() {
             expect( ADD CODE HERE ).toEqual(5)
         })
     });
-      
       `,
     }),
     TestingPrompt.create({
       narrative: `Let’s try another example:
 
       `,
-      prompt: `Create a function called charCount that accepts two arguments: a string and a letter. The function should return the correct count of the letter passed into the argument. In this instance, we will pass the string “Hello, World,” in as the first argument and the letter, 'o' in as the second argument.
+      prompt: `Create a function called charCount that accepts two arguments: a string and a letter. The function should return the correct count of the letter passed into the argument. In this instance, we will pass the string “Hello, World” in as the first argument and the letter, 'l' in as the second argument.
       `,
       jsCode: `    
           const charCount = (str, letter) => {
@@ -263,7 +262,7 @@ async function seed() {
       narrative: `Last exercise!
 
       `,
-      prompt: `Create a function called woof that accepts one argument: a number. This function returns the number of woofs passed to it. For example, woof(2) would return “woof, woof”. In the exercise below, you will write two tests. The first test will return the number of woofs passed into the function. The second test should return null when not given an integer.
+      prompt: `Create a function called woof that accepts one argument: a number. This function returns the number of woofs passed to it. In this exercise, you will pass the woof function the number 3, returning 3 'woofs'.
       `,
       jsCode: `    
                   const woof = (num) => {
@@ -281,10 +280,7 @@ async function seed() {
         `,
       templateTest: `describe( ' ADD CODE HERE ', () => {
         test(' ADD CODE HERE ', () => {
-            expect( woof(2)  ).toBe( ADD CODE HERE )
-        })
-        test(' ADD CODE HERE ', () => {
-            expect( ADD CODE HERE ).toEqual( ADD CODE HERE )
+            expect( ADD CODE HERE ).toBe( ADD CODE HERE )
         })
     });    
       `,
