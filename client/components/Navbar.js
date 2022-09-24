@@ -4,29 +4,32 @@ import { Link } from 'react-router-dom';
 import { logout } from '../store';
 
 const Navbar = ({ handleClick, isLoggedIn, username }) => (
-  <div className='bg-gray-800'>
-    <nav className='p-3'>
+  <div className='border-0'>
+    <nav className='border-0 p-3'>
       {isLoggedIn ? (
-        <div className='flex'>
+        <div className='flex border-0 text-white'>
           {/* The navbar will show these links after you log in */}
-          <Link className='p-2 pl-10 text-white' to='/home'>
-            Home
+          <Link className='' to='/'>
+            <img src='/test-brew-logo-boba.svg' className='h-8' />
           </Link>
-          <Link className='p-2 text-white' to='/jest3'>
+          <Link className='p-2' to='/jest8'>
             Tests
           </Link>
-          <a className='p-2 text-white' href='#' onClick={handleClick}>
+          <Link className='p-2' href='#' onClick={handleClick}>
             Logout
-          </a>
-          <a className='ml-auto p-2 pr-10 text-white'>Welcome, {username}</a>
+          </Link>
+          <span>Welcome, {username}</span>
+          <Link className='ml-auto p-2 pr-10' href='#'>
+            Account
+          </Link>
         </div>
       ) : (
         <div>
           {/* The navbar will show these links before you log in */}
-          <Link className='p-2 text-white' to='/login'>
+          <Link className='p-2' to='/login'>
             Login
           </Link>
-          <Link className='p-2 text-white' to='/signup'>
+          <Link className='p-2' to='/signup'>
             Sign Up
           </Link>
         </div>
