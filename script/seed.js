@@ -230,14 +230,13 @@ async function seed() {
             expect( ADD CODE HERE ).toEqual(5)
         })
     });
-      
       `,
     }),
     TestingPrompt.create({
       narrative: `Let’s try another example:
 
       `,
-      prompt: `Create a function called charCount that accepts two arguments: a string and a letter. The function should return the correct count of the letter passed into the argument. In this instance, we will pass the string “Hello, World,” in as the first argument and the letter, 'o' in as the second argument.
+      prompt: `Create a function called charCount that accepts two arguments: a string and a letter. The function should return the correct count of the letter passed into the argument. In this instance, we will pass the string “Hello, World” in as the first argument and the letter, 'l' in as the second argument.
       `,
       jsCode: `    
           const charCount = (str, letter) => {

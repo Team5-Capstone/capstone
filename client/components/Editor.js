@@ -1,7 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { EditorState, StateField, StateEffect } from '@codemirror/state';
+import { EditorState } from '@codemirror/state';
+// import { StateField, StateEffect } from '@codemirror/state';
 import { basicSetup } from 'codemirror';
-import { EditorView, keymap, Decoration } from '@codemirror/view';
+import { EditorView, keymap } from '@codemirror/view';
+// import { Decoration } from '@codemirror/view';
 import { defaultKeymap, indentWithTab } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
@@ -32,8 +34,8 @@ export const Editor = (props) => {
   const [response, setResponse] = useState('See your results here!');
   const { prompts } = props;
 
-  const templateTest = prompts[7]?.templateTest;
-  const narrative = prompts[7]?.narrative;
+  const templateTest = prompts[8]?.templateTest;
+  const narrative = prompts[8]?.narrative;
   const completions = [
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
@@ -113,7 +115,7 @@ export const Editor = (props) => {
 
   const fetchData = () => {
     axios
-      .post('/api/jestTests/jest8', {
+      .post('/api/jestTests/jest9', {
         code,
       })
       .then((res) => {
@@ -134,7 +136,7 @@ export const Editor = (props) => {
     if (passedTest === 'true') {
       setId(uuidv4());
       axios
-        .post('/api/jestTests/jest8/results', {
+        .post('/api/jestTests/jest9/results', {
           code,
           id,
           passedTest,
@@ -149,30 +151,30 @@ export const Editor = (props) => {
   };
 
   useEffect(() => {
-    const addMarks = StateEffect.define();
-    const filterMarks = StateEffect.define();
+    // const addMarks = StateEffect.define();
+    // const filterMarks = StateEffect.define();
 
-    const markField = StateField.define({
-      // Start with an empty set of decorations
-      create() {
-        return Decoration.none;
-      },
-      // This is called whenever the editor updates—it computes the new set
-      update(value, tr) {
-        // Move the decorations to account for document changes
-        value = value.map(tr.changes);
-        // If this transaction adds or removes decorations, apply those changes
-        for (let effect of tr.effects) {
-          if (effect.is(addMarks))
-            value = value.update({ add: effect.value, sort: true });
-          else if (effect.is(filterMarks))
-            value = value.update({ filter: effect.value });
-        }
-        return value;
-      },
-      // Indicate that this field provides a set of decorations
-      provide: (f) => EditorView.decorations.from(f),
-    });
+    // const markField = StateField.define({
+    //   // Start with an empty set of decorations
+    //   create() {
+    //     return Decoration.none;
+    //   },
+    //   // This is called whenever the editor updates—it computes the new set
+    //   update(value, tr) {
+    //     // Move the decorations to account for document changes
+    //     value = value.map(tr.changes);
+    //     // If this transaction adds or removes decorations, apply those changes
+    //     for (let effect of tr.effects) {
+    //       if (effect.is(addMarks))
+    //         value = value.update({ add: effect.value, sort: true });
+    //       else if (effect.is(filterMarks))
+    //         value = value.update({ filter: effect.value });
+    //     }
+    //     return value;
+    //   },
+    //   // Indicate that this field provides a set of decorations
+    //   provide: (f) => EditorView.decorations.from(f),
+    // });
 
     turnOffCtrlS();
     const state = EditorState.create({
@@ -183,7 +185,7 @@ export const Editor = (props) => {
         EditorState.tabSize.of(16),
         keymap.of([defaultKeymap, indentWithTab]),
         oneDark,
-        markField,
+        // markField,
         javascript(),
         onUpdate,
         // readOnlyRangesExtension(getReadOnlyRanges),
@@ -192,16 +194,16 @@ export const Editor = (props) => {
     });
 
     const view = new EditorView({ state, parent: editor.current });
-    const strikeMark = Decoration.mark({
-      attributes: { style: 'background: yellow' },
-    });
+    // const strikeMark = Decoration.mark({
+    //   attributes: { style: 'background: yellow' },
+    // });
     view.dispatch({
-      effects: addMarks.of([
-        strikeMark.range(90, 103),
-        strikeMark.range(115, 128),
-        strikeMark.range(147, 160),
-        strikeMark.range(173, 186),
-      ]),
+      // effects: addMarks.of([
+      //   strikeMark.range(90, 103),
+      //   strikeMark.range(115, 128),
+      //   strikeMark.range(147, 160),
+      //   strikeMark.range(173, 186),
+      // ]),
     });
 
     const fetchStuff = async () => {
@@ -217,7 +219,7 @@ export const Editor = (props) => {
   return (
     <div className='p-5'>
       <div ref={editor2}></div>
-      <div className='p-5 font-bold'>{prompts[7]?.prompt}</div>
+      <div className='p-5 font-bold'>{prompts[8]?.prompt}</div>
       <div ref={editor}></div>
       <button className='m-5 bg-gray-400 p-1' onClick={onSubmit}>
         Evaluate Your Test
