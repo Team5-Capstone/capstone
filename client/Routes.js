@@ -21,13 +21,13 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path='/home' component={Home} />
-            <Route path='/jest3' exact component={Editor} />
+            <Route path='/' component={Home} />
+            <Route path='/jest8' exact component={Editor} />
           </Switch>
         ) : (
           <Switch>
-            <Route path='/' exact component={Login} />
-            <Route path='/jest3' exact component={Editor} />
+            <Route path='/' exact component={Home} />
+            <Route path='/jest8' exact component={Editor} />
             <Route path='/login' component={Login} />
             <Route path='/signup' component={Signup} />
           </Switch>
