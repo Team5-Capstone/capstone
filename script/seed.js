@@ -112,7 +112,8 @@ async function seed() {
       templateTest: `describe('isTruthy function', () => {
         test('check if value passed is truthy', () => {
         expect( ADD CODE HERE ).toBeTruthy();
-    });
+    })
+  });
       `,
     }),
     TestingPrompt.create({
