@@ -25,6 +25,7 @@ router.post('/', async (req, res) => {
         node.callee?.property?.name === 'toBe'
       ) {
         node.arguments.map((argument) => {
+          console.log(argument);
           if (argument.value === true && argument.start < 165) {
             toBe1TestPassed = true;
           }
@@ -73,7 +74,7 @@ router.post('/', async (req, res) => {
             argument.callee?.name === 'isNumber'
           ) {
             argument.arguments.map((argument) => {
-              if (!Number.isInteger(argument.value)) {
+              if (!Number.isInteger(argument.name)) {
                 expect2TestPassed = true;
               }
             });

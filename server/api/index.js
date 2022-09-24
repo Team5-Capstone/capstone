@@ -4,7 +4,7 @@ module.exports = router;
 router.use('/jestTests/jest1', require('./jestTests/jest1.js'));
 router.use('/jestTests/jest2', require('./jestTests/jest2.js'));
 router.use('/jestTests/jest3', require('./jestTests/jest3.js'));
-// router.use('/jest2', require('../jest4'));
+router.use('/jestTests/jest4', require('./jestTests/jest4.js'));
 // router.use('/jest2', require('../jest5'));
 // router.use('/jest2', require('../jest6'));
 // router.use('/jest2', require('../jest7'));

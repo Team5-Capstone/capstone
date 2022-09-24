@@ -87,6 +87,7 @@ async function seed() {
         test("isInteger fails for non-integer value", () => {
             expect( ADD CODE HERE ).toBe( ADD CODE HERE );
         });
+      });
        
       `,
     }),
