@@ -243,8 +243,8 @@ router.post('/results', async (req, res) => {
         } else {
           console.log('success!');
         }
-      }),
-        res.json(stderr.toString());
+      });
+      res.json(stderr.toString());
     }
   } catch (err) {
     res.send(err.toString());

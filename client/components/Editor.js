@@ -7,7 +7,7 @@ import { EditorView, keymap } from '@codemirror/view';
 import { defaultKeymap, indentWithTab } from '@codemirror/commands';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-// import readOnlyRangesExtension from 'codemirror-readonly-ranges';
+import readOnlyRangesExtension from 'codemirror-readonly-ranges';
 import axios from 'axios';
 import { fetchPrompts } from '../store/prompts';
 import { autocompletion } from '@codemirror/autocomplete';
@@ -29,25 +29,27 @@ export const Editor = (props) => {
   const editor = useRef();
   const editor2 = useRef();
   const [code, setCode] = useState('');
+  const [code2, setCode2] = useState('');
   const [id, setId] = useState(uuidv4());
   const [passedTest, setPassedTest] = useState('false');
   const [response, setResponse] = useState('See your results here!');
   const { prompts } = props;
 
-  const templateTest = prompts[9]?.templateTest;
-  const narrative = prompts[9]?.narrative;
+  const templateTest = prompts[0]?.templateTest;
+  const narrative = prompts[0]?.narrative;
   const completions = [
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
     { label: 'test', type: 'keyWord' },
     { label: 'describe', type: 'keyword' },
-    { label: 'helloWorld', type: 'keyword' },
-    { label: 'Hello, ', type: 'keyword' },
-    { label: 'World!', type: 'keyword' },
   ];
 
+  // const removeIndentation =() => {
+  //   const cm = editor2.instance;
+  //   cm.execCommand('delLineLeft');
+  // }
+
   function myCompletions(context) {
-    console.log(context);
     let before = context.matchBefore(/\w+/);
     if (!context.explicit && !before) return null;
     return {
@@ -57,44 +59,41 @@ export const Editor = (props) => {
     };
   }
 
-  const onUpdate = EditorView.updateListener.of((v) => {
-    setCode(v.state.doc.toString());
+  // Instructions editor
+
+  const onUpdate2 = EditorView.updateListener.of((v) => {
+    setCode2(v.state.doc.toString());
   });
 
-  // const getReadOnlyRanges = (editor) => {
-  // console.log(editor.doc.line);
-  // return [
-  //   {
-  //     from: undefined, //same as targetState.doc.line(0).from or 0
-  //     to: editor.doc.line(2).to,
-  //   },
-  //   {
-  //     from: editor.doc.line(4).from, //same as targetState.doc.line(0).from or 0
-  //     to: editor.doc.line(5).to,
-  //   },
-  //   {
-  //     from: editor.doc.line(editor.doc.lines).from,
-  //     to: undefined, // same as targetState.doc.line(targetState.doc.lines).to
-  //   },
-  // ];
-  // };
-  // const removeIndentation =() => {
-  //   const cm = editor2.instance;
-  //   cm.execCommand('delLineLeft');
-  // }
+  const getReadOnlyRanges2 = (editor2) => {
+    return [
+      {
+        from: undefined, //same as targetState.doc.line(0).from or 0
+        to: editor2.doc.line(0).to,
+      },
+      {
+        from: editor2.doc.line(1).from, //same as targetState.doc.line(0).from or 0
+        to: editor2.doc.line(100).to,
+      },
+      {
+        from: editor2.doc.line(editor2.doc.lines).from,
+        to: undefined, // same as targetState.doc.line(targetState.doc.lines).to
+      },
+    ];
+  };
 
   useEffect(() => {
     turnOffCtrlS();
 
     const state = EditorState.create({
-      doc: narrative,
+      doc: narrative || code2,
       extensions: [
         basicSetup,
         oneDark,
-        onUpdate,
+        onUpdate2,
         javascript(),
         // removeIndentation(),
-        // readOnlyRangesExtension(getReadOnlyRanges),
+        readOnlyRangesExtension(getReadOnlyRanges2),
       ],
     });
 
@@ -113,41 +112,23 @@ export const Editor = (props) => {
     };
   }, [narrative]);
 
-  const fetchData = () => {
-    axios
-      .post('/api/jestTests/jest10', {
-        code,
-      })
-      .then((res) => {
-        setResponse(res.data);
-        if (
-          res.data.includes('That looks right! Go ahead and submit your test!')
-        ) {
-          setPassedTest('true');
-        }
-      });
-  };
+  // Template Test editor
 
-  const onSubmit = () => {
-    fetchData();
-  };
+  const onUpdate = EditorView.updateListener.of((v) => {
+    setCode(v.state.doc.toString());
+  });
 
-  const runTest = () => {
-    if (passedTest === 'true') {
-      setId(uuidv4());
-      axios
-        .post('/api/jestTests/jest10/results', {
-          code,
-          id,
-          passedTest,
-        })
-        .then((res) => {
-          setPassedTest('false');
-          setResponse(res.data);
-        });
-    } else {
-      setResponse('Get the test to pass before you submit!');
-    }
+  const getReadOnlyRanges = (editor) => {
+    return [
+      {
+        from: editor.doc.line(4).from, //same as targetState.doc.line(0).from or 0
+        to: editor.doc.line(5).to,
+      },
+      {
+        from: editor.doc.line(editor.doc.lines).from,
+        to: undefined, // same as targetState.doc.line(targetState.doc.lines).to
+      },
+    ];
   };
 
   useEffect(() => {
@@ -188,7 +169,7 @@ export const Editor = (props) => {
         // markField,
         javascript(),
         onUpdate,
-        // readOnlyRangesExtension(getReadOnlyRanges),
+        readOnlyRangesExtension(getReadOnlyRanges),
         autocompletion({ override: [myCompletions] }),
       ],
     });
@@ -216,10 +197,47 @@ export const Editor = (props) => {
     };
   }, [templateTest]);
 
+  const fetchData = () => {
+    axios
+      .post('/api/jestTests/jest1', {
+        code,
+      })
+      .then((res) => {
+        setResponse(res.data);
+        if (
+          res.data.includes('That looks right! Go ahead and submit your test!')
+        ) {
+          setPassedTest('true');
+        }
+      });
+  };
+
+  const onSubmit = () => {
+    fetchData();
+  };
+
+  const runTest = () => {
+    if (passedTest === 'true') {
+      setId(uuidv4());
+      axios
+        .post('/api/jestTests/jest1/results', {
+          code,
+          id,
+          passedTest,
+        })
+        .then((res) => {
+          setPassedTest('false');
+          setResponse(res.data);
+        });
+    } else {
+      setResponse('Get the test to pass before you submit!');
+    }
+  };
+
   return (
     <div className='p-5'>
       <div ref={editor2}></div>
-      <div className='p-5 font-bold'>{prompts[9]?.prompt}</div>
+      <div className='p-5 font-bold'>{prompts[0]?.prompt}</div>
       <div ref={editor}></div>
       <button className='m-5 bg-gray-400 p-1' onClick={onSubmit}>
         Evaluate Your Test
