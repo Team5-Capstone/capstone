@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import Test1 from './Test1';
 import Test2 from './Test2';
 import Test3 from './Test3';
@@ -32,37 +32,26 @@ const PaginatedTests = () => {
   const onPrevious = () => {
     setCurrentTestIx((ix) => ix - 1);
   };
-  const onReset = () => {
-    setCurrentTestIx(0);
-  };
-  const onTestChange = (e) => {
-    setCurrentTestIx(Number(e.target.value));
-  };
-  const testOptions = useMemo(
-    () =>
-      AllTests.map((Test, ix) => (
-        <option key={ix} value={ix}>
-          {Test.name}
-        </option>
-      )),
-    [],
-  );
   return (
     <div>
       <CurrentTest />
-      <div>
-        <button onClick={onPrevious} disabled={currentTestIx === 0}>
+      <div
+        className='p-5'
+        style={{
+          whiteSpace: 'pre-wrap',
+        }}>
+        <button
+          onClick={onPrevious}
+          disabled={currentTestIx === 0}
+          className='m-5 bg-gray-400 p-1'>
           Previous
         </button>
         <button
           onClick={onNext}
-          disabled={currentTestIx === AllTests.length - 1}>
+          disabled={currentTestIx === AllTests.length - 1}
+          className='m-5 bg-gray-400 p-1'>
           Next
         </button>
-        <button onClick={onReset}>Reset</button>
-        <select value={currentTestIx} onChange={onTestChange}>
-          {testOptions}
-        </select>
       </div>
     </div>
   );
