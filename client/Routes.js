@@ -15,6 +15,7 @@ import Test7 from './components/Tests/Test7';
 import Test8 from './components/Tests/Test8';
 import Test9 from './components/Tests/Test9';
 import Test10 from './components/Tests/Test10';
+import PaginationTests from './components/Tests/index.js';
 
 /**
  * COMPONENT
@@ -42,6 +43,7 @@ class Routes extends Component {
             <Route path='/jest8' exact component={Test8} />
             <Route path='/jest9' exact component={Test9} />
             <Route path='/jest10' exact component={Test10} />
+            <Route path='/jest' exact component={PaginationTests} />
           </Switch>
         ) : (
           <Switch>
