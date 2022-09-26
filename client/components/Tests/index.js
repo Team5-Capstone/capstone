@@ -32,6 +32,11 @@ const PaginatedTests = () => {
   const onPrevious = () => {
     setCurrentTestIx((ix) => ix - 1);
   };
+
+  const onNumber = (ix) => {
+    setCurrentTestIx(ix);
+  };
+
   return (
     <div>
       <CurrentTest />
@@ -43,13 +48,23 @@ const PaginatedTests = () => {
         <button
           onClick={onPrevious}
           disabled={currentTestIx === 0}
-          className='m-5 bg-gray-400 p-1'>
+          className='m-5 bg-gray-400 p-1 hover:bg-yellow-600  disabled:bg-red-900'>
           Previous
         </button>
+        {AllTests.map((_test, ix) => {
+          return (
+            <span
+              key={ix}
+              onClick={() => onNumber(ix)}
+              className={'m-5 bg-gray-400 p-1 hover:bg-yellow-600'}>
+              {`  ${ix + 1}  `}
+            </span>
+          );
+        })}
         <button
           onClick={onNext}
           disabled={currentTestIx === AllTests.length - 1}
-          className='m-5 bg-gray-400 p-1'>
+          className='m-5 bg-gray-400 p-1 hover:bg-yellow-600 disabled:bg-red-900'>
           Next
         </button>
       </div>
