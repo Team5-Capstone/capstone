@@ -149,11 +149,11 @@ export const Editor = (props) => {
     return [
       {
         from: editor.doc.line(1).from,
-        to: editor.doc.line(2).to,
+        to: editor.doc.line(5).to,
       },
       {
-        from: editor.doc.line(4).from,
-        to: editor.doc.line(5).to,
+        from: editor.doc.line(7).from,
+        to: editor.doc.line(14).to,
       },
     ];
   };
@@ -201,7 +201,7 @@ export const Editor = (props) => {
       attributes: { style: 'background: yellow' },
     });
     view.dispatch({
-      effects: addMarks.of([strikeMark.range(95, 108)]),
+      effects: addMarks.of([strikeMark.range(98, 111)]),
     });
 
     const fetchStuff = async () => {
