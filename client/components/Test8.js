@@ -207,10 +207,12 @@ export const Editor = (props) => {
     const strikeMark = Decoration.mark({
       attributes: { style: 'background: yellow' },
     });
+
     view.dispatch({
       effects: addMarks.of([
-        strikeMark.range(96, 109),
-        strikeMark.range(119, 132),
+        strikeMark.range(11, 24),
+        strikeMark.range(50, 63),
+        strikeMark.range(95, 108),
       ]),
     });
 

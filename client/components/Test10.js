@@ -82,25 +82,6 @@ export const Editor = (props) => {
 
   useEffect(() => {
     turnOffCtrlS();
-    const addMarks = StateEffect.define();
-    const filterMarks = StateEffect.define();
-
-    const markField = StateField.define({
-      create() {
-        return Decoration.none;
-      },
-      update(value, tr) {
-        value = value.map(tr.changes);
-        for (let effect of tr.effects) {
-          if (effect.is(addMarks))
-            value = value.update({ add: effect.value, sort: true });
-          else if (effect.is(filterMarks))
-            value = value.update({ filter: effect.value });
-        }
-        return value;
-      },
-      provide: (f) => EditorView.decorations.from(f),
-    });
 
     const state = EditorState.create({
       doc: narrative || code2,
@@ -108,7 +89,6 @@ export const Editor = (props) => {
         basicSetup,
         oneDark,
         baseTheme,
-        markField,
         onUpdate2,
         javascript(),
         // removeIndentation(),
@@ -189,9 +169,9 @@ export const Editor = (props) => {
     });
     view.dispatch({
       effects: addMarks.of([
-        strikeMark.range(12, 25),
-        strikeMark.range(52, 65),
-        strikeMark.range(97, 110),
+        strikeMark.range(11, 24),
+        strikeMark.range(51, 64),
+        strikeMark.range(96, 109),
         strikeMark.range(119, 132),
       ]),
     });
