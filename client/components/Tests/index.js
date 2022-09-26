@@ -37,6 +37,8 @@ const PaginatedTests = () => {
     setCurrentTestIx(ix);
   };
 
+  const styleOnCurrent = (ix) => ix === currentTestIx && 'bg-red-900';
+
   return (
     <div>
       <CurrentTest />
@@ -56,7 +58,9 @@ const PaginatedTests = () => {
             <span
               key={ix}
               onClick={() => onNumber(ix)}
-              className={'m-5 bg-gray-400 p-1 hover:bg-yellow-600'}>
+              className={`${styleOnCurrent(
+                ix,
+              )} m-5 bg-gray-400 p-1 hover:bg-yellow-600`}>
               {`  ${ix + 1}  `}
             </span>
           );
