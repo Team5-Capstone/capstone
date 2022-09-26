@@ -5,7 +5,7 @@ import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 
 import { me } from './store';
-// import Test1 from './components/Tests/Test1';
+import Test2 from './components/Tests/Test2';
 
 /**
  * COMPONENT
@@ -23,12 +23,12 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path='/home' component={Home} />
-            {/* <Route path='/jest3' exact component={AllTests} /> */}
+            <Route path='/jest3' exact component={Test2} />
           </Switch>
         ) : (
           <Switch>
             <Route path='/' exact component={Login} />
-            {/* <Route path='/jest3' exact component={Test1} /> */}
+            <Route path='/jest3' exact component={Test2} />
             <Route path='/login' component={Login} />
             <Route path='/signup' component={Signup} />
           </Switch>

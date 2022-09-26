@@ -9,7 +9,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import readOnlyRangesExtension from 'codemirror-readonly-ranges';
 import axios from 'axios';
-import { fetchPrompts } from '../store/prompts';
+import { fetchPrompts } from '../../store/prompts';
 import { autocompletion } from '@codemirror/autocomplete';
 import { connect } from 'react-redux';
 const { v4: uuidv4 } = require('uuid');
