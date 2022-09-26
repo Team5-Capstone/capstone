@@ -9,7 +9,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import readOnlyRangesExtension from 'codemirror-readonly-ranges';
 import axios from 'axios';
-import { fetchPrompts } from '../store/prompts';
+import { fetchPrompts } from '../../store/prompts';
 import { autocompletion } from '@codemirror/autocomplete';
 import { connect } from 'react-redux';
 const { v4: uuidv4 } = require('uuid');
@@ -41,8 +41,8 @@ export const Editor = (props) => {
   const [response, setResponse] = useState('See your results here!');
   const { prompts } = props;
 
-  const templateTest = prompts[6]?.templateTest;
-  const narrative = prompts[6]?.narrative;
+  const templateTest = prompts[2]?.templateTest;
+  const narrative = prompts[2]?.narrative;
   const completions = [
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
@@ -156,11 +156,15 @@ export const Editor = (props) => {
     return [
       {
         from: editor.doc.line(1).from,
-        to: editor.doc.line(5).to,
+        to: editor.doc.line(2).to,
       },
       {
-        from: editor.doc.line(7).from,
-        to: editor.doc.line(14).to,
+        from: editor.doc.line(4).from,
+        to: editor.doc.line(6).to,
+      },
+      {
+        from: editor.doc.line(8).from,
+        to: editor.doc.line(11).to,
       },
     ];
   };
@@ -208,7 +212,12 @@ export const Editor = (props) => {
       attributes: { style: 'background: yellow' },
     });
     view.dispatch({
-      effects: addMarks.of([strikeMark.range(98, 111)]),
+      effects: addMarks.of([
+        strikeMark.range(137, 150),
+        strikeMark.range(159, 172),
+        strikeMark.range(278, 291),
+        strikeMark.range(300, 313),
+      ]),
     });
 
     const fetchStuff = async () => {
@@ -261,7 +270,7 @@ export const Editor = (props) => {
   return (
     <div className='p-5'>
       <div ref={editor2}></div>
-      <div className='p-5 font-bold'>{prompts[6]?.prompt}</div>
+      <div className='p-5 font-bold'>{prompts[2]?.prompt}</div>
       <div ref={editor}></div>
       <button className='m-5 bg-gray-400 p-1' onClick={onSubmit}>
         Evaluate Your Test

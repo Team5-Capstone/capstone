@@ -9,7 +9,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import readOnlyRangesExtension from 'codemirror-readonly-ranges';
 import axios from 'axios';
-import { fetchPrompts } from '../store/prompts';
+import { fetchPrompts } from '../../store/prompts';
 import { autocompletion } from '@codemirror/autocomplete';
 import { connect } from 'react-redux';
 const { v4: uuidv4 } = require('uuid');
@@ -41,8 +41,8 @@ export const Editor = (props) => {
   const [response, setResponse] = useState('See your results here!');
   const { prompts } = props;
 
-  const templateTest = prompts[7]?.templateTest;
-  const narrative = prompts[7]?.narrative;
+  const templateTest = prompts[1]?.templateTest;
+  const narrative = prompts[1]?.narrative;
   const completions = [
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
@@ -159,8 +159,8 @@ export const Editor = (props) => {
         to: editor.doc.line(2).to,
       },
       {
-        from: editor.doc.line(4).from,
-        to: editor.doc.line(5).to,
+        from: editor.doc.line(5).from,
+        to: editor.doc.line(6).to,
       },
     ];
   };
@@ -209,8 +209,10 @@ export const Editor = (props) => {
     });
     view.dispatch({
       effects: addMarks.of([
-        strikeMark.range(96, 109),
-        strikeMark.range(119, 132),
+        strikeMark.range(90, 103),
+        strikeMark.range(115, 128),
+        strikeMark.range(147, 160),
+        strikeMark.range(173, 186),
       ]),
     });
 
@@ -264,7 +266,7 @@ export const Editor = (props) => {
   return (
     <div className='p-5'>
       <div ref={editor2}></div>
-      <div className='p-5 font-bold'>{prompts[7]?.prompt}</div>
+      <div className='p-5 font-bold'>{prompts[1]?.prompt}</div>
       <div ref={editor}></div>
       <button className='m-5 bg-gray-400 p-1' onClick={onSubmit}>
         Evaluate Your Test
