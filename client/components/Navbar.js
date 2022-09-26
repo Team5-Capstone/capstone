@@ -3,39 +3,46 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
 
-const Navbar = ({ handleClick, isLoggedIn, username }) => (
-  <div className='border-0'>
-    <nav className='border-0 p-3'>
-      {isLoggedIn ? (
-        <div className='flex border-0 text-white'>
-          {/* The navbar will show these links after you log in */}
-          <Link className='' to='/'>
-            <img src='/test-brew-logo-boba.svg' className='h-8' />
-          </Link>
-          <Link className='p-2' to='/jest8'>
-            Tests
-          </Link>
-          <Link className='p-2' href='#' onClick={handleClick}>
-            Logout
-          </Link>
-          <span>Welcome, {username}</span>
-          <Link className='ml-auto p-2 pr-10' href='#'>
-            Account
-          </Link>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link className='p-2' to='/login'>
-            Login
-          </Link>
-          <Link className='p-2' to='/signup'>
-            Sign Up
-          </Link>
-        </div>
-      )}
-    </nav>
-    <hr />
+const Navbar = ({ handleClick, isLoggedIn }) => (
+  <div className='supports-backdrop-blur:bg-white/95 sticky top-0 z-40 w-full flex-none border-b border-slate-800 backdrop-blur transition-colors duration-500'>
+    <div className='mx-auto max-w-[1440px]'>
+      <nav className='flex justify-between p-4'>
+        <Link className='self-center' to='/'>
+          <img src='/test-brew-logo.svg' className='h-7' />
+        </Link>
+        {isLoggedIn ? (
+          <div className='flex items-center gap-x-8 self-center'>
+            <Link className='m-0 p-0 ' to='#'>
+              Account
+            </Link>
+            <Link
+              className='m-0 p-0 text-slate-500'
+              to='#'
+              onClick={handleClick}>
+              Log out
+            </Link>
+
+            <Link
+              className='self-center rounded-md bg-lime-400 px-4 py-2 text-slate-900'
+              to='/jest8'>
+              Learn
+            </Link>
+          </div>
+        ) : (
+          //
+
+          <div>
+            {/* The navbar will show these links before you log in */}
+            <Link className='' to='/login'>
+              Login
+            </Link>
+            <Link className='' to='/signup'>
+              Sign Up
+            </Link>
+          </div>
+        )}
+      </nav>
+    </div>
   </div>
 );
 

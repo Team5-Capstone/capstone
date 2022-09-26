@@ -217,22 +217,54 @@ export const Editor = (props) => {
   }, [templateTest]);
 
   return (
-    <div className='p-5'>
-      <div ref={editor2}></div>
-      <div className='p-5 font-bold'>{prompts[9]?.prompt}</div>
-      <div ref={editor}></div>
-      <button className='m-5 bg-gray-400 p-1' onClick={onSubmit}>
-        Evaluate Your Test
-      </button>
-      <button className='m-5 bg-gray-400 p-1' onClick={runTest}>
-        Submit Your Test
-      </button>
-      <div
-        className='p-5'
-        style={{
-          whiteSpace: 'pre-wrap',
-        }}>
-        {response}
+    <div className='h-screen'>
+      <div>
+        <div className='flex h-4/6 w-full'>
+          <div
+            id='left-column'
+            className='my-8 ml-8 mr-4 flex w-1/2 flex-col border border-slate-700'>
+            <div className='bg-slate-700 py-2 px-4 text-white'>
+              Instructions
+            </div>
+            <div
+              id='instructions'
+              className='bg-[#282c34]'
+              style={{ height: '100%' }}
+              ref={editor2}></div>
+          </div>
+
+          <div id='right-column' className='w-1/2 py-8 pl-4 pr-8'>
+            <div className='bg-slate-700 py-2 px-4 text-white'>Prompt</div>
+            <div id='prompt' className='mb-8 border border-slate-700 px-4 py-6'>
+              {prompts[8]?.prompt}
+            </div>
+            <div className='bg-slate-700 py-2 px-4 text-white'>Your Code</div>
+            <div id='editor' ref={editor}></div>
+
+            <div
+              id='button-container'
+              className='flex gap-4 border border-slate-800 p-4'>
+              <button
+                className='rounded-lg border border-lime-400 px-4 py-2 text-lime-400'
+                onClick={onSubmit}>
+                Evaluate Your Test
+              </button>
+              <button
+                className='rounded-lg bg-lime-400 py-2 px-4 text-slate-900'
+                onClick={runTest}>
+                Submit Your Test
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className='p-5 font-mono'
+          style={{
+            whiteSpace: 'pre-wrap',
+          }}>
+          {response}
+        </div>
       </div>
     </div>
   );
