@@ -25,6 +25,12 @@ const turnOffCtrlS = () => {
   });
 };
 
+let baseTheme = EditorView.theme({
+  '.cm-content *': {
+    color: 'white',
+  },
+});
+
 export const Editor = (props) => {
   const editor = useRef();
   const editor2 = useRef();
@@ -68,16 +74,16 @@ export const Editor = (props) => {
   const getReadOnlyRanges2 = (editor2) => {
     return [
       {
-        from: undefined, //same as targetState.doc.line(0).from or 0
+        from: undefined,
         to: editor2.doc.line(0).to,
       },
       {
-        from: editor2.doc.line(1).from, //same as targetState.doc.line(0).from or 0
+        from: editor2.doc.line(1).from,
         to: editor2.doc.line(100).to,
       },
       {
         from: editor2.doc.line(editor2.doc.lines).from,
-        to: undefined, // same as targetState.doc.line(targetState.doc.lines).to
+        to: undefined,
       },
     ];
   };
@@ -88,15 +94,11 @@ export const Editor = (props) => {
     const filterMarks = StateEffect.define();
 
     const markField = StateField.define({
-      // Start with an empty set of decorations
       create() {
         return Decoration.none;
       },
-      // This is called whenever the editor updates—it computes the new set
       update(value, tr) {
-        // Move the decorations to account for document changes
         value = value.map(tr.changes);
-        // If this transaction adds or removes decorations, apply those changes
         for (let effect of tr.effects) {
           if (effect.is(addMarks))
             value = value.update({ add: effect.value, sort: true });
@@ -105,14 +107,7 @@ export const Editor = (props) => {
         }
         return value;
       },
-      // Indicate that this field provides a set of decorations
       provide: (f) => EditorView.decorations.from(f),
-    });
-
-    const baseTheme = EditorView.baseTheme({
-      cm: {
-        color: 'white',
-      },
     });
 
     const state = EditorState.create({
@@ -120,8 +115,8 @@ export const Editor = (props) => {
       extensions: [
         basicSetup,
         oneDark,
-        markField,
         baseTheme,
+        markField,
         onUpdate2,
         javascript(),
         // removeIndentation(),
@@ -160,17 +155,13 @@ export const Editor = (props) => {
   const getReadOnlyRanges = (editor) => {
     return [
       {
-        from: editor.doc.line(1).from, //same as targetState.doc.line(0).from or 0
+        from: editor.doc.line(1).from,
         to: editor.doc.line(2).to,
       },
       {
-        from: editor.doc.line(4).from, //same as targetState.doc.line(0).from or 0
+        from: editor.doc.line(4).from,
         to: editor.doc.line(5).to,
       },
-      // {
-      //   from: editor.doc.line(editor.doc.lines).from,
-      //   to: undefined, // same as targetState.doc.line(targetState.doc.lines).to
-      // },
     ];
   };
 
@@ -179,15 +170,11 @@ export const Editor = (props) => {
     const filterMarks = StateEffect.define();
 
     const markField = StateField.define({
-      // Start with an empty set of decorations
       create() {
         return Decoration.none;
       },
-      // This is called whenever the editor updates—it computes the new set
       update(value, tr) {
-        // Move the decorations to account for document changes
         value = value.map(tr.changes);
-        // If this transaction adds or removes decorations, apply those changes
         for (let effect of tr.effects) {
           if (effect.is(addMarks))
             value = value.update({ add: effect.value, sort: true });
@@ -196,7 +183,6 @@ export const Editor = (props) => {
         }
         return value;
       },
-      // Indicate that this field provides a set of decorations
       provide: (f) => EditorView.decorations.from(f),
     });
 
