@@ -9,7 +9,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import readOnlyRangesExtension from 'codemirror-readonly-ranges';
 import axios from 'axios';
-import { fetchPrompts } from '../store/prompts';
+import { fetchPrompts } from '../../store/prompts';
 import { autocompletion } from '@codemirror/autocomplete';
 import { connect } from 'react-redux';
 const { v4: uuidv4 } = require('uuid');
@@ -41,8 +41,8 @@ export const Editor = (props) => {
   const [response, setResponse] = useState('See your results here!');
   const { prompts } = props;
 
-  const templateTest = prompts[8]?.templateTest;
-  const narrative = prompts[8]?.narrative;
+  const templateTest = prompts[0]?.templateTest;
+  const narrative = prompts[0]?.narrative;
   const completions = [
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
@@ -90,6 +90,25 @@ export const Editor = (props) => {
 
   useEffect(() => {
     turnOffCtrlS();
+    const addMarks = StateEffect.define();
+    const filterMarks = StateEffect.define();
+
+    const markField = StateField.define({
+      create() {
+        return Decoration.none;
+      },
+      update(value, tr) {
+        value = value.map(tr.changes);
+        for (let effect of tr.effects) {
+          if (effect.is(addMarks))
+            value = value.update({ add: effect.value, sort: true });
+          else if (effect.is(filterMarks))
+            value = value.update({ filter: effect.value });
+        }
+        return value;
+      },
+      provide: (f) => EditorView.decorations.from(f),
+    });
 
     const state = EditorState.create({
       doc: narrative || code2,
@@ -97,6 +116,7 @@ export const Editor = (props) => {
         basicSetup,
         oneDark,
         baseTheme,
+        markField,
         onUpdate2,
         javascript(),
         // removeIndentation(),
@@ -107,6 +127,13 @@ export const Editor = (props) => {
     const view2 = new EditorView({
       state,
       parent: editor2.current,
+    });
+    const strikeMark = Decoration.mark({
+      attributes: { style: 'color: white' },
+    });
+
+    view2.dispatch({
+      effects: addMarks.of([strikeMark.range(33, 1000)]),
     });
 
     const fetchStuff = async () => {
@@ -128,8 +155,12 @@ export const Editor = (props) => {
   const getReadOnlyRanges = (editor) => {
     return [
       {
-        from: editor.doc.line(2).from,
-        to: editor.doc.line(7).to,
+        from: editor.doc.line(1).from,
+        to: editor.doc.line(2).to,
+      },
+      {
+        from: editor.doc.line(4).from,
+        to: editor.doc.line(5).to,
       },
     ];
   };
@@ -176,13 +207,10 @@ export const Editor = (props) => {
     const strikeMark = Decoration.mark({
       attributes: { style: 'background: yellow' },
     });
-
     view.dispatch({
       effects: addMarks.of([
-        strikeMark.range(12, 25),
-        strikeMark.range(52, 65),
-        strikeMark.range(97, 110),
-        strikeMark.range(119, 132),
+        strikeMark.range(109, 122),
+        strikeMark.range(131, 144),
       ]),
     });
 
@@ -236,7 +264,7 @@ export const Editor = (props) => {
   return (
     <div className='p-5'>
       <div ref={editor2}></div>
-      <div className='p-5 font-bold'>{prompts[8]?.prompt}</div>
+      <div className='p-5 font-bold'>{prompts[0]?.prompt}</div>
       <div ref={editor}></div>
       <button className='m-5 bg-gray-400 p-1' onClick={onSubmit}>
         Evaluate Your Test
