@@ -198,7 +198,7 @@ export const Editor = (props) => {
 
   const fetchData = () => {
     axios
-      .post('/api/jestTests/jest1', {
+      .post('/api/jestTests/jest9', {
         code,
       })
       .then((res) => {
@@ -219,7 +219,7 @@ export const Editor = (props) => {
     if (passedTest === 'true') {
       setId(uuidv4());
       axios
-        .post('/api/jestTests/jest1/results', {
+        .post('/api/jestTests/jest9/results', {
           code,
           id,
           passedTest,
