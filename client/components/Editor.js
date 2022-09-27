@@ -1,13 +1,14 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { EditorState } from '@codemirror/state';
+// import React, { useRef, useEffect, useState } from 'react';
+// import { EditorState } from '@codemirror/state';
 // import { StateField, StateEffect } from '@codemirror/state';
-import { basicSetup } from 'codemirror';
-import { EditorView, keymap } from '@codemirror/view';
+// import { basicSetup } from 'codemirror';
+// import { EditorView, keymap } from '@codemirror/view';
 // import { Decoration } from '@codemirror/view';
-import { defaultKeymap, indentWithTab } from '@codemirror/commands';
-import { javascript } from '@codemirror/lang-javascript';
-import { oneDark } from '@codemirror/theme-one-dark';
+// import { defaultKeymap, indentWithTab } from '@codemirror/commands';
+// import { javascript } from '@codemirror/lang-javascript';
+// import { oneDark } from '@codemirror/theme-one-dark';
 // import readOnlyRangesExtension from 'codemirror-readonly-ranges';
+
 import axios from 'axios';
 import { fetchPrompts } from '../store/prompts';
 import { autocompletion } from '@codemirror/autocomplete';
