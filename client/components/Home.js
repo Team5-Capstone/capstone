@@ -2,31 +2,69 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../styles.css';
-import jestLogo from '/public/jestLogo';
+import { Link } from 'react-router-dom';
 
 /**
  * COMPONENT
  */
-export const Home = (props) => {
+export const Home = () => {
   return (
-    <div>
-      <div className='mt-12 w-2/3 flex-col border-2 bg-cyan-600 p-4'>
-        <div>
-          <p className='decoration-wavy'>
-            {' '}
-            Welcome to testBrew{' '}
-            <span className='font-black'> {props.username} </span>, a place
-            where you can practice writing Unit Tests and learn the fundamental
-            syntax of a testing language in 15-minutes!{' '}
-          </p>
-          <br></br>
-          <p className='font-black text-emerald-400'>
-            {' '}
-            But, what is a unit test?{' '}
-          </p>
-          <br></br>
+    <div className='w-full'>
+      <section className=''>
+        <div className='left-0 flex w-screen flex-col items-center border-b border-slate-800 bg-gradient-to-t from-slate-800 to-slate-900'>
+          <div className='max-w-[700px] py-10 text-center lg:w-3/4'>
+            <p className='py-4 text-center leading-normal text-lime-400'>
+              Welcome to TestBrew
+            </p>
+            <h1 className='text-center text-[64px] leading-tight'>
+              <b>The quickest way to learn to write unit tests</b>
+            </h1>
+            <h3 className='pt-8 text-center text-[24px] leading-normal text-slate-500'>
+              TestBrew helps you learn the fundamental syntax of some of the
+              most popular testing languages. Learn to write unit tests today!
+            </h3>
+            <p className='inline-block py-8 text-center leading-normal text-slate-300'>
+              Pick a language to get started:
+            </p>
+            <div className='mt-2 mb-6 flex items-center justify-center gap-10'>
+              <img className='h-14 self-center' src='/jest-logo.svg' />
+              <img className='h-16' src='/mocha-logo.svg' />
+              <img className='h-14 self-center' src='/karma-logo.svg' />
+              <img className='h-16' src='/jasmine-logo.svg' />
+            </div>
+            <Link
+              to='/jest8'
+              className='my-6 inline-flex items-center gap-4 rounded-lg bg-lime-400 px-8 py-4 text-[18px] text-slate-900'>
+              Get started for free{' '}
+              <svg
+                width='17'
+                height='18'
+                viewBox='0 0 17 18'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'>
+                <path
+                  d='M1.48022 8.87939H14.5'
+                  stroke='#101827'
+                  strokeWidth='2'
+                  strokeLinecap='square'
+                  strokeLinejoin='round'
+                />
+                <path
+                  d='M8.48022 1.87939L15.4802 8.87939L8.48022 15.8794'
+                  stroke='#101827'
+                  strokeWidth='2'
+                  strokeLinecap='square'
+                />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+      <section className='mx-auto min-h-screen max-w-[1440px]'>
+        <div className='py-8'>
+          <p className='font-black'>What is a unit test?</p>
+
           <p>
-            {' '}
             A unit test should test the behaviour of a given input, expecting a
             specific end result. Unit tests should be:
           </p>
@@ -38,22 +76,8 @@ export const Home = (props) => {
               <li>Easy to write and read</li>
             </ul>
           </div>
-          <div>
-            <br></br>
-            <p>Pick a testing language below to get started:</p>
-            <div>
-              <div>
-                <a>
-                  <img
-                    className='h-20 w-20 max-w-xs rounded-full'
-                    src={jestLogo.imgSrc}
-                  />
-                </a>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
