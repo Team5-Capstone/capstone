@@ -89,25 +89,7 @@ export const Editor = (props) => {
   };
 
   useEffect(() => {
-    const addMarks = StateEffect.define();
-    const filterMarks = StateEffect.define();
-
-    const markField = StateField.define({
-      create() {
-        return Decoration.none;
-      },
-      update(value, tr) {
-        value = value.map(tr.changes);
-        for (let effect of tr.effects) {
-          if (effect.is(addMarks))
-            value = value.update({ add: effect.value, sort: true });
-          else if (effect.is(filterMarks))
-            value = value.update({ filter: effect.value });
-        }
-        return value;
-      },
-      provide: (f) => EditorView.decorations.from(f),
-    });
+    turnOffCtrlS();
 
     const state = EditorState.create({
       doc: narrative || code2,
@@ -115,7 +97,6 @@ export const Editor = (props) => {
         basicSetup,
         oneDark,
         baseTheme,
-        markField,
         onUpdate2,
         javascript(),
         // removeIndentation(),
@@ -126,13 +107,6 @@ export const Editor = (props) => {
     const view2 = new EditorView({
       state,
       parent: editor2.current,
-    });
-    const strikeMark = Decoration.mark({
-      attributes: { style: 'color: white' },
-    });
-
-    view2.dispatch({
-      effects: addMarks.of([strikeMark.range(33, 1000)]),
     });
 
     const fetchStuff = async () => {

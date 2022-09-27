@@ -179,10 +179,10 @@ export const Editor = (props) => {
 
     view.dispatch({
       effects: addMarks.of([
-        strikeMark.range(90, 103),
-        strikeMark.range(115, 128),
-        strikeMark.range(147, 160),
-        strikeMark.range(173, 186),
+        strikeMark.range(11, 24),
+        strikeMark.range(51, 64),
+        strikeMark.range(96, 109),
+        strikeMark.range(119, 132),
       ]),
     });
 
