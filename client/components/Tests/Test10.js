@@ -168,7 +168,12 @@ export const Editor = (props) => {
       attributes: { style: 'background: yellow' },
     });
     view.dispatch({
-      effects: addMarks.of([strikeMark.range(6, 19)]),
+      effects: addMarks.of([
+        strikeMark.range(12, 25),
+        strikeMark.range(52, 65),
+        strikeMark.range(97, 110),
+        strikeMark.range(119, 132),
+      ]),
     });
 
     const fetchStuff = async () => {
