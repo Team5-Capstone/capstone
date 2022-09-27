@@ -209,8 +209,10 @@ export const Editor = (props) => {
     });
     view.dispatch({
       effects: addMarks.of([
-        strikeMark.range(109, 122),
-        strikeMark.range(146, 159),
+        strikeMark.range(11, 24),
+        strikeMark.range(51, 64),
+        strikeMark.range(96, 109),
+        strikeMark.range(119, 132),
       ]),
     });
     const fetchStuff = async () => {
