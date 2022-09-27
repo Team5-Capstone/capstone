@@ -2,9 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: 'Inter';
+    font-weight: 400;
+    font-style: normal;
+    src: url('../public/fonts/Inter-Regular.woff2') format('woff2');
+  }
+  /* @font-face {
+    font-family: 'Inter';
+    font-weight: 400;
+    font-style: italic;
+    src: url('../public/fonts/Inter-Italic.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-style: normal;
+    src: url('../public/fonts/Inter-Bold.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-style: italic;
+    src: url('../public/fonts/Inter-BoldItalic.woff2') format('woff2');
+  } */
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-xl;
+  }
+}
+
+/* @font-face {
+  font-family: Inter;
+  font-weight: 400;
+  font-style: normal;
+  src: url(../public/fonts/Inter-Regular.woff2) format('woff2');
+} */
+
 body {
-  --tw-bg-opacity: 1;
-  background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
   color: white;
 }
 
+input {
+  color: black;
+}

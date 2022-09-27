@@ -1,0 +1,5 @@
+{
+    "verbose": true,
+    "ignore": ["server/api/jest1.js", "testFiles/*"]
+}
+  
