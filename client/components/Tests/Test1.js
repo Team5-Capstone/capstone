@@ -182,8 +182,10 @@ export const Editor = (props) => {
     });
     view.dispatch({
       effects: addMarks.of([
-        strikeMark.range(109, 122),
-        strikeMark.range(131, 144),
+        strikeMark.range(90, 103),
+        strikeMark.range(115, 128),
+        strikeMark.range(147, 160),
+        strikeMark.range(173, 186),
       ]),
     });
 
