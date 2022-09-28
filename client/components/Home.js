@@ -33,7 +33,7 @@ export const Home = () => {
               <img className='h-16' src='/jasmine-logo.svg' />
             </div>
             <Link
-              to='/jest8'
+              to='/jest'
               className='my-6 inline-flex items-center gap-4 rounded-lg bg-lime-400 px-8 py-4 text-[18px] text-slate-900'>
               Get started for free{' '}
               <svg
