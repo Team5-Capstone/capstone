@@ -82,13 +82,6 @@ router.post('/', async (req, res) => {
       }
     });
 
-    console.log(
-      toBe1TestPassed,
-      toBe2TestPassed,
-      expect1TestPassed,
-      expect2TestPassed,
-    );
-
     // send different messages to user depending on accuracy of their test
     if (req.body.code.length < 1) {
       res.json("You haven't entered anything!");
@@ -219,31 +212,31 @@ router.post('/', async (req, res) => {
 // submit test
 
 router.post('/results', async (req, res) => {
-  try {
-    if (req.body.passedTest === 'true') {
-      req.body.id = req.body.id + '.test.js';
-      fs.writeFile(
-        './testFiles/' + req.body.id,
-        jsCode + '\n' + req.body.code,
-        function (err) {
-          if (err) throw err;
-        },
-      );
+  if (req.body.passedTest === 'true') {
+    req.body.id = req.body.id + '.test.js';
+    fs.writeFile(
+      './testFiles/' + req.body.id,
+      jsCode + '\n' + req.body.code,
+      function (err) {
+        if (err) throw err;
+      },
+    );
 
+    try {
       const exec = util.promisify(require('child_process').exec);
       const { stderr } = await exec(`npm test ${req.body.id}`);
-
+      res.json(stderr.toString());
+    } catch (err) {
+      res.send(err.toString());
+    } finally {
       fs.unlinkSync('./testFiles/' + req.body.id, (err) => {
         if (err) {
           console.error(err);
         } else {
           console.log('success!');
         }
-      }),
-        res.json(stderr.toString());
+      });
     }
-  } catch (err) {
-    res.send(err.toString());
   }
 });
 

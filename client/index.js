@@ -5,7 +5,7 @@ import { Router } from 'react-router-dom';
 import history from './history';
 import store from './store';
 import App from './App';
-import './styles.css';
+import './style.css';
 
 ReactDOM.render(
   <Provider store={store}>
