@@ -38,7 +38,7 @@ The toBe matcher will test exact equality.  Check out the following example:
 
 test('two plus two is four', () => {
   expect(2 + 2).toBe(4);
-  });
+});
 
 Now, take a look at the prompt and try to fill out the unit test below:
     `,
