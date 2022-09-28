@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Test1 from './Test1';
 import Test2 from './Test2';
 import Test3 from './Test3';
@@ -24,7 +24,9 @@ const AllTests = [
 ];
 
 const PaginatedTests = () => {
-  const [currentTestIx, setCurrentTestIx] = useState(0);
+  const [currentTestIx, setCurrentTestIx] = useState(
+    window.localStorage.index * 1 || 0,
+  );
   const CurrentTest = AllTests[currentTestIx];
   const onNext = () => {
     setCurrentTestIx((ix) => ix + 1);
@@ -36,8 +38,14 @@ const PaginatedTests = () => {
   const onNumber = (ix) => {
     setCurrentTestIx(ix);
   };
+  console.log(CurrentTest);
 
   const styleOnCurrent = (ix) => ix === currentTestIx && 'bg-red-900';
+
+  useEffect(() => {
+    window.localStorage.setItem('index', currentTestIx);
+    console.log(currentTestIx, window.localStorage.index * 1);
+  }, [currentTestIx]);
 
   return (
     <div>
