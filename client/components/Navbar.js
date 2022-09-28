@@ -6,11 +6,49 @@ import { logout } from '../store';
 const Navbar = ({ handleClick, isLoggedIn }) => {
   const location = useLocation();
 
+  const LoggedInLinks = () => {
+    return (
+      <div>
+        {location.pathname.includes('jest') ? (
+          <div className='flex h-[40px] items-center gap-x-8 self-center'>
+            <Link className='m-0 p-0 ' to='#'>
+              Account
+            </Link>
+            <Link
+              className='m-0 p-0 text-slate-500'
+              to='#'
+              onClick={handleClick}>
+              Log out
+            </Link>
+          </div>
+        ) : (
+          <div className='flex items-center gap-x-8 self-center'>
+            <Link className='m-0 p-0 ' to='#'>
+              Account
+            </Link>
+            <Link
+              className='m-0 p-0 text-slate-500'
+              to='#'
+              onClick={handleClick}>
+              Log out
+            </Link>
+
+            <Link
+              className='self-center rounded-md bg-gradient-to-r from-lime-500 to-lime-400 px-4 py-2 text-slate-900 transition-all hover:shadow-md hover:shadow-lime-400/40'
+              to='/jest'>
+              Learn
+            </Link>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   const LoginButtons = () => {
     return (
       <div>
         {location.pathname === '/login' || location.pathname === '/signup' ? (
-          <div className='h-[42px]'></div>
+          <div className='h-[40px]'></div>
         ) : (
           <div>
             {/* The navbar will show these links before you log in */}
@@ -41,27 +79,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => {
           <Link className='self-center' to='/'>
             <img src='/test-brew-logo.svg' className='h-7' />
           </Link>
-          {isLoggedIn ? (
-            <div className='flex items-center gap-x-8 self-center'>
-              <Link className='m-0 p-0 ' to='#'>
-                Account
-              </Link>
-              <Link
-                className='m-0 p-0 text-slate-500'
-                to='#'
-                onClick={handleClick}>
-                Log out
-              </Link>
-
-              <Link
-                className='self-center rounded-md bg-gradient-to-r from-lime-500 to-lime-400 px-4 py-2 text-slate-900 transition-all hover:shadow-md hover:shadow-lime-400/40'
-                to='/jest'>
-                Learn
-              </Link>
-            </div>
-          ) : (
-            <LoginButtons />
-          )}
+          {isLoggedIn ? <LoggedInLinks /> : <LoginButtons />}
         </nav>
       </div>
     </div>

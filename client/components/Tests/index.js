@@ -41,9 +41,15 @@ const PaginatedTests = () => {
     ix === currentTestIx && 'bg-lime-400 text-slate-900 pointer-events-none';
 
   return (
-    <div className='mt-[-73px] flex h-screen flex-col justify-between pt-[72px]'>
+    <div className='top-0 mt-[-74px] flex h-screen max-h-screen flex-col justify-between overflow-hidden pt-[70px]'>
+      {/* Overlay blocking access on screens smaller than 768px */}
+      <div className='absolute top-0 z-10 flex h-full w-full items-center justify-center bg-slate-900 md:hidden'>
+        Please use a desktop browser to continue learning
+      </div>
       <CurrentTest />
-      <div className='flex justify-center gap-4 p-8' style={{}}>
+      <div
+        className='flex max-h-[10vh] items-center justify-center gap-4 p-8'
+        style={{}}>
         <button
           onClick={onPrevious}
           disabled={currentTestIx === 0}

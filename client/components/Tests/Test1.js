@@ -182,7 +182,7 @@ export const Editor = (props) => {
       lineWrapping: true,
     });
     const strikeMark = Decoration.mark({
-      attributes: { style: 'background: #1d4ed8' },
+      attributes: { style: 'background: #3730a3', color: 'red !important' },
     });
     view.dispatch({
       effects: addMarks.of([
@@ -239,12 +239,12 @@ export const Editor = (props) => {
   };
 
   return (
-    <div className='flex w-full grow flex-col bg-slate-900'>
-      <div className='flex h-4/6 w-full'>
+    <div className='flex h-[90vh] max-h-[90vh] w-full grow flex-col overflow-hidden bg-slate-900'>
+      <div className='flex h-[70%] w-full 2xl:h-3/4'>
         <div
           id='left-column'
           className='flex w-1/2 flex-col overflow-hidden border-r border-slate-700'>
-          <div className='flex gap-3 border-b border-slate-700 py-4 px-8 text-slate-400'>
+          <div className='flex gap-3 border-b border-slate-700 px-8 pt-4 pb-3 text-slate-400'>
             <svg
               width='24'
               height='24'
@@ -267,15 +267,15 @@ export const Editor = (props) => {
             Instructions
           </div>
           <div
-            id='instructions'
-            className='bg-[#090e1a]'
+            id='instructions-editor'
+            className='scrollbar overflow-y-auto bg-[#090e1a]'
             style={{ height: '100%' }}
             ref={editor2}></div>
         </div>
 
         <div id='right-column' className='flex h-full w-1/2 flex-col'>
           <div id='prompt-container' className='overflow-hidden'>
-            <div className='flex gap-3 border-b border-slate-700 bg-slate-900 py-4 px-8 text-slate-400'>
+            <div className='flex gap-3 border-b border-slate-700 bg-slate-900 px-8 pt-4 pb-3 text-slate-400'>
               <svg
                 width='24'
                 height='24'
@@ -302,14 +302,16 @@ export const Editor = (props) => {
               </svg>
               Prompt
             </div>
-            <div id='prompt' className='bg-slate-800 px-8 py-4'>
+            <div
+              id='prompt'
+              className='overflow-hidden bg-slate-900 px-8 py-4 text-lg'>
               <div className='max-w-[800px]'>{prompts[0]?.prompt}</div>
             </div>
           </div>
           <div
             id='your-code-container'
             className='flex grow flex-col overflow-hidden'>
-            <div className='flex gap-3 border-y border-slate-700 bg-slate-900 py-4 px-8 text-slate-400'>
+            <div className='flex gap-3 border-y border-slate-700 bg-slate-900 py-3 px-8 text-slate-400'>
               <svg
                 width='24'
                 height='24'
@@ -330,14 +332,17 @@ export const Editor = (props) => {
                   fill='#a3e635'
                 />
               </svg>
-              Your Code
+              Your Test
             </div>
 
-            <div id='editor' className='grow bg-[#090e1a]' ref={editor}></div>
+            <div
+              id='your-editor'
+              className='scrollbar h-full grow overflow-y-auto overflow-x-hidden bg-[#090e1a]'
+              ref={editor}></div>
 
             <div
               id='button-container'
-              className='flex gap-4 border-t border-slate-700 bg-slate-900 p-6'>
+              className='flex gap-6 border-t border-slate-700 bg-slate-900 px-8 py-5'>
               <button
                 className='rounded-lg border border-lime-400 px-4 py-2 text-lime-400'
                 onClick={onSubmit}>
@@ -356,7 +361,7 @@ export const Editor = (props) => {
       <div
         className='flex grow flex-col overflow-hidden border-b border-slate-700'
         style={{}}>
-        <div className='flex gap-3 border-y border-slate-700 py-4 px-8 text-slate-400'>
+        <div className='flex gap-3 border-y border-slate-700 py-3 px-8 text-slate-400'>
           <svg
             width='24'
             height='24'
@@ -375,7 +380,9 @@ export const Editor = (props) => {
           </svg>
           Result
         </div>
-        <div className='grow bg-[#090e1a] px-8 py-4 font-mono'>{response}</div>
+        <div className='scrollbar grow bg-[#090e1a] px-8 py-4 font-mono'>
+          {response}
+        </div>
       </div>
     </div>
     // <div className='p-5'>
