@@ -50,11 +50,6 @@ export const Editor = (props) => {
     { label: 'describe', type: 'keyword' },
   ];
 
-  // const removeIndentation =() => {
-  //   const cm = editor2.instance;
-  //   cm.execCommand('delLineLeft');
-  // }
-
   function myCompletions(context) {
     let before = context.matchBefore(/\w+/);
     if (!context.explicit && !before) return null;
@@ -90,25 +85,6 @@ export const Editor = (props) => {
 
   useEffect(() => {
     turnOffCtrlS();
-    const addMarks = StateEffect.define();
-    const filterMarks = StateEffect.define();
-
-    const markField = StateField.define({
-      create() {
-        return Decoration.none;
-      },
-      update(value, tr) {
-        value = value.map(tr.changes);
-        for (let effect of tr.effects) {
-          if (effect.is(addMarks))
-            value = value.update({ add: effect.value, sort: true });
-          else if (effect.is(filterMarks))
-            value = value.update({ filter: effect.value });
-        }
-        return value;
-      },
-      provide: (f) => EditorView.decorations.from(f),
-    });
 
     const state = EditorState.create({
       doc: narrative || code2,
@@ -116,10 +92,8 @@ export const Editor = (props) => {
         basicSetup,
         oneDark,
         baseTheme,
-        markField,
         onUpdate2,
         javascript(),
-        // removeIndentation(),
         readOnlyRangesExtension(getReadOnlyRanges2),
       ],
     });
@@ -127,13 +101,6 @@ export const Editor = (props) => {
     const view2 = new EditorView({
       state,
       parent: editor2.current,
-    });
-    const strikeMark = Decoration.mark({
-      attributes: { style: 'color: white' },
-    });
-
-    view2.dispatch({
-      effects: addMarks.of([strikeMark.range(33, 1000)]),
     });
 
     const fetchStuff = async () => {
@@ -228,7 +195,7 @@ export const Editor = (props) => {
 
   const fetchData = () => {
     axios
-      .post('/api/jestTests/jest1', {
+      .post('/api/jestTests/jest8', {
         code,
       })
       .then((res) => {
@@ -249,7 +216,7 @@ export const Editor = (props) => {
     if (passedTest === 'true') {
       setId(uuidv4());
       axios
-        .post('/api/jestTests/jest1/results', {
+        .post('/api/jestTests/jest8/results', {
           code,
           id,
           passedTest,

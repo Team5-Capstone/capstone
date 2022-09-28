@@ -6,7 +6,7 @@ module.exports = router;
 
 router.get('/', async (req, res, next) => {
   try {
-    const prompts = await TestingPrompt.findAll({});
+    const prompts = await TestingPrompt.findAll();
     res.send(prompts);
   } catch (ex) {
     next(ex);

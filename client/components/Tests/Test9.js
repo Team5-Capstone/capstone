@@ -50,11 +50,6 @@ export const Editor = (props) => {
     { label: 'describe', type: 'keyword' },
   ];
 
-  // const removeIndentation =() => {
-  //   const cm = editor2.instance;
-  //   cm.execCommand('delLineLeft');
-  // }
-
   function myCompletions(context) {
     let before = context.matchBefore(/\w+/);
     if (!context.explicit && !before) return null;
@@ -99,7 +94,7 @@ export const Editor = (props) => {
         baseTheme,
         onUpdate2,
         javascript(),
-        // removeIndentation(),
+        EditorView.lineWrapping,
         readOnlyRangesExtension(getReadOnlyRanges2),
       ],
     });
@@ -179,9 +174,9 @@ export const Editor = (props) => {
 
     view.dispatch({
       effects: addMarks.of([
-        strikeMark.range(12, 25),
-        strikeMark.range(52, 65),
-        strikeMark.range(97, 110),
+        strikeMark.range(11, 24),
+        strikeMark.range(51, 64),
+        strikeMark.range(96, 109),
         strikeMark.range(119, 132),
       ]),
     });
@@ -198,7 +193,7 @@ export const Editor = (props) => {
 
   const fetchData = () => {
     axios
-      .post('/api/jestTests/jest1', {
+      .post('/api/jestTests/jest9', {
         code,
       })
       .then((res) => {
@@ -219,7 +214,7 @@ export const Editor = (props) => {
     if (passedTest === 'true') {
       setId(uuidv4());
       axios
-        .post('/api/jestTests/jest1/results', {
+        .post('/api/jestTests/jest9/results', {
           code,
           id,
           passedTest,
