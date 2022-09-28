@@ -48,6 +48,11 @@ const PaginatedTests = () => {
     console.log(currentTestIx, window.localStorage.index * 1);
   }, [currentTestIx]);
 
+  useEffect(() => {
+    window.localStorage.setItem('index', currentTestIx);
+    console.log(currentTestIx, window.localStorage.index * 1);
+  }, [currentTestIx]);
+
   return (
     <div className='top-0 mt-[-74px] flex h-screen max-h-screen flex-col justify-between overflow-hidden pt-[70px]'>
       {/* Overlay blocking access on screens smaller than 768px */}
