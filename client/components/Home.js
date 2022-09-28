@@ -34,6 +34,7 @@ export const Home = ({ isLoggedIn }) => {
               <img className='h-16' src='/jasmine-logo.svg' />
             </div>
             <Link
+
               to={isLoggedIn ? '/jest' : '/login'}
               className='group my-6 inline-flex items-center gap-4 rounded-lg bg-gradient-to-r from-lime-500 to-lime-400 px-8 py-4 text-[18px] text-slate-900 transition-all hover:shadow-lg hover:shadow-lime-400/40'>
               {isLoggedIn ? 'Continue your progress' : 'Get started for free'}

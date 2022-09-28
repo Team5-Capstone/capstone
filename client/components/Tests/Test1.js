@@ -51,7 +51,7 @@ export const Editor = (props) => {
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
     { label: 'test', type: 'keyWord' },
-    { label: 'describe', type: 'keyword' },
+    { label: 'toEqual', type: 'keyWord' },
   ];
 
   function myCompletions(context) {
