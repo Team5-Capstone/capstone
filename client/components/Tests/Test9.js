@@ -50,11 +50,6 @@ export const Editor = (props) => {
     { label: 'describe', type: 'keyword' },
   ];
 
-  // const removeIndentation =() => {
-  //   const cm = editor2.instance;
-  //   cm.execCommand('delLineLeft');
-  // }
-
   function myCompletions(context) {
     let before = context.matchBefore(/\w+/);
     if (!context.explicit && !before) return null;
@@ -99,7 +94,7 @@ export const Editor = (props) => {
         baseTheme,
         onUpdate2,
         javascript(),
-        // removeIndentation(),
+        EditorView.lineWrapping,
         readOnlyRangesExtension(getReadOnlyRanges2),
       ],
     });
