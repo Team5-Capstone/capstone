@@ -93,6 +93,7 @@ export const Editor = (props) => {
         oneDark,
         baseTheme,
         onUpdate2,
+        EditorView.lineWrapping,
         javascript(),
         readOnlyRangesExtension(getReadOnlyRanges2),
       ],
