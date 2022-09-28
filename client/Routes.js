@@ -5,17 +5,17 @@ import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 
 import { me } from './store';
-import Test1 from './components/Tests/Test1';
-import Test2 from './components/Tests/Test2';
-import Test3 from './components/Tests/Test3';
-import Test4 from './components/Tests/Test4';
-import Test5 from './components/Tests/Test5';
-import Test6 from './components/Tests/Test6';
-import Test7 from './components/Tests/Test7';
-import Test8 from './components/Tests/Test8';
-import Test9 from './components/Tests/Test9';
-import Test10 from './components/Tests/Test10';
-import PaginationTests from './components/Tests/index.js';
+// import Test1 from './components/Tests/Test1';
+// import Test2 from './components/Tests/Test2';
+// import Test3 from './components/Tests/Test3';
+// import Test4 from './components/Tests/Test4';
+// import Test5 from './components/Tests/Test5';
+// import Test6 from './components/Tests/Test6';
+// import Test7 from './components/Tests/Test7';
+// import Test8 from './components/Tests/Test8';
+// import Test9 from './components/Tests/Test9';
+// import Test10 from './components/Tests/Test10';
+import PaginatedTests from './components/Tests';
 
 /**
  * COMPONENT
@@ -33,8 +33,8 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path='/' exact component={Home} />
-            <Route path='/jest1' exact component={Test1} />
-            <Route path='/jest2' exact component={Test2} />
+            <Route path='/jest' exact component={PaginatedTests} />
+            {/* <Route path='/jest2' exact component={Test2} />
             <Route path='/jest3' exact component={Test3} />
             <Route path='/jest4' exact component={Test4} />
             <Route path='/jest5' exact component={Test5} />
@@ -42,8 +42,7 @@ class Routes extends Component {
             <Route path='/jest7' exact component={Test7} />
             <Route path='/jest8' exact component={Test8} />
             <Route path='/jest9' exact component={Test9} />
-            <Route path='/jest10' exact component={Test10} />
-            <Route path='/jest' exact component={PaginationTests} />
+            <Route path='/jest10' exact component={Test10} /> */}
           </Switch>
         ) : (
           <Switch>

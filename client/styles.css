@@ -29,28 +29,6 @@
   }
 } */
 
-/* @layer utilities {
-  .scrollbar::-webkit-scrollbar {
-    width: 20px;
-    height: 20px;
-  }
-
-  .scrollbar::-webkit-scrollbar-track {
-    border-radius: 100vh;
-    background: #f7f4ed;
-  }
-
-  .scrollbar::-webkit-scrollbar-thumb {
-    background: #e0cbcb;
-    border-radius: 100vh;
-    border: 3px solid #f6f7ed;
-  }
-
-  .scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #c0a0b9;
-  }
-} */
-
 /* @font-face {
   font-family: 'Inter';
   font-weight: 400;
@@ -67,60 +45,22 @@ input {
   color: black;
 }
 
-.cm-editor {
+/* .cm-editor {
   background-color: #090e1a;
-  /* overflow: scroll; */
-}
-
-.cm-line {
-  margin: 0 1rem;
-}
-
-/* .cm-scroller {
-  overflow-y: auto;
-} */
-
-.cm-line .cm-activeLine {
-  /* background-color: red !important; */
+  overflow: scroll;
 }
 
 .cm-gutters {
   background-color: #090e1a !important;
-}
+} */
 
-.cm-editor .cm-content {
+/* .cm-editor .cm-content {
   font-size: 16px;
   line-height: 1.5;
   white-space: pre-wrap;
-}
-
-.cm-activeLineGutter {
-  background-color: #334155 !important;
-}
+  width: 90%;
+} */
 
 /* #instructions-editor::-webkit-scrollbar {
   background-color: red;
-} */
-
-.scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: auto;
-}
-
-.scrollbar::-webkit-scrollbar-track {
-  border-radius: 0;
-  background: #1e293b;
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-  background: #475569;
-  border-radius: 0;
-}
-
-.scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
-}
-
-/* .scrollbar {
-  background-color: rgba(255, 255, 255, 0.1);
 } */
