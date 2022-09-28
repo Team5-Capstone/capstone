@@ -7,24 +7,25 @@ import { Link } from 'react-router-dom';
 /**
  * COMPONENT
  */
-export const Home = () => {
+export const Home = ({ isLoggedIn }) => {
+  console.log(isLoggedIn);
   return (
     <div className='w-full'>
       <section className=''>
-        <div className='left-0 flex w-screen flex-col items-center border-b border-slate-800 bg-gradient-to-t from-slate-800 to-slate-900'>
+        <div className='left-0 flex min-h-[70vh] w-full flex-col items-center justify-center border-b border-slate-700 bg-gradient-to-t from-slate-800 to-slate-900'>
           <div className='max-w-[700px] py-10 text-center lg:w-3/4'>
             <p className='py-4 text-center leading-normal text-lime-400'>
               Welcome to TestBrew
             </p>
             <h1 className='text-center text-[64px] leading-tight'>
-              <b>The quickest way to learn to write unit tests</b>
+              <b>The quickest way to learn unit testing</b>
             </h1>
             <h3 className='pt-8 text-center text-[24px] leading-normal text-slate-500'>
               TestBrew helps you learn the fundamental syntax of some of the
               most popular testing languages. Learn to write unit tests today!
             </h3>
             <p className='inline-block py-8 text-center leading-normal text-slate-300'>
-              Pick a language to get started:
+              Select a language to get started:
             </p>
             <div className='mt-2 mb-6 flex items-center justify-center gap-10'>
               <img className='h-14 self-center' src='/jest-logo.svg' />
@@ -33,10 +34,11 @@ export const Home = () => {
               <img className='h-16' src='/jasmine-logo.svg' />
             </div>
             <Link
-              to='/jest8'
-              className='my-6 inline-flex items-center gap-4 rounded-lg bg-lime-400 px-8 py-4 text-[18px] text-slate-900'>
-              Get started for free{' '}
+              to={isLoggedIn ? '/jest' : '/login'}
+              className='group my-6 inline-flex items-center gap-4 rounded-lg bg-gradient-to-r from-lime-500 to-lime-400 px-8 py-4 text-[18px] text-slate-900 transition-all hover:shadow-lg hover:shadow-lime-400/40'>
+              {isLoggedIn ? 'Continue your progress' : 'Get started for free'}
               <svg
+                // className='transition-all group-hover:ml-4'
                 width='17'
                 height='18'
                 viewBox='0 0 17 18'
@@ -59,8 +61,9 @@ export const Home = () => {
             </Link>
           </div>
         </div>
+        <div id='modal-root'></div>
       </section>
-      <section className='mx-auto min-h-screen max-w-[1440px]'>
+      {/* <section className='mx-auto min-h-screen max-w-[1440px]'>
         <div className='py-8'>
           <p className='font-black'>What is a unit test?</p>
 
@@ -77,7 +80,7 @@ export const Home = () => {
             </ul>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };
@@ -87,6 +90,7 @@ export const Home = () => {
  */
 const mapState = (state) => {
   return {
+    isLoggedIn: !!state.auth.id,
     username: state.auth.username,
   };
 };
