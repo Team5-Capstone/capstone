@@ -77,7 +77,7 @@ const Footer = ({ handleClick }) => (
         <img src='/logo-twitter.svg' className='h-8 self-center' />
       </div>
       <p className='text-center'>
-        Made with <span className='text-red-500'>♥</span> in NYC
+        Made with <span className='text-red-500'>♥</span> in CT, IL, NJ & NY
       </p>
     </div>
     <hr className='border-slate-700' />
