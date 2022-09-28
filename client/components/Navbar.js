@@ -24,7 +24,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 
             <Link
               className='self-center rounded-md bg-lime-400 px-4 py-2 text-slate-900'
-              to='/jest8'>
+              to='/jest'>
               Learn
             </Link>
           </div>
