@@ -165,6 +165,7 @@ export const Editor = (props) => {
         markField,
         javascript(),
         onUpdate,
+        EditorView.lineWrapping,
         readOnlyRangesExtension(getReadOnlyRanges),
         autocompletion({ override: [myCompletions] }),
       ],
