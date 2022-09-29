@@ -51,6 +51,12 @@ Now, take a look at the prompt and try to fill out the unit test below:
         })
     });
     `,
+      solution: ` describe('helloWorld', () => {
+      test('returns a string "Hello World"', () => {
+          expect( helloWorld('World!') ).toBe( 'Hello, World!' )
+      })
+  });
+  `,
     }),
     TestingPrompt.create({
       narrative: `Now, let’s examine the toEqual and the not.toBe matchers.
@@ -70,6 +76,12 @@ The not.toBe matcher will test for the opposite of a matcher.
         expect( ADD CODE HERE ).not.toBe( ADD CODE HERE )
     })    
       `,
+      solution: `  test('properly clones an array', () => {
+        const array = [1, 2, 3]
+        expect( cloneArray(array) ).toEqual( array )
+        expect( cloneArray(array) ).not.toBe( array )
+    })     
+    `,
     }),
     TestingPrompt.create({
       narrative: `Let's use what we learned from the last two exercises and use the prompt to complete the following Unit Test:
@@ -90,6 +102,15 @@ The not.toBe matcher will test for the opposite of a matcher.
       });
        
       `,
+      solution: `describe('isNumber function', () => {
+        test('properly checks that the value passed in is a integer', () => {
+            expect( isNumber(2) ).toBe( true )
+        });
+        
+        test("isInteger fails for non-integer value", () => {
+            expect( isNumber('string') ).toBe( false );
+        });
+      });`,
     }),
     TestingPrompt.create({
       narrative: `In tests, you sometimes need to distinguish between undefined, null, and false, but you sometimes do not want to treat these differently. Jest contains helpers that let you be explicit about what you want.
@@ -105,7 +126,7 @@ toBeFalsy matches anything that an if statement treats as false
       `,
       jsCode: `
         function isTruthy(value){
-          if (value == true) {
+          if (value) {
             return true;
           } 
       };`,
@@ -115,6 +136,13 @@ toBeFalsy matches anything that an if statement treats as false
     })
   });
       `,
+      solution: `
+      describe('isTruthy function', () => {
+        test('check if value passed is truthy', () => {
+        expect( isTruthy('string') ).toBeTruthy();
+    })
+  });
+  `,
     }),
     TestingPrompt.create({
       narrative: `We can also compare numbers using the following unique matchers:
@@ -140,6 +168,12 @@ Please use one of the matchers above to complete the following exercise:
       templateTest: `describe('notOverTen function', () => {
         test('check if value passed exceeds 10', () => {
     expect( ADD CODE HERE ).toBeLessThanOrEqual( ADD CODE HERE )
+    });
+  })
+      `,
+      solution: ` describe('notOverTen function', () => {
+        test('check if value passed exceeds 10', () => {
+    expect( notOverTen(3) ).toBeLessThanOrEqual( 10 )
     });
   })
       `,
@@ -185,6 +219,21 @@ describe('my lunch, () => {
     })
   })
       `,
+      solution: `
+      const weatherOutside = {
+        isCold: true,
+        isRaining: false,
+    }
+    
+    describe( 'Weather Outside' , () => {
+        test('is cold outside', () => {
+        expect( weatherOutside.isCold ).toBeTruthy();
+    })
+        test('is raining outside', () => {
+        expect( weatherOutside.isRaining ).toBeFalsy();
+    })
+  })
+  `,
     }),
     TestingPrompt.create({
       narrative: `Now, let’s explore the test function.
@@ -212,6 +261,12 @@ In the exercise below, fill in the test method.
       });      
            
       `,
+      solution: ` test( 'Apples on my shoppingList', () => {
+        let apples;
+        expect(shoppingList()).toContain(apples);
+        expect(new Set(shoppingList())).toContain(apples);
+      });      
+      `,
     }),
     TestingPrompt.create({
       narrative: `Ok, now that we know the basics, let's try a more advanced exercise. 
@@ -228,6 +283,12 @@ Based on the prompt below, please fill in the describe, test, expect and toBe fu
       templateTest: `describe(' ADD CODE HERE ', ()=> {
         test(' ADD CODE HERE ', () => {
             expect( ADD CODE HERE ).toEqual(5)
+        })
+    });
+      `,
+      solution: ` describe(' sum ', ()=> {
+        test(' sum two numbers ', () => {
+            expect( sum(3,2) ).toEqual(5)
         })
     });
       `,
@@ -257,6 +318,13 @@ Based on the prompt below, please fill in the describe, test, expect and toBe fu
         })
     });
       `,
+      solution: `
+      describe(' charCount ', () => {
+        test(' return current count ', () => {
+            expect( charCount('Hello, World', 'l') ).toBe( 3 )
+        })
+    });
+      `,
     }),
     TestingPrompt.create({
       narrative: `Last exercise!
@@ -283,6 +351,13 @@ Based on the prompt below, please fill in the describe, test, expect and toBe fu
             expect( ADD CODE HERE ).toBe( ADD CODE HERE )
         })
     });    
+      `,
+      solution: `
+      describe( ' woof ', () => {
+        test(' return number of woofs passed ', () => {
+            expect( woof(3) ).toBe( 'woof,woof,woof' )
+        })
+    });  
       `,
     }),
   ]);

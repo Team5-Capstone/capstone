@@ -7,7 +7,7 @@ const util = require('util');
 let jsCode = `
 function notOverTen(num){
   if (num <= 10) {
-    return true
+    return num
   }
 };`;
 
@@ -24,8 +24,15 @@ router.post('/', async (req, res) => {
     walk.full(ast, (node) => {
       if (node.type === 'CallExpression' && node.callee?.name === 'expect') {
         node.arguments.map((argument) => {
-          if (Number.isInteger(argument.value)) {
-            expectTestPassed = true;
+          if (
+            argument.type === 'CallExpression' &&
+            argument.callee?.name === 'notOverTen'
+          ) {
+            argument.arguments.map((argument) => {
+              if (Number.isInteger(argument.value)) {
+                expectTestPassed = true;
+              }
+            });
           }
         });
       }

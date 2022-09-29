@@ -96,6 +96,7 @@ export const Editor = (props) => {
         baseTheme,
         onUpdate2,
         javascript(),
+        EditorView.lineWrapping,
         readOnlyRangesExtension(getReadOnlyRanges2),
       ],
     });
@@ -124,12 +125,8 @@ export const Editor = (props) => {
   const getReadOnlyRanges = (editor) => {
     return [
       {
-        from: editor.doc.line(1).from,
-        to: editor.doc.line(2).to,
-      },
-      {
         from: editor.doc.line(4).from,
-        to: editor.doc.line(5).to,
+        to: editor.doc.line(6).to,
       },
     ];
   };
