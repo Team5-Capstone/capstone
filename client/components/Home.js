@@ -16,7 +16,7 @@ export const Home = ({ isLoggedIn }) => {
             <p className='py-4 text-center leading-normal text-lime-400'>
               Welcome to TestBrew
             </p>
-            <h1 className='text-center text-[64px] leading-tight'>
+            <h1 className='text-center font-inter text-[64px] leading-tight'>
               <b>The quickest way to learn unit testing</b>
             </h1>
             <h3 className='pt-8 text-center text-[24px] leading-normal text-slate-500'>

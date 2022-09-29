@@ -9,9 +9,9 @@ module.exports = {
 
   theme: {
     extend: {
-      // fontFamily: {
-      //   'inter': ['Inter'],
-      // },
+      fontFamily: {
+        'inter': ['Inter', 'sans-serif' ],
+      },
     },
    
   },
