@@ -34,9 +34,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => {
             </Link>
 
             <Link
-
-              className='self-center rounded-md bg-gradient-to-r from-lime-500 to-lime-400 px-4 py-2 text-slate-900 transition-all hover:shadow-md hover:shadow-lime-400/40'
-
+              className='filled-button self-center rounded-md bg-gradient-to-r from-lime-500 to-lime-400 px-4 py-2 text-slate-900 transition-all'
               to='/jest'>
               Learn
             </Link>

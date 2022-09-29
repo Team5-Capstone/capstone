@@ -349,12 +349,12 @@ export const Editor = (props) => {
             id='button-container'
             className='flex gap-6 border-t border-slate-700 py-4 px-6'>
             <button
-              className='self-center rounded-lg border border-lime-400 px-4 py-2 text-sm text-lime-400 2xl:text-base'
+              className='self-center rounded-lg border border-lime-400 px-4 py-2 text-sm text-lime-400 transition-all hover:bg-lime-400/10 2xl:text-base'
               onClick={onSubmit}>
               Evaluate Test
             </button>
             <button
-              className='self-center rounded-lg bg-lime-400 px-4 py-2 text-sm  text-slate-900 2xl:text-base'
+              className='filled-button self-center rounded-lg bg-lime-400 px-4 py-2  text-sm text-slate-900 transition-shadow 2xl:text-base'
               onClick={runTest}>
               Submit Test
             </button>
