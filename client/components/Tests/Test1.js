@@ -12,6 +12,7 @@ import axios from 'axios';
 import { fetchPrompts } from '../../store/prompts';
 import { autocompletion } from '@codemirror/autocomplete';
 import { connect } from 'react-redux';
+import Modal from 'react-modal';
 const { v4: uuidv4 } = require('uuid');
 
 const turnOffCtrlS = () => {
@@ -38,15 +39,23 @@ let baseTheme = EditorView.theme({
 export const Editor = (props) => {
   const editor = useRef();
   const editor2 = useRef();
+  const jsCodeRef = useRef();
   const [code, setCode] = useState('');
   const [code2, setCode2] = useState('');
   const [id, setId] = useState(uuidv4());
   const [passedTest, setPassedTest] = useState('false');
   const [response, setResponse] = useState('See your results here!');
+  const [isFunctionShown, setIsFunctionShown] = useState(false);
+  const toggleModal = () => setIsFunctionShown((isShown) => !isShown);
   const { prompts } = props;
 
   const templateTest = prompts[0]?.templateTest;
   const narrative = prompts[0]?.narrative;
+  // const jsCode = prompts[0]?.jsCode;
+  // const [jsCodeState, _setJsCodeState] = useState(jsCode);
+  // TODO: show in modal
+  // const solution = prompts[0]?.solution;
+
   const completions = [
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
@@ -239,8 +248,81 @@ export const Editor = (props) => {
     }
   };
 
+  // Show Function Editor for jsCode and solution, taken from instructions
+  // Instructions editor
+
+  // const onUpdate2 = EditorView.updateListener.of((v) => {
+  //   setCode2(v.state.doc.toString());
+  // });
+
+  // const getReadOnlyRanges2 = (editor2) => {
+  //   return [
+  //     {
+  //       from: undefined,
+  //       to: editor2.doc.line(0).to,
+  //     },
+  //     {
+  //       from: editor2.doc.line(1).from,
+  //       to: editor2.doc.line(100).to,
+  //     },
+  //     {
+  //       from: editor2.doc.line(editor2.doc.lines).from,
+  //       to: undefined,
+  //     },
+  //   ];
+  // };
+
+  useEffect(() => {
+    turnOffCtrlS();
+
+    const state = EditorState.create({
+      doc: narrative || code2,
+      extensions: [
+        basicSetup,
+        oneDark,
+        baseTheme,
+        onUpdate2,
+        javascript(),
+        EditorView.lineWrapping,
+        readOnlyRangesExtension(getReadOnlyRanges2),
+      ],
+    });
+
+    const view2 = new EditorView({
+      state,
+      parent: editor2.current,
+      lineWrapping: true,
+    });
+
+    const fetchStuff = async () => {
+      await props.fetchPrompts();
+    };
+    fetchStuff();
+
+    return () => {
+      view2.destroy();
+    };
+  }, [narrative]);
+
   return (
     <div className='flex h-[90vh] max-h-[90vh] w-full grow flex-col overflow-hidden bg-slate-900'>
+      <Modal
+        isOpen={isFunctionShown}
+        // style={customStyles}
+        contentLabel='testing'>
+        <button
+          onClick={toggleModal}
+          style={{ backgroundColor: 'orange', color: 'black' }}>
+          Close
+        </button>
+        <div style={{ backgroundColor: 'orange', color: 'black' }}>
+          Hello There
+        </div>
+        <div
+          id='instructions-editor'
+          style={{ height: '50%' }}
+          ref={jsCodeRef}></div>
+      </Modal>
       <div className='flex h-[70%] w-full 2xl:h-3/4'>
         <div
           id='left-column'
@@ -353,6 +435,11 @@ export const Editor = (props) => {
                 className='rounded-lg bg-lime-400 py-2 px-4 text-slate-900'
                 onClick={runTest}>
                 Submit Your Test
+              </button>
+              <button
+                className='rounded-lg bg-lime-400 py-2 px-4 text-slate-900'
+                onClick={toggleModal}>
+                Show Function
               </button>
             </div>
           </div>
