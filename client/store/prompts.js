@@ -17,7 +17,7 @@ export const _setPrompts = (prompts) => {
 export const fetchPrompts = () => {
   return async (dispatch) => {
     const prompts = (await axios.get('/api/prompts')).data;
-    console.log(prompts);
+    // console.log(prompts);
     dispatch(_setPrompts(prompts));
   };
 };
