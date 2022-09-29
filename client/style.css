@@ -73,7 +73,7 @@ input {
 }
 
 .cm-line {
-  margin: 0 1rem;
+  padding: 0.25rem 0.5rem !important;
 }
 
 /* .cm-scroller {
@@ -89,13 +89,25 @@ input {
 }
 
 .cm-editor .cm-content {
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
   white-space: pre-wrap;
+  margin: 0;
+  padding: 0;
 }
 
-.cm-activeLineGutter {
-  background-color: #334155 !important;
+.cm-activeLineGutter,
+.cm-activeLine {
+  background-color: #141f38 !important;
+}
+
+.cm-gutterElement {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.cm-gutterElement span {
+  margin-top: -4px;
 }
 
 /* #instructions-editor::-webkit-scrollbar {

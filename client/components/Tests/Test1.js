@@ -27,10 +27,10 @@ const turnOffCtrlS = () => {
 
 let baseTheme = EditorView.theme({
   '.cm-content *': {
-    color: 'white',
+    color: '#e2e8f0',
     whiteSpace: 'normal',
     fontSize: '16px',
-    lineHeight: '1.1',
+    lineHeight: '1.5',
     overflowWrap: 'anywhere',
   },
 });
@@ -183,7 +183,7 @@ export const Editor = (props) => {
       lineWrapping: true,
     });
     const strikeMark = Decoration.mark({
-      attributes: { style: 'background: #3730a3', color: 'red !important' },
+      attributes: { style: 'background: #3730a3' },
     });
     view.dispatch({
       effects: addMarks.of([
@@ -240,8 +240,8 @@ export const Editor = (props) => {
   };
 
   return (
-    <div className='flex h-[90vh] max-h-[90vh] w-full grow flex-col overflow-hidden bg-slate-900'>
-      <div className='flex h-[70%] w-full 2xl:h-3/4'>
+    <div className='flex h-[93vh] max-h-[93vh] w-full grow flex-col overflow-hidden bg-slate-900'>
+      <div className='flex h-3/4 w-full'>
         <div
           id='left-column'
           className='flex w-1/2 flex-col overflow-hidden border-r border-slate-700'>
@@ -274,9 +274,11 @@ export const Editor = (props) => {
             ref={editor2}></div>
         </div>
 
-        <div id='right-column' className='flex h-full w-1/2 flex-col'>
-          <div id='prompt-container' className='overflow-hidden'>
-            <div className='flex gap-3 border-b border-slate-700 bg-slate-900 px-8 pt-4 pb-3 text-slate-400'>
+        <div id='right-column' className='relative flex h-full w-1/2 flex-col'>
+          <div
+            id='prompt-container'
+            className='flex max-h-[40%] min-h-[30%] shrink-0 flex-col overflow-hidden'>
+            <div className='flex gap-3 border-b border-slate-700 bg-slate-900 px-6 pt-4 pb-3 text-slate-400'>
               <svg
                 width='24'
                 height='24'
@@ -305,14 +307,16 @@ export const Editor = (props) => {
             </div>
             <div
               id='prompt'
-              className='overflow-hidden bg-slate-900 px-8 py-4 text-lg'>
-              <div className='max-w-[800px]'>{prompts[0]?.prompt}</div>
+              className='scrollbar grow overflow-y-auto bg-slate-900 px-8 py-4 text-lg text-slate-200'>
+              <div className='max-w-[800px] leading-7'>
+                {prompts[0]?.prompt}
+              </div>
             </div>
           </div>
           <div
             id='your-code-container'
             className='flex grow flex-col overflow-hidden'>
-            <div className='flex gap-3 border-y border-slate-700 bg-slate-900 py-3 px-8 text-slate-400'>
+            <div className='flex gap-3 border-y border-slate-700 bg-slate-900 py-3 px-6 text-slate-400'>
               <svg
                 width='24'
                 height='24'
@@ -340,21 +344,20 @@ export const Editor = (props) => {
               id='your-editor'
               className='scrollbar h-full grow overflow-y-auto overflow-x-hidden bg-[#090e1a]'
               ref={editor}></div>
-
-            <div
-              id='button-container'
-              className='flex gap-6 border-t border-slate-700 bg-slate-900 px-8 py-5'>
-              <button
-                className='rounded-lg border border-lime-400 px-4 py-2 text-lime-400'
-                onClick={onSubmit}>
-                Evaluate Your Test
-              </button>
-              <button
-                className='rounded-lg bg-lime-400 py-2 px-4 text-slate-900'
-                onClick={runTest}>
-                Submit Your Test
-              </button>
-            </div>
+          </div>
+          <div
+            id='button-container'
+            className='flex gap-6 border-t border-slate-700 py-4 px-6'>
+            <button
+              className='self-center rounded-lg border border-lime-400 px-4 py-2 text-sm text-lime-400 2xl:text-base'
+              onClick={onSubmit}>
+              Evaluate Test
+            </button>
+            <button
+              className='self-center rounded-lg bg-lime-400 px-4 py-2 text-sm  text-slate-900 2xl:text-base'
+              onClick={runTest}>
+              Submit Test
+            </button>
           </div>
         </div>
       </div>
@@ -362,26 +365,29 @@ export const Editor = (props) => {
       <div
         className='flex grow flex-col overflow-hidden border-b border-slate-700'
         style={{}}>
-        <div className='flex gap-3 border-y border-slate-700 py-3 px-8 text-slate-400'>
-          <svg
-            width='24'
-            height='24'
-            viewBox='0 0 16 16'
-            fill='none'
-            xmlns='http://www.w3.org/2000/svg'>
-            <rect width='16' height='16' fill='none' />
-            <path
-              d='M13 2.00391H3C2.73478 2.00391 2.48043 2.10926 2.29289 2.2968C2.10536 2.48434 2 2.73869 2 3.00391V13.0039C2 13.2691 2.10536 13.5235 2.29289 13.711C2.48043 13.8985 2.73478 14.0039 3 14.0039H13C13.2652 14.0039 13.5196 13.8985 13.7071 13.711C13.8946 13.5235 14 13.2691 14 13.0039V3.00391C14 2.73869 13.8946 2.48434 13.7071 2.2968C13.5196 2.10926 13.2652 2.00391 13 2.00391ZM13 3.00391V5.00391H3V3.00391H13ZM3 13.0039V6.00391H13V13.0039H3Z'
-              fill='#a3e635'
-            />
-            <path
-              d='M5.38 8.08891L6.79 9.50391L5.38 10.9189L6.085 11.6239L8.205 9.50391L6.085 7.38391L5.38 8.08891Z'
-              fill='#a3e635'
-            />
-          </svg>
-          Result
+        <div className='flex items-center border-y border-slate-700 px-8 py-3 text-slate-400'>
+          <div className='flex items-center gap-3'>
+            <svg
+              width='24'
+              height='24'
+              viewBox='0 0 16 16'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'>
+              <rect width='16' height='16' fill='none' />
+              <path
+                d='M13 2.00391H3C2.73478 2.00391 2.48043 2.10926 2.29289 2.2968C2.10536 2.48434 2 2.73869 2 3.00391V13.0039C2 13.2691 2.10536 13.5235 2.29289 13.711C2.48043 13.8985 2.73478 14.0039 3 14.0039H13C13.2652 14.0039 13.5196 13.8985 13.7071 13.711C13.8946 13.5235 14 13.2691 14 13.0039V3.00391C14 2.73869 13.8946 2.48434 13.7071 2.2968C13.5196 2.10926 13.2652 2.00391 13 2.00391ZM13 3.00391V5.00391H3V3.00391H13ZM3 13.0039V6.00391H13V13.0039H3Z'
+                fill='#a3e635'
+              />
+              <path
+                d='M5.38 8.08891L6.79 9.50391L5.38 10.9189L6.085 11.6239L8.205 9.50391L6.085 7.38391L5.38 8.08891Z'
+                fill='#a3e635'
+              />
+            </svg>
+            Results
+          </div>
         </div>
-        <div className='scrollbar grow bg-[#090e1a] px-8 py-4 font-mono'>
+
+        <div className='scrollbar grow overflow-y-auto bg-[#090e1a] px-8 py-4 font-mono text-slate-200'>
           {response}
         </div>
       </div>

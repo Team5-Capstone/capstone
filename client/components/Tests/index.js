@@ -61,7 +61,7 @@ const PaginatedTests = () => {
       </div>
       <CurrentTest />
       <div
-        className='flex max-h-[10vh] items-center justify-center gap-4 p-8'
+        className='flex max-h-[7vh] items-center justify-center gap-4 p-8'
         style={{}}>
         <button
           onClick={onPrevious}
@@ -100,7 +100,7 @@ const PaginatedTests = () => {
               onClick={() => onNumber(ix)}
               className={`${styleOnCurrent(
                 ix,
-              )}  flex h-8 w-8 cursor-pointer items-center justify-center self-center rounded-lg bg-slate-700 transition-all hover:bg-slate-600`}>
+              )}  flex h-8 w-8 cursor-pointer items-center justify-center self-center rounded-lg transition-all hover:bg-slate-600`}>
               {`  ${ix + 1}  `}
             </span>
           );
