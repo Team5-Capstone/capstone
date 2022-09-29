@@ -23,7 +23,8 @@ async function seed() {
   const prompts = await Promise.all([
     TestingPrompt.create({
       narrative: `Welcome to Exercise #1!
-    
+
+
 It often makes sense to write Unit Tests first and then write as much code as needed to allow the Unit Tests to pass.
 
 Doing this moves towards a practice known as Test-Driven Development (TDD).
@@ -40,7 +41,7 @@ test('two plus two is four', () => {
   expect(2 + 2).toBe(4);
 });
 
-Now, take a look at the prompt and try to fill out the unit test below:
+Now, take a look at the prompt and try to fill out the unit test:
     `,
       prompt: `Please create a function called helloWorld where when a user passes the string “World” to this function, the function console.logs the string “Hello, World!”.
     `,
