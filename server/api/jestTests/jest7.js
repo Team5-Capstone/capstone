@@ -27,9 +27,14 @@ router.post('/', async (req, res) => {
         node.arguments.map((argument) => {
           let regex = /^.*?\bapples\b$/im;
           let regex2 = /^.*?\bshoppinglist\b$/im;
+          let regex3 = /^.*?\bshopping\b$/im;
+          let regex4 = /^.*?\blist\b$/im;
+
           if (
             argument.value?.trim().match(regex) ||
-            argument.value?.trim().match(regex2)
+            argument.value?.trim().match(regex2) ||
+            argument.value?.trim().match(regex3) ||
+            argument.value?.trim().match(regex4)
           ) {
             testTestPassed = true;
           }

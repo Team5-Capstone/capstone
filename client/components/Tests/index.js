@@ -38,19 +38,19 @@ const PaginatedTests = () => {
   const onNumber = (ix) => {
     setCurrentTestIx(ix);
   };
-  console.log(CurrentTest);
+  // console.log(CurrentTest);
 
   const styleOnCurrent = (ix) =>
     ix === currentTestIx && 'bg-lime-400 text-slate-900 pointer-events-none';
 
   useEffect(() => {
     window.localStorage.setItem('index', currentTestIx);
-    console.log(currentTestIx, window.localStorage.index * 1);
+    // console.log(currentTestIx, window.localStorage.index * 1);
   }, [currentTestIx]);
 
   useEffect(() => {
     window.localStorage.setItem('index', currentTestIx);
-    console.log(currentTestIx, window.localStorage.index * 1);
+    // console.log(currentTestIx, window.localStorage.index * 1);
   }, [currentTestIx]);
 
   return (

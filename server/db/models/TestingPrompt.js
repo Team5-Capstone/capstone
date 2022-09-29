@@ -19,6 +19,9 @@ const TestingPrompt = db.define('testingPrompt', {
   templateTest: {
     type: Sequelize.TEXT,
   },
+  solution: {
+    type: Sequelize.TEXT,
+  },
 });
 
 module.exports = TestingPrompt;

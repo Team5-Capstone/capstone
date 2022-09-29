@@ -126,11 +126,7 @@ export const Editor = (props) => {
   const getReadOnlyRanges = (editor) => {
     return [
       {
-        from: editor.doc.line(1).from,
-        to: editor.doc.line(2).to,
-      },
-      {
-        from: editor.doc.line(4).from,
+        from: editor.doc.line(2).from,
         to: editor.doc.line(6).to,
       },
     ];

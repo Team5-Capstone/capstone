@@ -6,7 +6,7 @@ const util = require('util');
 
 const jsCode = `
 function isTruthy(value){
-  if (value == true) {
+  if (value) {
     return true;
   } 
 };`;
@@ -15,7 +15,6 @@ function isTruthy(value){
 
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body.code);
     let ast = acorn.parse(req.body.code, {
       ecmaVersion: 2020,
     });
@@ -24,8 +23,15 @@ router.post('/', async (req, res) => {
     walk.full(ast, (node) => {
       if (node.type === 'CallExpression' && node.callee?.name === 'expect') {
         node.arguments.map((argument) => {
-          if (argument.value) {
-            expectTestPassed = true;
+          if (
+            argument.type === 'CallExpression' &&
+            argument.callee?.name === 'isTruthy'
+          ) {
+            argument.arguments.map((argument) => {
+              if (argument.value) {
+                expectTestPassed = true;
+              }
+            });
           }
         });
       }
