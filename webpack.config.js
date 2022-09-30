@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   entry: ['./client/index.js'],
   output: {
@@ -17,20 +19,26 @@ module.exports = {
       },
       {
         test: /\.css$/i,
+        include: path.resolve(__dirname, 'client'),
         use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
-      // {
-      //   test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-      //   use: [
-      //     {
-      //       loader: 'file-loader',
-      //       options: {
-      //         name: '[name].[ext]',
-      //         publicPath: 'fonts/',
-      //       },
-      //     },
-      //   ],
-      // },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        type: 'asset/resource',
+        generator: {
+          filename: './fonts/[name][ext]',
+        },
+        // use: [
+        //   {
+        //     loader: 'url-loader',
+        //     options: {
+        //       name: '[name].[ext]',
+        //       outputPath: 'public/fonts',
+        //       publicPath: './../fonts/',
+        //     },
+        //   },
+        // ],
+      },
     ],
   },
 };
