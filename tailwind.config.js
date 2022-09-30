@@ -12,7 +12,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'inter': ['Inter', 'sans-serif' ],
+        'inter': ['Inter', 'system-ui', 'sans-serif' ],
       },
     },
    
