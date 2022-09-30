@@ -15,10 +15,10 @@ export const Home = ({ isLoggedIn }) => {
       <section className=''>
         <div className='left-0 mt-[-72px] flex min-h-[70vh] w-full flex-col items-center justify-center border-slate-700 bg-gradient-to-b from-slate-800 to-slate-900 pt-[72px]'>
           <div className='max-w-[700px] py-10 text-center lg:w-3/4'>
-            <p className='py-4 text-center leading-normal text-lime-400'>
+            <p className='py-4 text-center font-inter leading-normal text-lime-400'>
               Welcome to TestBrew
             </p>
-            <h1 className='text-center font-inter text-[64px] leading-tight'>
+            <h1 className='text-center text-[64px] leading-tight'>
               <b>The quickest way to learn unit testing</b>
             </h1>
             <h3 className='pt-8 text-center text-[24px] leading-normal text-slate-500'>
