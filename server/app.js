@@ -20,7 +20,7 @@ app.get('/', (_req, res) =>
 
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, '..', 'public')));
-app.use(express.static(path.join(__dirname, '..', 'public/fonts')));
+// app.use(express.static(path.join(__dirname, '..', 'public/fonts')));
 
 // any remaining requests with an extension (.js, .css, etc.) send 404
 app.use((req, res, next) => {
