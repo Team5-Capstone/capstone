@@ -13,6 +13,7 @@ import { fetchPrompts } from '../../store/prompts';
 import { autocompletion } from '@codemirror/autocomplete';
 import { connect } from 'react-redux';
 const { v4: uuidv4 } = require('uuid');
+import Modal from 'react-modal';
 
 const turnOffCtrlS = () => {
   document.addEventListener('keydown', (e) => {
@@ -230,8 +231,60 @@ export const Editor = (props) => {
     }
   };
 
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // subtitle.style.color = '#f00';
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  Modal.setAppElement('#app');
+
   return (
     <div className='flex h-[93vh] max-h-[93vh] w-full grow flex-col overflow-hidden bg-slate-900'>
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(255,255,255,0.1',
+            backdropFilter: 'blur(8px)',
+          },
+        }}
+        contentLabel='Example Modal'
+        className='mx-auto mt-[96px] flex max-w-[60vw] flex-col overflow-hidden rounded-xl bg-slate-900 text-white shadow-xl'>
+        <div>
+          <div className='flex justify-between border-b border-slate-700 px-8 py-5'>
+            <h2 className='text-2xl'>Solution Code</h2>
+            <button onClick={closeModal}>
+              <svg
+                width='32'
+                height='32'
+                viewBox='0 0 16 16'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'>
+                <rect width='16' height='16' fill='none' />
+                <path
+                  d='M12 4.7L11.3 4L8 7.3L4.7 4L4 4.7L7.3 8L4 11.3L4.7 12L8 8.7L11.3 12L12 11.3L8.7 8L12 4.7Z'
+                  fill='#a3e635'
+                />
+              </svg>
+            </button>
+          </div>
+          <div className='min-h-[300px] bg-[#090e1a] p-8 font-mono text-slate-200'>
+            {prompts[5]?.solution}
+          </div>
+        </div>
+      </Modal>
       <div className='flex h-3/4 w-full'>
         <div
           id='left-column'
@@ -348,6 +401,11 @@ export const Editor = (props) => {
               className='filled-button self-center rounded-lg bg-lime-400 px-4 py-2 text-sm text-slate-900 transition-shadow 2xl:text-base'
               onClick={runTest}>
               Submit Test
+            </button>
+            <button
+              className='self-center  py-2  text-sm text-lime-400 transition-shadow 2xl:text-base'
+              onClick={openModal}>
+              Show Solution
             </button>
           </div>
         </div>
