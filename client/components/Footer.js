@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import { logout } from '../store';
 
 const Footer = ({ handleClick }) => (
-  <div className='flex min-h-[30vh] w-full flex-none flex-col bg-slate-800 pb-8'>
-    <div className='mx-auto w-full max-w-[1440px] grow p-8'>
-      <div className='flex w-full justify-between px-8 pb-4'>
-        <div className='align-start flex w-1/4 flex-col justify-between self-stretch'>
+  <div className='flex min-h-[30vh] w-full flex-none flex-col bg-slate-900 pt-4 pb-8'>
+    <div className='mx-auto w-full max-w-[1440px] grow py-8'>
+      <div className='flex w-full justify-between px-4 pb-4'>
+        <div className='flex w-1/4 flex-col justify-between self-stretch'>
           <img src='/boba-cup.svg' className='h-20 self-start' />
         </div>
         <div className='flex flex-col gap-y-3'>
@@ -69,7 +69,7 @@ const Footer = ({ handleClick }) => (
       </div>
     </div>
     <hr className='border-slate-700' />
-    <div className='mx-auto flex w-full max-w-[1440px] grow items-center justify-between py-8 px-16'>
+    <div className='mx-auto flex w-full max-w-[1440px] grow items-center justify-between py-8 px-4'>
       <div className='flex gap-8'>
         <img src='/logo-github.svg' className='h-8 self-center' />
         <img src='/logo-discord.svg' className='h-8 self-center' />

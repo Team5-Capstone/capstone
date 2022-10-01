@@ -27,6 +27,9 @@
     font-style: italic;
     src: url('../public/fonts/Inter-BoldItalic.woff2');
   }
+  html {
+    @apply font-inter;
+  }
 }
 
 /* @layer utilities {
@@ -73,7 +76,7 @@ input {
 }
 
 .cm-line {
-  margin: 0 1rem;
+  padding: 0.25rem 0.5rem !important;
 }
 
 /* .cm-scroller {
@@ -89,13 +92,25 @@ input {
 }
 
 .cm-editor .cm-content {
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
   white-space: pre-wrap;
+  margin: 0;
+  padding: 0;
 }
 
-.cm-activeLineGutter {
-  background-color: #334155 !important;
+.cm-activeLineGutter,
+.cm-activeLine {
+  background-color: #141f38 !important;
+}
+
+.cm-gutterElement {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.cm-gutterElement span {
+  margin-top: -4px;
 }
 
 /* #instructions-editor::-webkit-scrollbar {
@@ -124,3 +139,42 @@ input {
 /* .scrollbar {
   background-color: rgba(255, 255, 255, 0.1);
 } */
+
+.filled-button:hover {
+  box-shadow: 0px 0px 20px rgba(163, 230, 53, 0.5);
+}
+
+.lang-logo {
+  filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0));
+}
+
+.lang-logo:hover {
+  filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.4));
+}
+
+.lang-logo-active {
+  filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.4));
+}
+
+li::marker {
+  color: #a3e635;
+}
+
+.gradient-text {
+  /* Fallback: Set a background color. */
+  background-color: red;
+
+  /* Create the gradient. */
+  background-image: linear-gradient(25deg, #84cc16, #a3e635);
+
+  /* Set the background size and repeat properties. */
+  background-size: 100%;
+  background-repeat: repeat;
+
+  /* Use the text as a mask for the background. */
+  /* This will show the gradient as a text color rather than element bg. */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+}
