@@ -271,7 +271,7 @@ export const Editor = (props) => {
             </button>
           </div>
           <div className='min-h-[300px] bg-[#090e1a] p-8 font-mono text-slate-200'>
-            {prompts[0]?.solution}
+            {prompts[9]?.solution}
           </div>
         </div>
       </Modal>

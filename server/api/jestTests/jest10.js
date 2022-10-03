@@ -108,8 +108,8 @@ router.post('/', async (req, res) => {
       toBeTestPassed
     ) {
       res.json(`
-      toEqual matcher is correct.
-      not.toBe matcher is correct.
+      expect matcher is correct.
+      toBe matcher is correct.
       expect functions are correct.
       That looks right! Go ahead and submit your test!`);
     } else if (
