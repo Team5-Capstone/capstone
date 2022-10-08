@@ -16,6 +16,7 @@ import { me } from './store';
 // import Test9 from './components/Tests/Test9';
 // import Test10 from './components/Tests/Test10';
 import PaginatedTests from './components/Tests';
+import TestGen from './components/Tests/TestGen';
 
 /**
  * COMPONENT
@@ -34,6 +35,7 @@ class Routes extends Component {
           <Switch>
             <Route path='/' exact component={Home} />
             <Route path='/jest' exact component={PaginatedTests} />
+            <Route path='/dynamic/:promptOrderId' component={TestGen} />
             {/* <Route path='/jest2' exact component={Test2} />
             <Route path='/jest3' exact component={Test3} />
             <Route path='/jest4' exact component={Test4} />
