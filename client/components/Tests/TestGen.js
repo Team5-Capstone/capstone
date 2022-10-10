@@ -453,7 +453,7 @@ export const Editor = (props) => {
 };
 
 const mapStateToProps = (props, { match }) => {
-  const promptIndex = match.params.promptIndex;
+  const promptIndex = match.params.promptIndex - 1;
   const { prompts } = props;
   const singlePrompt = prompts[promptIndex] || {};
   console.log('prompts', promptIndex, prompts, singlePrompt);
