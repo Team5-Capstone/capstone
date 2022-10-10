@@ -42,8 +42,8 @@ export const Editor = (props) => {
   const [response, setResponse] = useState('See your results here!');
   const { prompts } = props;
 
-  const templateTest = prompts[1]?.templateTest;
-  const narrative = prompts[1]?.narrative;
+  const templateTest = prompts[2]?.templateTest;
+  const narrative = prompts[2]?.narrative;
   const completions = [
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
@@ -130,8 +130,12 @@ export const Editor = (props) => {
         to: editor.doc.line(2).to,
       },
       {
-        from: editor.doc.line(5).from,
+        from: editor.doc.line(4).from,
         to: editor.doc.line(6).to,
+      },
+      {
+        from: editor.doc.line(8).from,
+        to: editor.doc.line(11).to,
       },
     ];
   };
@@ -181,10 +185,10 @@ export const Editor = (props) => {
     });
     view.dispatch({
       effects: addMarks.of([
-        strikeMark.range(90, 103),
-        strikeMark.range(115, 128),
-        strikeMark.range(147, 160),
-        strikeMark.range(173, 186),
+        strikeMark.range(137, 150),
+        strikeMark.range(159, 172),
+        strikeMark.range(278, 291),
+        strikeMark.range(300, 313),
       ]),
     });
 
@@ -200,7 +204,7 @@ export const Editor = (props) => {
 
   const fetchData = () => {
     axios
-      .post('/api/jestTests/jest2', {
+      .post('/api/jestTests/jest3', {
         code,
       })
       .then((res) => {
@@ -221,7 +225,7 @@ export const Editor = (props) => {
     if (passedTest === 'true') {
       setId(uuidv4());
       axios
-        .post('/api/jestTests/jest2/results', {
+        .post('/api/jestTests/jest3/results', {
           code,
           id,
           passedTest,
@@ -234,6 +238,7 @@ export const Editor = (props) => {
       setResponse('Get the test to pass before you submit!');
     }
   };
+
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {
@@ -284,7 +289,7 @@ export const Editor = (props) => {
             </button>
           </div>
           <div className='min-h-[300px] bg-[#090e1a] p-8 font-mono text-slate-200'>
-            {prompts[1]?.solution}
+            {prompts[2]?.solution}
           </div>
         </div>
       </Modal>
@@ -356,7 +361,7 @@ export const Editor = (props) => {
               id='prompt'
               className='scrollbar grow overflow-y-auto bg-slate-900 px-8 py-4 text-lg text-slate-200'>
               <div className='max-w-[800px] leading-7'>
-                {prompts[1]?.prompt}
+                {prompts[2]?.prompt}
               </div>
             </div>
           </div>
@@ -401,7 +406,7 @@ export const Editor = (props) => {
               Evaluate Test
             </button>
             <button
-              className='filled-button self-center rounded-lg bg-lime-400 px-4 py-2 text-sm text-slate-900 transition-shadow 2xl:text-base'
+              className='filled-button self-center rounded-lg bg-lime-400 px-4 py-2 text-sm  text-slate-900 transition-shadow 2xl:text-base'
               onClick={runTest}>
               Submit Test
             </button>
