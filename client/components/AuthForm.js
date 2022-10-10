@@ -39,7 +39,7 @@ const AuthForm = (props) => {
             <div className='flex items-center justify-between'>
               <div>
                 <button
-                  className="className='hover:shadow-lime-400/40' rounded-md bg-gradient-to-r from-lime-500 to-lime-400 px-4 py-2 text-slate-900 transition-all hover:shadow-md"
+                  className='rounded-md bg-gradient-to-r from-lime-500 to-lime-400 px-4 py-2 text-slate-900 transition-all hover:shadow-md'
                   type='submit'>
                   {displayName}
                 </button>
