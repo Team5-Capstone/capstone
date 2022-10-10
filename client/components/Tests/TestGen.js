@@ -28,11 +28,7 @@ const turnOffCtrlS = () => {
 
 let baseTheme = EditorView.theme({
   '.cm-content *': {
-    color: '#e2e8f0',
-    whiteSpace: 'normal',
-    fontSize: '16px',
-    lineHeight: '1.5',
-    overflowWrap: 'anywhere',
+    color: 'white',
   },
 });
 
@@ -46,13 +42,15 @@ export const Editor = (props) => {
   const [response, setResponse] = useState('See your results here!');
   const { prompts } = props;
 
-  const templateTest = prompts[0]?.templateTest;
-  const narrative = prompts[0]?.narrative;
+  const templateTest = prompts[1]?.templateTest;
+  const narrative = prompts[1]?.narrative;
   const completions = [
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
     { label: 'test', type: 'keyWord' },
+    { label: 'describe', type: 'keyword' },
     { label: 'toEqual', type: 'keyWord' },
+    { label: 'not', type: 'keyWord' },
   ];
 
   function myCompletions(context) {
@@ -107,7 +105,6 @@ export const Editor = (props) => {
     const view2 = new EditorView({
       state,
       parent: editor2.current,
-      lineWrapping: true,
     });
 
     const fetchStuff = async () => {
@@ -133,8 +130,8 @@ export const Editor = (props) => {
         to: editor.doc.line(2).to,
       },
       {
-        from: editor.doc.line(4).from,
-        to: editor.doc.line(5).to,
+        from: editor.doc.line(5).from,
+        to: editor.doc.line(6).to,
       },
     ];
   };
@@ -178,18 +175,16 @@ export const Editor = (props) => {
       ],
     });
 
-    const view = new EditorView({
-      state,
-      parent: editor.current,
-      lineWrapping: true,
-    });
+    const view = new EditorView({ state, parent: editor.current });
     const strikeMark = Decoration.mark({
       attributes: { style: 'background: #3730a3' },
     });
     view.dispatch({
       effects: addMarks.of([
-        strikeMark.range(109, 122),
-        strikeMark.range(131, 144),
+        strikeMark.range(90, 103),
+        strikeMark.range(115, 128),
+        strikeMark.range(147, 160),
+        strikeMark.range(173, 186),
       ]),
     });
 
@@ -205,7 +200,7 @@ export const Editor = (props) => {
 
   const fetchData = () => {
     axios
-      .post('/api/jestTests/jest1', {
+      .post('/api/jestTests/jest2', {
         code,
       })
       .then((res) => {
@@ -226,7 +221,7 @@ export const Editor = (props) => {
     if (passedTest === 'true') {
       setId(uuidv4());
       axios
-        .post('/api/jestTests/jest1/results', {
+        .post('/api/jestTests/jest2/results', {
           code,
           id,
           passedTest,
@@ -239,7 +234,6 @@ export const Editor = (props) => {
       setResponse('Get the test to pass before you submit!');
     }
   };
-
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {
@@ -290,11 +284,10 @@ export const Editor = (props) => {
             </button>
           </div>
           <div className='min-h-[300px] bg-[#090e1a] p-8 font-mono text-slate-200'>
-            {prompts[0]?.solution}
+            {prompts[1]?.solution}
           </div>
         </div>
       </Modal>
-
       <div className='flex h-3/4 w-full'>
         <div
           id='left-column'
@@ -363,7 +356,7 @@ export const Editor = (props) => {
               id='prompt'
               className='scrollbar grow overflow-y-auto bg-slate-900 px-8 py-4 text-lg text-slate-200'>
               <div className='max-w-[800px] leading-7'>
-                {prompts[0]?.prompt}
+                {prompts[1]?.prompt}
               </div>
             </div>
           </div>
@@ -408,7 +401,7 @@ export const Editor = (props) => {
               Evaluate Test
             </button>
             <button
-              className='filled-button self-center rounded-lg bg-lime-400 px-4 py-2  text-sm text-slate-900 transition-shadow 2xl:text-base'
+              className='filled-button self-center rounded-lg bg-lime-400 px-4 py-2 text-sm text-slate-900 transition-shadow 2xl:text-base'
               onClick={runTest}>
               Submit Test
             </button>
@@ -451,24 +444,6 @@ export const Editor = (props) => {
         </div>
       </div>
     </div>
-    // <div className='p-5'>
-    //   <div ref={editor2}></div>
-    //   <div className='p-5 font-bold'>{prompts[0]?.prompt}</div>
-    //   <div ref={editor}></div>
-    //   <button className='m-5 bg-gray-400 p-1' onClick={onSubmit}>
-    //     Evaluate Your Test
-    //   </button>
-    //   <button className='m-5 bg-gray-400 p-1' onClick={runTest}>
-    //     Submit Your Test
-    //   </button>
-    //   <div
-    //     className='p-5'
-    //     style={{
-    //       whiteSpace: 'pre-wrap',
-    //     }}>
-    //     {response}
-    //   </div>
-    // </div>
   );
 };
 
