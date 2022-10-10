@@ -40,10 +40,10 @@ export const Editor = (props) => {
   const [id, setId] = useState(uuidv4());
   const [passedTest, setPassedTest] = useState('false');
   const [response, setResponse] = useState('See your results here!');
-  const { prompts } = props;
+  const { singlePrompt } = props;
 
-  const templateTest = prompts[2]?.templateTest;
-  const narrative = prompts[2]?.narrative;
+  const templateTest = singlePrompt.templateTest;
+  const narrative = singlePrompt.narrative;
   const completions = [
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
@@ -289,7 +289,7 @@ export const Editor = (props) => {
             </button>
           </div>
           <div className='min-h-[300px] bg-[#090e1a] p-8 font-mono text-slate-200'>
-            {prompts[2]?.solution}
+            {singlePrompt.solution}
           </div>
         </div>
       </Modal>
@@ -361,7 +361,7 @@ export const Editor = (props) => {
               id='prompt'
               className='scrollbar grow overflow-y-auto bg-slate-900 px-8 py-4 text-lg text-slate-200'>
               <div className='max-w-[800px] leading-7'>
-                {prompts[2]?.prompt}
+                {singlePrompt.prompt}
               </div>
             </div>
           </div>
@@ -452,9 +452,14 @@ export const Editor = (props) => {
   );
 };
 
-const mapStateToProps = ({ prompts }) => {
+const mapStateToProps = (props, { match }) => {
+  const promptIndex = match.params.promptIndex;
+  const { prompts } = props;
+  const singlePrompt = prompts[promptIndex] || {};
+  console.log('prompts', promptIndex, prompts, singlePrompt);
   return {
     prompts,
+    singlePrompt,
   };
 };
 

@@ -35,7 +35,7 @@ class Routes extends Component {
           <Switch>
             <Route path='/' exact component={Home} />
             <Route path='/jest' exact component={PaginatedTests} />
-            <Route path='/dynamic/:promptOrderId' component={TestGen} />
+            <Route path='/dynamic/:promptIndex' component={TestGen} />
             {/* <Route path='/jest2' exact component={Test2} />
             <Route path='/jest3' exact component={Test3} />
             <Route path='/jest4' exact component={Test4} />
