@@ -36,7 +36,7 @@ let baseTheme = EditorView.theme({
   },
 });
 
-export const Editor = ({ prompt, fetchPrompts }) => {
+export const Editor = (props) => {
   const editor = useRef();
   const editor2 = useRef();
   const [code, setCode] = useState('');
@@ -44,9 +44,10 @@ export const Editor = ({ prompt, fetchPrompts }) => {
   const [id, setId] = useState(uuidv4());
   const [passedTest, setPassedTest] = useState('false');
   const [response, setResponse] = useState('See your results here!');
+  const { prompts } = props;
 
-  const templateTest = prompt.templateTest;
-  const narrative = prompt.narrative;
+  const templateTest = prompts[0]?.templateTest;
+  const narrative = prompts[0]?.narrative;
   const completions = [
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
@@ -110,7 +111,7 @@ export const Editor = ({ prompt, fetchPrompts }) => {
     });
 
     const fetchStuff = async () => {
-      await fetchPrompts();
+      await props.fetchPrompts();
     };
     fetchStuff();
 
@@ -193,7 +194,7 @@ export const Editor = ({ prompt, fetchPrompts }) => {
     });
 
     const fetchStuff = async () => {
-      await fetchPrompts();
+      await props.fetchPrompts();
     };
     fetchStuff();
 
@@ -289,7 +290,7 @@ export const Editor = ({ prompt, fetchPrompts }) => {
             </button>
           </div>
           <div className='min-h-[300px] bg-[#090e1a] p-8 font-mono text-slate-200'>
-            {prompt.solution}
+            {prompts[0]?.solution}
           </div>
         </div>
       </Modal>
@@ -361,7 +362,9 @@ export const Editor = ({ prompt, fetchPrompts }) => {
             <div
               id='prompt'
               className='scrollbar grow overflow-y-auto bg-slate-900 px-8 py-4 text-lg text-slate-200'>
-              <div className='max-w-[800px] leading-7'>{prompt.prompt}</div>
+              <div className='max-w-[800px] leading-7'>
+                {prompts[0]?.prompt}
+              </div>
             </div>
           </div>
           <div
@@ -448,16 +451,30 @@ export const Editor = ({ prompt, fetchPrompts }) => {
         </div>
       </div>
     </div>
+    // <div className='p-5'>
+    //   <div ref={editor2}></div>
+    //   <div className='p-5 font-bold'>{prompts[0]?.prompt}</div>
+    //   <div ref={editor}></div>
+    //   <button className='m-5 bg-gray-400 p-1' onClick={onSubmit}>
+    //     Evaluate Your Test
+    //   </button>
+    //   <button className='m-5 bg-gray-400 p-1' onClick={runTest}>
+    //     Submit Your Test
+    //   </button>
+    //   <div
+    //     className='p-5'
+    //     style={{
+    //       whiteSpace: 'pre-wrap',
+    //     }}>
+    //     {response}
+    //   </div>
+    // </div>
   );
 };
 
-const mapStateToProps = ({ prompts }, { match: { params } }) => {
-  console.log(prompts);
-  const promptOrderId = 1 * params.promptOrderId;
-  const prompt = prompts[promptOrderId - 1] || {};
+const mapStateToProps = ({ prompts }) => {
   return {
     prompts,
-    prompt,
   };
 };
 
