@@ -226,11 +226,15 @@ export const Editor = (props) => {
       setResponse('Get the test to pass before you submit!');
     }
   };
-
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [jsModalIsOpen, jsIsOpen] = React.useState(false);
 
-  function openModal() {
+  function openSolutionModal() {
     setIsOpen(true);
+  }
+
+  function openJSCodeModal() {
+    jsIsOpen(true);
   }
 
   function afterOpenModal() {
@@ -240,6 +244,7 @@ export const Editor = (props) => {
 
   function closeModal() {
     setIsOpen(false);
+    jsIsOpen(false);
   }
 
   Modal.setAppElement('#app');
@@ -278,6 +283,44 @@ export const Editor = (props) => {
           </div>
           <div className='min-h-[300px] bg-[#090e1a] p-8 font-mono text-slate-200'>
             {prompts[6]?.solution}
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={jsModalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(255,255,255,0.1',
+            backdropFilter: 'blur(8px)',
+          },
+        }}
+        contentLabel='Example Modal'
+        className='mx-auto mt-[96px] flex max-w-[60vw] flex-col overflow-hidden rounded-xl bg-slate-900 text-white shadow-xl'>
+        <div>
+          <div className='flex justify-between border-b border-slate-700 px-8 py-5'>
+            <h2 className='text-2xl'>
+              JavaScript Code Your Unit Test Will Run Against
+            </h2>
+            <button onClick={closeModal}>
+              <svg
+                width='32'
+                height='32'
+                viewBox='0 0 16 16'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'>
+                <rect width='16' height='16' fill='none' />
+                <path
+                  d='M12 4.7L11.3 4L8 7.3L4.7 4L4 4.7L7.3 8L4 11.3L4.7 12L8 8.7L11.3 12L12 11.3L8.7 8L12 4.7Z'
+                  fill='#a3e635'
+                />
+              </svg>
+            </button>
+          </div>
+          <div className='min-h-[300px] bg-[#090e1a] p-8 font-mono text-slate-200'>
+            {prompts[6]?.jsCode}
           </div>
         </div>
       </Modal>
@@ -399,9 +442,14 @@ export const Editor = (props) => {
               Submit Test
             </button>
             <button
-              className='self-center  py-2  text-sm text-lime-400 transition-shadow 2xl:text-base'
-              onClick={openModal}>
+              className='self-center rounded-lg border border-lime-400 px-4 py-2 text-sm text-lime-400 transition-all hover:bg-lime-400/10 2xl:text-base'
+              onClick={openSolutionModal}>
               Show Solution
+            </button>
+            <button
+              className='filled-button self-center rounded-lg bg-lime-400 px-4 py-2  text-sm text-slate-900 transition-shadow 2xl:text-base'
+              onClick={openJSCodeModal}>
+              Show JavaScript Code
             </button>
           </div>
         </div>
