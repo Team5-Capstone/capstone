@@ -15,13 +15,7 @@ const Footer = ({ handleClick }) => (
             Resources
           </Link>
           <Link className='m-0 p-0 text-slate-500' to='#' onClick={handleClick}>
-            Item
-          </Link>
-          <Link className='m-0 p-0 text-slate-500' to='#' onClick={handleClick}>
-            Item
-          </Link>
-          <Link className='m-0 p-0 text-slate-500' to='#' onClick={handleClick}>
-            Item
+            Coming Soon
           </Link>
         </div>
         <div className='flex flex-col gap-y-3'>
@@ -29,13 +23,7 @@ const Footer = ({ handleClick }) => (
             Product
           </Link>
           <Link className='m-0 p-0 text-slate-500' to='#' onClick={handleClick}>
-            Item
-          </Link>
-          <Link className='m-0 p-0 text-slate-500' to='#' onClick={handleClick}>
-            Item
-          </Link>
-          <Link className='m-0 p-0 text-slate-500' to='#' onClick={handleClick}>
-            Item
+            Coming Soon
           </Link>
         </div>
         <div className='flex flex-col gap-y-3'>
@@ -43,13 +31,7 @@ const Footer = ({ handleClick }) => (
             About
           </Link>
           <Link className='m-0 p-0 text-slate-500' to='#' onClick={handleClick}>
-            Item
-          </Link>
-          <Link className='m-0 p-0 text-slate-500' to='#' onClick={handleClick}>
-            Item
-          </Link>
-          <Link className='m-0 p-0 text-slate-500' to='#' onClick={handleClick}>
-            Item
+            Coming Soon
           </Link>
         </div>
         <div className='flex flex-col gap-y-3'>
@@ -57,13 +39,7 @@ const Footer = ({ handleClick }) => (
             Support
           </Link>
           <Link className='m-0 p-0 text-slate-500' to='#' onClick={handleClick}>
-            Item
-          </Link>
-          <Link className='m-0 p-0 text-slate-500' to='#' onClick={handleClick}>
-            Item
-          </Link>
-          <Link className='m-0 p-0 text-slate-500' to='#' onClick={handleClick}>
-            Item
+            Coming Soon
           </Link>
         </div>
       </div>
