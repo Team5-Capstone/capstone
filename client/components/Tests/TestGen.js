@@ -123,22 +123,33 @@ export const Editor = (props) => {
     setCode(v.state.doc.toString());
   });
 
-  const getReadOnlyRanges = (editor) => {
-    return [
-      {
-        from: editor.doc.line(1).from,
-        to: editor.doc.line(2).to,
-      },
-      {
-        from: editor.doc.line(4).from,
-        to: editor.doc.line(6).to,
-      },
-      {
-        from: editor.doc.line(8).from,
-        to: editor.doc.line(11).to,
-      },
-    ];
+  const readOnlyRanges = [
+    [1, 2],
+    [4, 6],
+    [8, 11],
+  ]; // easier to read and input, would be helpful for a future admin test editor
+  const getReadOnlyRangesForEditor = (readOnlyRanges, editor) => {
+    return readOnlyRanges.map((range) => ({
+      from: editor.doc.line(range[0]).from,
+      to: editor.doc.line(range[1]).from,
+    }));
   };
+  // const _getReadOnlyRanges = (editor) => {
+  //   return [
+  //     {
+  //       from: editor.doc.line(1).from,
+  //       to: editor.doc.line(2).to,
+  //     },
+  //     {
+  //       from: editor.doc.line(4).from,
+  //       to: editor.doc.line(6).to,
+  //     },
+  //     {
+  //       from: editor.doc.line(8).from,
+  //       to: editor.doc.line(11).to,
+  //     },
+  //   ];
+  // };
 
   useEffect(() => {
     const addMarks = StateEffect.define();
@@ -174,7 +185,7 @@ export const Editor = (props) => {
         javascript(),
         onUpdate,
         EditorView.lineWrapping,
-        readOnlyRangesExtension(getReadOnlyRanges),
+        readOnlyRangesExtension(getReadOnlyRangesForEditor(readOnlyRanges)),
         autocompletion({ override: [myCompletions] }),
       ],
     });
