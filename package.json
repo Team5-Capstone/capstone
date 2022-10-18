@@ -19,10 +19,9 @@
     "lint:check": "eslint .",
     "lint:fix": "eslint . --fix",
     "prettier:check": "prettier . --check",
-    "prettier:fix": "prettier --write \"**/*.{js,html,jsxc,css}\"",
+    "prettier:fix": "prettier --write \"**/*.js\"",
     "prettify": "npm run prettier:fix",
-    "test": "jest",
-    "testCanRunNode": "echo 'ran this script here'"
+    "test": "jest"
   },
   "author": "Fullstack Academy of Code",
   "license": "MIT",
@@ -61,8 +60,6 @@
     "axios": "^0.27.2",
     "babel-loader": "^8.2.5",
     "eslint": "^8.23.1",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-tailwindcss": "^3.6.2",
     "file-loader": "^6.2.0",
@@ -85,9 +82,9 @@
     "webpack-cli": "^4.10.0"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "prettier  --write"
+    "**/*.js": [
+      "npm run lint:fix",
+      "npm run prettier:fix"
     ]
   },
   "repository": {
