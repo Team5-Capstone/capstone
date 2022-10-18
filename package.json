@@ -49,7 +49,7 @@
     "range-analyzer": "^0.1.1-alpha.2",
     "react-modal": "^3.15.1",
     "replace-in-file": "^6.3.5",
-    "sequelize": "^6.21.4",
+    "sequelize": "^6.25.2",
     "style-loader": "^3.3.1",
     "url-loader": "^4.1.1",
     "uuid": "^9.0.0"
@@ -89,5 +89,14 @@
       "eslint --fix",
       "prettier  --write"
     ]
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fraih001/testbrew.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Fraih001/testbrew/issues"
+  },
+  "homepage": "https://github.com/Fraih001/testbrew#readme"
 }
