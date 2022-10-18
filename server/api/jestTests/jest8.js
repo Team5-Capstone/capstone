@@ -78,7 +78,7 @@ router.post('/', async (req, res) => {
       }
     });
 
-    console.log(testTestPassed, describeTestPassed, expect1TestPassed);
+    // console.log(testTestPassed, describeTestPassed, expect1TestPassed);
 
     // send different messages to user depending on accuracy of their test
     if (req.body.code.length < 1) {
@@ -106,7 +106,7 @@ router.post('/', async (req, res) => {
       res.json('You failed. Check your all functions.');
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.json('Syntax Error!');
   }
 });

@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
     walk.full(ast, (node) => {
       if (node.type === 'CallExpression' && node.callee?.name === 'test') {
         node.arguments.map((argument) => {
-          console.log(argument.value);
+          // console.log(argument.value);
           let regex = /^.*?\bcurrent\b$/im;
           let regex2 = /^.*?\bcount\b$/im;
           let regex3 = /^.*?\bletter\b$/im;
@@ -110,12 +110,12 @@ router.post('/', async (req, res) => {
       }
     });
 
-    console.log(
-      describeTestPassed,
-      testTestPassed,
-      expect1TestPassed,
-      toBeTestPassed,
-    );
+    // console.log(
+    //   describeTestPassed,
+    //   testTestPassed,
+    //   expect1TestPassed,
+    //   toBeTestPassed,
+    // );
 
     // send different messages to user depending on accuracy of their test
     if (req.body.code.length < 1) {
@@ -235,7 +235,7 @@ router.post('/', async (req, res) => {
       );
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.json('Syntax Error!');
   }
 });

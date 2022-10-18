@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     });
 
     let toBe1TestPassed = false;
-    console.log(toBe1TestPassed);
+    // console.log(toBe1TestPassed);
     walk.full(ast, (node) => {
       if (
         node.type === 'CallExpression' &&

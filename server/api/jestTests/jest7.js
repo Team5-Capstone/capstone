@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
     let ast = acorn.parse(req.body.code, {
       ecmaVersion: 2020,
     });
-    console.log(ast);
+    // console.log(ast);
     let testTestPassed = false;
     walk.full(ast, (node) => {
       if (node.type === 'CallExpression' && node.callee?.name === 'test') {
@@ -54,7 +54,7 @@ router.post('/', async (req, res) => {
       res.json('You failed. Check your test function.');
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.json('Syntax Error!');
   }
 });

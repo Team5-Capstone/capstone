@@ -215,7 +215,7 @@ router.post('/', async (req, res) => {
       );
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.json('Syntax Error!');
   }
 });

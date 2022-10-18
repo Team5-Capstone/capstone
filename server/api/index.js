@@ -12,6 +12,7 @@ router.use('/jestTests/jest8', require('./jestTests/jest8.js'));
 router.use('/jestTests/jest9', require('./jestTests/jest9.js'));
 router.use('/jestTests/jest10', require('./jestTests/jest10.js'));
 
+router.use('/submitTest', require('./submitTest.js'));
 router.use('/users', require('./users'));
 router.use('/prompts', require('./prompts'));
 

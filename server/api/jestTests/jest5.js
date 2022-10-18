@@ -15,7 +15,7 @@ function notOverTen(num){
 
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body.code);
+    // console.log(req.body.code);
     let ast = acorn.parse(req.body.code, {
       ecmaVersion: 2020,
     });

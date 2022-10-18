@@ -45,7 +45,7 @@ Now, take a look at the prompt and try to fill out the unit test:
     `,
       prompt: `Please create a function called helloWorld where when a user passes the string “World!” to this function, the function console.logs the string “Hello, World!”.
     `,
-      jsCode: 'const helloWorld = (str) => { return `Hello ${str}`};',
+      jsCode: 'const helloWorld = (str) => { return `Hello, ${str}`};',
       templateTest: ` describe('helloWorld', () => {
         test('returns a string "Hello, World!"', () => {
             expect( ADD CODE HERE ).toBe( ADD CODE HERE )
