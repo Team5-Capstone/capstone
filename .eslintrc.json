@@ -9,7 +9,6 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended",
     "plugin:tailwindcss/recommended"
   ],
   "ignorePatterns": [
@@ -25,9 +24,8 @@
       "jsx": true
     }
   },
-  "plugins": ["react", "prettier", "tailwindcss"],
+  "plugins": ["react", "tailwindcss"],
   "rules": {
-    "prettier/prettier": "warn",
     "react/no-unescaped-entities": "off",
     "react/prop-types": "off"
   },
