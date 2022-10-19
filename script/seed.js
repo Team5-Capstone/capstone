@@ -22,6 +22,7 @@ async function seed() {
   // Creating Prompts
   const prompts = await Promise.all([
     TestingPrompt.create({
+      orderNum: 10,
       narrative: `Welcome to Exercise #1!
 
 
@@ -60,6 +61,7 @@ Now, take a look at the prompt and try to fill out the unit test:
   `,
     }),
     TestingPrompt.create({
+      orderNum: 20,
       narrative: `Now, let’s examine the toEqual and the not.toBe matchers.
 
 The toEqual matcher will recursively check every field of an object or array.
@@ -85,6 +87,7 @@ The not.toBe matcher will test for the opposite of a matcher.
     `,
     }),
     TestingPrompt.create({
+      orderNum: 30,
       narrative: `Let's use what we learned from the last two exercises and use the prompt to complete the following Unit Test:
       `,
       prompt: `Please create a function called isNumber that returns a boolean (True) if the argument passed to isNumber is an integer and false if the argument passed to isNumber is any other data-type.`,
@@ -114,6 +117,7 @@ The not.toBe matcher will test for the opposite of a matcher.
       });`,
     }),
     TestingPrompt.create({
+      orderNum: 40,
       narrative: `In tests, you sometimes need to distinguish between undefined, null, and false, but you sometimes do not want to treat these differently. Jest contains helpers that let you be explicit about what you want.
 
 toBeNull matches only null
@@ -146,6 +150,7 @@ toBeFalsy matches anything that an if statement treats as false
   `,
     }),
     TestingPrompt.create({
+      orderNum: 50,
       narrative: `We can also compare numbers using the following unique matchers:
 
 test('two plus two', () => {
@@ -180,6 +185,7 @@ Please use one of the matchers above to complete the following exercise:
       `,
     }),
     TestingPrompt.create({
+      orderNum: 60,
       narrative: `You've probably noticed by now that we have used the function Describe over and over again.
 
 describe(name, fn) creates a block that groups together several related tests. For example, if you have a myLunch object that is supposed to be hot but not spicy, you could test it with:
@@ -237,6 +243,7 @@ describe('my lunch, () => {
   `,
     }),
     TestingPrompt.create({
+      orderNum: 70,
       narrative: `Now, let’s explore the test function.
 
 All you need in a test file is the test method which runs a test. For example, let's say there's a function inchesOfSnow() that should be zero. Your whole test could be:
@@ -270,6 +277,7 @@ In the exercise below, fill in the test method.
       `,
     }),
     TestingPrompt.create({
+      orderNum: 80,
       narrative: `Ok, now that we know the basics, let's try a more advanced exercise. 
       
 Based on the prompt below, please fill in the describe, test, expect and toBe functions.
@@ -295,6 +303,7 @@ Based on the prompt below, please fill in the describe, test, expect and toBe fu
       `,
     }),
     TestingPrompt.create({
+      orderNum: 90,
       narrative: `Let’s try another example:
 
       `,
@@ -328,6 +337,7 @@ Based on the prompt below, please fill in the describe, test, expect and toBe fu
       `,
     }),
     TestingPrompt.create({
+      orderNum: 100,
       narrative: `Last exercise!
 
       `,

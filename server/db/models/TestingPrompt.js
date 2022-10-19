@@ -22,6 +22,9 @@ const TestingPrompt = db.define('testingPrompt', {
   solution: {
     type: Sequelize.TEXT,
   },
+  orderNum: {
+    type: Sequelize.INTEGER,
+  },
 });
 
 module.exports = TestingPrompt;
