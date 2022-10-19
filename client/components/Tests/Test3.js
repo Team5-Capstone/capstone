@@ -44,6 +44,8 @@ export const Editor = (props) => {
 
   const templateTest = prompts[2]?.templateTest;
   const narrative = prompts[2]?.narrative;
+  const jsCode = prompts[2]?.jsCode;
+
   const completions = [
     { label: 'toBe', type: 'keyword' },
     { label: 'expect', type: 'keyword' },
@@ -225,10 +227,11 @@ export const Editor = (props) => {
     if (passedTest === 'true') {
       setId(uuidv4());
       axios
-        .post('/api/jestTests/jest3/results', {
+        .post('/api/submitTest', {
           code,
           id,
           passedTest,
+          jsCode,
         })
         .then((res) => {
           setPassedTest('false');
@@ -333,7 +336,7 @@ export const Editor = (props) => {
             </button>
           </div>
           <div className='min-h-[300px] bg-[#090e1a] p-8 font-mono text-slate-200'>
-            {prompts[2]?.jsCode}
+            {jsCode}
           </div>
         </div>
       </Modal>

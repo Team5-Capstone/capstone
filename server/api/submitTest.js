@@ -5,10 +5,10 @@ const {
   models: { TestingPrompt },
 } = require('../db');
 
-router.post('/results', async (req, res) => {
+router.post('/', async (req, res) => {
   let findJsCode = await TestingPrompt.findOne({
     where: {
-      narrative: req.body.narrative,
+      jsCode: req.body.jsCode,
     },
   });
 
