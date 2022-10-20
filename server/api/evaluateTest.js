@@ -5,10 +5,8 @@ const allTests = require('./ast');
 
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body.orderNum);
     allTests(req.body.orderNum, req, res);
   } catch (err) {
-    console.log(err);
     res.json('Syntax Error!');
   }
 });
