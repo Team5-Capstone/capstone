@@ -45,6 +45,7 @@ export const Editor = (props) => {
   const templateTest = prompts[8]?.templateTest;
   const narrative = prompts[8]?.narrative;
   const jsCode = prompts[8]?.jsCode;
+  const orderNum = prompts[8]?.orderNum;
 
   const completions = [
     { label: 'toBe', type: 'keyword' },
@@ -199,8 +200,9 @@ export const Editor = (props) => {
 
   const fetchData = () => {
     axios
-      .post('/api/jestTests/jest9', {
+      .post('/api/evaluateTest', {
         code,
+        orderNum,
       })
       .then((res) => {
         setResponse(res.data);
