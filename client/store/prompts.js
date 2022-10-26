@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const prompts = (state = [], action) => {
   if (action.type === 'SET_PROMPTS') {
-    state = action.prompts;
+    state = action.prompts.sort((a, b) => a.orderNum - b.orderNum);
   }
   return state;
 };

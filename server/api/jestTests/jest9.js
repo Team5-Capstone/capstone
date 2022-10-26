@@ -1,24 +1,6 @@
-const fs = require('fs');
 const router = require('express').Router();
 const acorn = require('acorn');
 const walk = require('acorn-walk');
-const util = require('util');
-
-const jsCode = `    
-const charCount = (str, letter) => {
-  let letterCount = 0;
-  for (let position = 0; position < str.length; position++) 
-  {
-    if (str.charAt(position) == letter) 
-      {
-      letterCount += 1;
-      }
-  }
-  return letterCount;    
-};
-`;
-
-// evaluate test
 
 router.post('/', async (req, res) => {
   try {
@@ -48,7 +30,7 @@ router.post('/', async (req, res) => {
     walk.full(ast, (node) => {
       if (node.type === 'CallExpression' && node.callee?.name === 'test') {
         node.arguments.map((argument) => {
-          console.log(argument.value);
+          // console.log(argument.value);
           let regex = /^.*?\bcurrent\b$/im;
           let regex2 = /^.*?\bcount\b$/im;
           let regex3 = /^.*?\bletter\b$/im;
@@ -110,12 +92,12 @@ router.post('/', async (req, res) => {
       }
     });
 
-    console.log(
-      describeTestPassed,
-      testTestPassed,
-      expect1TestPassed,
-      toBeTestPassed,
-    );
+    // console.log(
+    //   describeTestPassed,
+    //   testTestPassed,
+    //   expect1TestPassed,
+    //   toBeTestPassed,
+    // );
 
     // send different messages to user depending on accuracy of their test
     if (req.body.code.length < 1) {
@@ -235,39 +217,8 @@ router.post('/', async (req, res) => {
       );
     }
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     res.json('Syntax Error!');
-  }
-});
-
-// submit test
-
-router.post('/results', async (req, res) => {
-  if (req.body.passedTest === 'true') {
-    req.body.id = req.body.id + '.test.js';
-    fs.writeFile(
-      './testFiles/' + req.body.id,
-      jsCode + '\n' + req.body.code,
-      function (err) {
-        if (err) throw err;
-      },
-    );
-
-    try {
-      const exec = util.promisify(require('child_process').exec);
-      const { stderr } = await exec(`npm test ${req.body.id}`);
-      res.json(stderr.toString());
-    } catch (err) {
-      res.send(err.toString());
-    } finally {
-      fs.unlinkSync('./testFiles/' + req.body.id, (err) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log('success!');
-        }
-      });
-    }
   }
 });
 

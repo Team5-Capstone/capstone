@@ -28,16 +28,6 @@ module.exports = {
         generator: {
           filename: './fonts/[name][ext]',
         },
-        // use: [
-        //   {
-        //     loader: 'url-loader',
-        //     options: {
-        //       name: '[name].[ext]',
-        //       outputPath: 'public/fonts',
-        //       publicPath: './../fonts/',
-        //     },
-        //   },
-        // ],
       },
     ],
   },

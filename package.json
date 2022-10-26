@@ -19,10 +19,9 @@
     "lint:check": "eslint .",
     "lint:fix": "eslint . --fix",
     "prettier:check": "prettier . --check",
-    "prettier:fix": "prettier --write \"**/*.{js,html,jsxc,css}\"",
+    "prettier:fix": "prettier --write \"**/*.js\"",
     "prettify": "npm run prettier:fix",
-    "test": "jest",
-    "testCanRunNode": "echo 'ran this script here'"
+    "test": "jest"
   },
   "author": "Fullstack Academy of Code",
   "license": "MIT",
@@ -49,7 +48,7 @@
     "range-analyzer": "^0.1.1-alpha.2",
     "react-modal": "^3.15.1",
     "replace-in-file": "^6.3.5",
-    "sequelize": "^6.21.4",
+    "sequelize": "^6.25.2",
     "style-loader": "^3.3.1",
     "url-loader": "^4.1.1",
     "uuid": "^9.0.0"
@@ -61,8 +60,6 @@
     "axios": "^0.27.2",
     "babel-loader": "^8.2.5",
     "eslint": "^8.23.1",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-tailwindcss": "^3.6.2",
     "file-loader": "^6.2.0",
@@ -85,9 +82,18 @@
     "webpack-cli": "^4.10.0"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "prettier  --write"
+    "**/*.js": [
+      "npm run lint:fix",
+      "npm run prettier:fix"
     ]
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fraih001/testbrew.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Fraih001/testbrew/issues"
+  },
+  "homepage": "https://github.com/Fraih001/testbrew#readme"
 }
