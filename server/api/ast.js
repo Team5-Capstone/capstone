@@ -933,7 +933,7 @@ const allTests = (orderNum, req, res) => {
     }
   }
 
-  if (orderNum === 10) {
+  if (orderNum === 100) {
     let ast = acorn.parse(req.body.code, {
       ecmaVersion: 2020,
     });
