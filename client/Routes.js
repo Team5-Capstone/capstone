@@ -6,7 +6,7 @@ import Home from './components/Home';
 
 import { me } from './store';
 import DeprecatedPaginatedTests from './components/Tests/DeprecatedPaginatedTests';
-import Pagination from './components/Tests/Pagination';
+import PaginatedTests from './components/Tests/PaginatedTests';
 
 /**
  * COMPONENT
@@ -29,7 +29,7 @@ class Routes extends Component {
             </Switch>
           )}
           <Route exact path='/' component={Home} />
-          <Route exact path='/jest/:promptNum' component={Pagination} />
+          <Route exact path='/jest/:promptNum' component={PaginatedTests} />
           <Redirect exact from='/jest' to='/jest/1' />
           <Route
             exact
