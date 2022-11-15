@@ -1,29 +1,36 @@
-const Sequelize = require('sequelize');
 const db = require('../db');
+const Sequelize = require('sequelize');
+const { ARRAY, INTEGER, JSON, TEXT, UUID, UUIDV4 } = Sequelize;
 
 const TestingPrompt = db.define('testingPrompt', {
   id: {
-    type: Sequelize.UUID,
-    defaultValue: Sequelize.UUIDV4,
+    type: UUID,
+    defaultValue: UUIDV4,
     primaryKey: true,
   },
   narrative: {
-    type: Sequelize.TEXT,
+    type: TEXT,
   },
   prompt: {
-    type: Sequelize.TEXT,
+    type: TEXT,
   },
   jsCode: {
-    type: Sequelize.TEXT,
+    type: TEXT,
   },
   templateTest: {
-    type: Sequelize.TEXT,
+    type: TEXT,
   },
   solution: {
-    type: Sequelize.TEXT,
+    type: TEXT,
   },
   orderNum: {
-    type: Sequelize.INTEGER,
+    type: INTEGER,
+  },
+  readOnlyRanges: {
+    type: ARRAY(JSON(INTEGER)),
+  },
+  strikeMarkRanges: {
+    type: ARRAY(JSON(INTEGER)),
   },
 });
 

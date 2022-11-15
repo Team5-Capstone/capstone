@@ -1,6 +1,8 @@
 const fs = require('fs');
 const router = require('express').Router();
+const { v4: uuidv4 } = require('uuid');
 const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 const {
   models: { TestingPrompt },
 } = require('../db');
@@ -14,30 +16,23 @@ router.post('/', async (req, res) => {
 
   const jsCode = findJsCode.dataValues.jsCode;
 
-  if (req.body.passedTest === 'true') {
-    req.body.id = req.body.id + '.test.js';
-    fs.writeFile(
-      './testFiles/' + req.body.id,
-      jsCode + '\n' + '\n' + req.body.code,
-      function (err) {
-        if (err) throw err;
-      },
-    );
+  // TODO: rm this boolean check after deprecated tests are removed
+  const hasDeprecatedTestPassed = req.body.passedTest === 'true';
+
+  if (req.body.hasTestPassed === true || hasDeprecatedTestPassed) {
+    const testFileName = uuidv4() + '.test.js';
+
+    const filePath = `./testFiles/${testFileName}`;
+    const jsCodeWithUserCode = `${jsCode}\n\n${req.body.code}`;
 
     try {
-      const exec = util.promisify(require('child_process').exec);
-      const { stderr } = await exec(`npm test ${req.body.id}`);
+      fs.writeFileSync(filePath, jsCodeWithUserCode);
+      const { stderr } = await exec(`npm test ${testFileName}`);
       res.json(stderr.toString());
     } catch (err) {
       res.send(err.toString());
     } finally {
-      fs.unlinkSync('./testFiles/' + req.body.id, (err) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log('success!');
-        }
-      });
+      fs.unlinkSync(filePath);
     }
   }
 });
